@@ -31,7 +31,7 @@ public class Splash extends Activity {
                 finish();
                 // start the home screen
  
-                Intent intent = new Intent(Splash.this, Cover.class);
+                Intent intent = new Intent(Splash.this, Evaluations.class);
                 Splash.this.startActivity(intent);
  
             }
