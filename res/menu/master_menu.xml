@@ -7,11 +7,6 @@
             android:numericShortcut="1"
             android:alphabeticShortcut="a"  
         />
-    <item
-        android:title= "@string/addcourse"
-            android:id = "@+id/addcourse"
-            android:numericShortcut="2"
-            android:alphabeticShortcut="b"        
-        />
+    
 
 </menu>

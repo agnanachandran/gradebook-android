@@ -26,17 +26,15 @@ public class Splash extends Activity {
  
             public void run() {
  
-                // make sure we close the splash screen so the user won't come back when it presses back key
- 
-                finish();
+                finish(); //closes splash screen
                 // start the home screen
  
-                Intent intent = new Intent(Splash.this, Evaluations.class);
+                Intent intent = new Intent(Splash.this, Courses.class);
                 Splash.this.startActivity(intent);
  
             }
  
-        }, 2000); // time in milliseconds (1 second = 1000 milliseconds) until the run() method will be called
+        }, 2000); // time in milliseconds until the run() method will be called
  
     }
  

@@ -33,27 +33,45 @@
             android:name=".Detail"
             android:label="@string/title_activity_detail" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.DETAIL" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Courses"
             android:label="@string/title_activity_courses" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.amrak.gradebook.COURSES" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Evaluations"
             android:label="@string/title_activity_evaluations" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.amrak.gradebook.EVALUATIONS" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AddCourse"
+            android:label="@string/title_activity_add_course" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.ADDCOURSE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

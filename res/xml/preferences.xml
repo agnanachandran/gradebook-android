@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen  xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<ListPreference xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:key="pref_colour"
+        android:title="@string/pref_colour"
+        android:summary="@string/pref_colour_summ"
+        android:defaultValue="true"
+	    />
+
+</PreferenceScreen>

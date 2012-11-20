@@ -3,7 +3,9 @@ package com.amrak.gradebook;
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -53,7 +55,18 @@ public class Evaluations extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_evaluations, menu);
+        getMenuInflater().inflate(R.menu.master_menu, menu);
         return true;
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.preferences:
+			Intent i = new Intent("com.amrak.gradebook.SETTINGS");
+			startActivity(i);
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
