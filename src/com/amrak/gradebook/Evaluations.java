@@ -55,7 +55,7 @@ public class Evaluations extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.master_menu, menu);
+        getMenuInflater().inflate(R.menu.activity_evaluations, menu);
         return true;
     }
 
@@ -65,6 +65,10 @@ public class Evaluations extends Activity {
 		case R.id.preferences:
 			Intent i = new Intent("com.amrak.gradebook.SETTINGS");
 			startActivity(i);
+			break;
+		case R.id.addeval:
+			Intent j = new Intent("com.amrak.gradebook.ADDEVAL");
+			startActivity(j);
 			break;
 		}
 		return super.onOptionsItemSelected(item);

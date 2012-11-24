@@ -17,5 +17,17 @@
     <string name="courseName">Course Name</string>
     <string name="hintcoursename">Course Name</string>
     <string name="doneAddCourse">Done!</string>
+    <string name="title_activity_add_eval">AddEval</string>
+    <string name="evalName">Evaluation</string>
+    <string name="hintevalname">Evaluation Name</string>
+    <string name="hintevaldate">Date</string>
+    <string name="doneAddEval">Done!</string>
+    <string name="addeval">Add Evaluation</string>
+    <string name="hintMark">Mark</string>
+    <string name="hintoutof">Maximum Mark</string>
+    <string name="hintaccategory">Category</string>
+    <string name="hintterm">Term</string>
+    <string name="hintnotes">Notes</string>
+    <string name="title_activity_add_assignment">AddAssignment</string>
 
 </resources>

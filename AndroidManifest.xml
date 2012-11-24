@@ -74,6 +74,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddEval"
+            android:label="@string/title_activity_add_eval" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.ADDEVAL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

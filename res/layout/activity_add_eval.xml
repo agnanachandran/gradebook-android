@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tvEval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/evalName"
+        android:textSize="25dp" />
+
+    <EditText
+        android:id="@+id/etEvalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvEval"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="@string/hintevalname" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/bDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/doneAddEval" />
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etEvalName"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/hintevaldate"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/etMaxMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bDone"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="103dp"
+        android:ems="10"
+        android:hint="@string/hintoutof"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/hintMark"
+        android:inputType="numberDecimal" />
+
+    <AutoCompleteTextView
+        android:id="@+id/acTextCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etDate"
+        android:ems="10"
+        android:hint="@string/hintaccategory" />
+
+</RelativeLayout>
