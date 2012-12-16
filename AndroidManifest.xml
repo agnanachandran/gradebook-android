@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amrak.gradebook"
     android:versionCode="1"
@@ -12,8 +13,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Splash"
-            android:label="@string/app_name" >
+            android:name="com.amrak.gradebook.Splash"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Cover"
+            android:name="com.amrak.gradebook.Cover"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.amrak.gradebook.COVER" />
@@ -30,34 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Detail"
-            android:label="@string/title_activity_detail" >
-            <intent-filter>
-                <action android:name="android.intent.action.DETAIL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Courses"
-            android:label="@string/title_activity_courses" >
-            <intent-filter>
-                <action android:name="com.amrak.gradebook.COURSES" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Evaluations"
-            android:label="@string/title_activity_evaluations" >
-            <intent-filter>
-                <action android:name="com.amrak.gradebook.EVALUATIONS" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Settings"
+            android:name="com.amrak.gradebook.Settings"
             android:label="@string/title_activity_settings" >
             <intent-filter>
                 <action android:name="com.amrak.gradebook.SETTINGS" />
@@ -66,8 +40,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddCourse"
-            android:label="@string/title_activity_add_course" >
+            android:name="com.amrak.gradebook.Terms"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.TERMS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.Courses"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.COURSES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.Evaluations"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.EVALUATIONS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.AddTerm"
+            android:label="@string/title_activity_add_term" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.ADDTERM" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.AddCourse"
+            android:label="@string/title_activity_add_course"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
                 <action android:name="com.amrak.gradebook.ADDCOURSE" />
 
@@ -75,8 +86,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddEval"
-            android:label="@string/title_activity_add_eval" >
+            android:name="com.amrak.gradebook.AddCategory"
+            android:label="@string/title_activity_add_category" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.ADDCAT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.AddEval"
+            android:label="@string/title_activity_add_evaluation" >
             <intent-filter>
                 <action android:name="com.amrak.gradebook.ADDEVAL" />
 

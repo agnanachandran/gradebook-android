@@ -1,77 +1,126 @@
 package com.amrak.gradebook;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
-import android.app.ListActivity;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Courses extends ListActivity {
+public class Courses extends Activity {
 
-	TextView tvTitle;
-	ArrayList <String> courses2 = new ArrayList<String>();
-	String courses[] = { "Introduction to Methods of Software Engineering",
-			"Programming Principles", "Linear Algebra for Engineering",
-			"Calculus 1 for Engineering", "Physics for Electrical Engineering",
-	"Linear Circuits" };
+	// database
+	TermsDBAdapter termsDB = new TermsDBAdapter(this);
+	CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
+	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
+	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
+	
+	// context
+	Context context = this;
 
-	DBAdapter db = new DBAdapter(this);
+	// view(s)
+	ListView listView;
+	TextView termTitle;
+	TextView termDate;
+	TextView termMark;
+
+	// listAdapters
+	private CoursesListAdapter courseslistAdapter;
+
+	// data
+	public static final int CONTEXT_EDIT = 0;
+	public static final int CONTEXT_DELETE = 1;
+	TermData termData;
+	// courses
+	ArrayList<CourseData> courses = new ArrayList<CourseData>();
+	
+	// variables
+	final private String TAG = "Courses";
+	int[] refIDPass_Course;
+	int refIDGet_Term;
+	int contextSelection;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setListAdapter(new ArrayAdapter<String>(Courses.this,
-				android.R.layout.simple_list_item_1, courses));
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		setContentView(R.layout.activity_courses);
 
-		try {
-			String destPath = "/data/data/" + getPackageName()
-					+ "/databases/AssignmentDB";
-			File f = new File(destPath);
-			if (!f.exists()) {
-				CopyDB(getBaseContext().getAssets().open(destPath),
-						new FileOutputStream(destPath));
+		Intent iCourse = getIntent();
+		refIDGet_Term = iCourse.getIntExtra("refID_Term", -1);
+		// TODO Do something with reference gotten such as calculate term average
+		//setTitle(String.valueOf(refIDGet));
+
+		// initialization of views
+		termTitle = (TextView) findViewById(R.id.tvCoursesTermTitle);
+		termDate = (TextView) findViewById(R.id.tvCoursesTermDate);
+		termMark = (TextView) findViewById(R.id.tvCoursesTermMark);
+		listView = (ListView) findViewById(R.id.lvCourses);
+		
+		//term
+		termsDB.open();
+		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
+		
+		termData = new TermData(cTerm.getInt(cTerm.getColumnIndex("_id")), 
+				cTerm.getString(cTerm.getColumnIndex("termTitle")), 
+				cTerm.getString(cTerm.getColumnIndex("termStartDate")), 
+				cTerm.getString(cTerm.getColumnIndex("termEndDate")));
+		
+		termTitle.setText(termData.getTitle());
+		termDate.setText(termData.getDateStart() + " - " + termData.getDateEnd()); 
+		termMark.setText(String.valueOf(termData.getMark()));
+		termsDB.close();
+		
+		// read data from database
+		dataReadToList();
+	
+		// input listview data
+		courseslistAdapter = new CoursesListAdapter(this, courses);
+		listView.setAdapter(courseslistAdapter);
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> a, View v, int position,
+					long id) {
+				try {
+					@SuppressWarnings("rawtypes")
+					Class cEvaluations;
+					cEvaluations = Class.forName("com.amrak.gradebook.Evaluations");
+					Intent iEvaluations = new Intent(Courses.this, cEvaluations);
+					iEvaluations.putExtra("refID_Term", refIDGet_Term);
+					iEvaluations.putExtra("refID_Course", refIDPass_Course[position]);
+					startActivity(iEvaluations);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		});
+		registerForContextMenu(listView);
 
 	}
-
+	
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
-		super.onListItemClick(l, v, position, id);
-
-		String chooseCourse = courses[position];
-		try {
-			@SuppressWarnings("rawtypes")
-			Class ourClass;
-			ourClass = Class.forName("com.amrak.gradebook.Evaluations");
-			Intent ourIntent = new Intent(Courses.this, ourClass);
-			startActivity(ourIntent);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	protected void onResume() {
+		super.onResume();
+		dataReset();
 	}
 
 	@Override
@@ -88,30 +137,117 @@ public class Courses extends ListActivity {
 			startActivity(i);
 			break;
 		case R.id.addcourse:
-			Intent j = new Intent("com.amrak.gradebook.ADDCOURSE");
-			startActivity(j);
+			Intent iAddCourse = new Intent("com.amrak.gradebook.ADDCOURSE");
+			iAddCourse.putExtra("refID_Term", refIDGet_Term);
+			startActivity(iAddCourse);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void CopyDB(InputStream inputStream, OutputStream outputStream)
-			throws IOException {
-		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = inputStream.read(buffer)) > 0) {
-			outputStream.write(buffer, 0, length);
+	// Context menu
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+		CourseData courseSelected = (CourseData) courseslistAdapter.getItem(info.position);
+		String evalTitle = courseSelected.getTitle();
+		menu.setHeaderTitle(evalTitle);
+		menu.add(0, CONTEXT_EDIT, 0, "Edit Course");
+		menu.add(0, CONTEXT_DELETE, 0, "Delete Course");
+	}
+	
+	public boolean onContextItemSelected(MenuItem menuItem) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+		contextSelection = info.position;
+		
+		switch (menuItem.getItemId()) {
+		case CONTEXT_EDIT:
+			Intent iAddCourse = new Intent("com.amrak.gradebook.ADDCOURSE");
+			iAddCourse.putExtra("refID_Term", refIDGet_Term);
+			iAddCourse.putExtra("idEdit_Item", refIDPass_Course[contextSelection]);
+			iAddCourse.putExtra("id_Mode", 1);
+			startActivity(iAddCourse);
+			dataReset();
+			return true;
+		case CONTEXT_DELETE:
+			
+			coursesDB.open();
+			Cursor cDelete = coursesDB.getCourse(refIDPass_Course[contextSelection]);
+			String titleDelete = cDelete.getString(cDelete.getColumnIndex("courseTitle"));
+			coursesDB.close();
+			
+		    new AlertDialog.Builder(this)
+		    .setTitle("Delete Course, Categories and Evaluations?")
+		    .setMessage("Are you sure you want to delete \"" + titleDelete + "\" and ALL Categories and Evaluations within it?")
+		    .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					coursesDB.open();
+					Cursor cDelete = coursesDB.getCourse(refIDPass_Course[contextSelection]);
+					String titleDelete = cDelete.getString(cDelete.getColumnIndex("courseTitle"));
+					coursesDB.deleteCourse(refIDPass_Course[contextSelection]);
+					coursesDB.close();
+					
+					evalsDB.open();
+					evalsDB.deleteEvaluationsOfCourse(refIDPass_Course[contextSelection]);
+					evalsDB.close();
+					
+					categoriesDB.open();
+					categoriesDB.deleteCategoriesOfCourse(refIDPass_Course[contextSelection]);
+					categoriesDB.close();
+					
+					Toast toast = Toast.makeText(context, titleDelete + " and ALL Categories and Evaluations within it was deleted successfully.", Toast.LENGTH_SHORT);
+					try {
+						//center toast
+						((TextView)((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
+					} catch (ClassCastException cce) {
+						Log.d(TAG, cce.getMessage());
+					}
+					toast.show();
+					dataReset();
+				}
+			})
+		    .setNegativeButton("Cancel", null)
+		    .show();
+			
+			return true;
+		default:
+			return super.onContextItemSelected(menuItem);
 		}
-		inputStream.close();
-		outputStream.close();
 	}
+	
+	
+	public void dataReset() {
+		//clear data
+		courses.clear();
+		// read database
+		dataReadToList();
 
-	public void DisplayRecord(Cursor c) {
-		Toast.makeText(
-				this,
-				"id: " + c.getString(0) + "\n" + "Title: " + c.getString(1)
-				+ "\n" + "Due Date: " + c.getString(2),
-				Toast.LENGTH_SHORT).show();
+		// input listview data
+		courseslistAdapter.notifyDataSetChanged();
 	}
-
+	
+	public void dataReadToList() {
+		coursesDB.open();
+		Cursor c = coursesDB.getCoursesOfTerm(refIDGet_Term);
+		//Cursor c = coursesDB.getAllCourses();
+		int i = 0;
+		refIDPass_Course = new int[c.getCount()];
+		if (c.moveToFirst()) {
+			do {
+				refIDPass_Course[i] = c.getInt(c.getColumnIndex("_id")); // get ids of each.
+				courses.add(new CourseData(c.getInt(c.getColumnIndex("_id")), 
+						c.getString(c.getColumnIndex("courseTitle")), 
+						c.getString(c.getColumnIndex("courseCode")), 
+						c.getInt(c.getColumnIndex("courseUnits")), 
+						c.getString(c.getColumnIndex("notes")), 
+						c.getInt(c.getColumnIndex("termRef"))));
+				i++;
+			} while (c.moveToNext());
+		}
+		coursesDB.close();
+	}
 }

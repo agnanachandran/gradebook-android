@@ -1,77 +1,115 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/tvEval"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/evalName"
-        android:textSize="25dp" />
+    <ScrollView
+        android:id="@+id/svEval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/etEvalName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvEval"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="@string/hintevalname" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp" >
 
-        <requestFocus />
-    </EditText>
+            <EditText
+                android:id="@+id/etEvalName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/hint_evaluation_title"
+                android:inputType="text"
+                android:nextFocusDown="@+id/etEvalMark" >
 
-    <Button
-        android:id="@+id/bDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/doneAddEval" />
+                <requestFocus />
+            </EditText>
 
-    <EditText
-        android:id="@+id/etDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etEvalName"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/hintevaldate"
-        android:inputType="date" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
 
-    <EditText
-        android:id="@+id/etMaxMark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bDone"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="103dp"
-        android:ems="10"
-        android:hint="@string/hintoutof"
-        android:inputType="numberDecimal" />
+                <EditText
+                    android:id="@+id/etEvalMark"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_evaluation_mark"
+                    android:inputType="numberDecimal"
+                    android:nextFocusDown="@+id/etEvalOutOf" />
 
-    <EditText
-        android:id="@+id/etMark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:hint="@string/hintMark"
-        android:inputType="numberDecimal" />
+                <TextView
+                    android:id="@+id/tvOutOf"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/evaluation_outOf" />
 
-    <AutoCompleteTextView
-        android:id="@+id/acTextCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etDate"
-        android:ems="10"
-        android:hint="@string/hintaccategory" />
+                <EditText
+                    android:id="@+id/etEvalOutOf"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_evaluation_outOf"
+                    android:inputType="numberDecimal"
+                    android:nextFocusDown="@+id/etEvalWeight" />
+            </LinearLayout>
 
-</RelativeLayout>
+            <Spinner
+                android:id="@+id/sEvalCat"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <Button
+                    android:id="@+id/bPickEvalDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:onClick="showDatePickerDialog"
+                    android:text="Pick a Date" />
+
+                <EditText
+                    android:id="@+id/etEvalWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_evaluation_weight"
+                    android:inputType="numberDecimal" >
+                </EditText>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etEvalNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_notes"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+
+            <Button
+                android:id="@+id/bEvalDone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/doneAddEval"
+                android:onClick="addEval" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

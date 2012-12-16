@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp" >
+
+    <EditText
+        android:id="@+id/etTermTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/hint_term_title"
+        android:inputType="text" >
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:weightSum="7" >
+
+        <Button
+            android:id="@+id/bTermPickStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="2"
+            android:onClick="showDatePickerDialog"
+            android:text="Pick Start Date" />
+
+        <TextView
+            android:id="@+id/tvTermDash"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/term_to"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/bTermPickEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="2"
+            android:onClick="showDatePickerDialog"
+            android:text="Pick End Date" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bTermDone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/doneAddTerm" />
+    
+</LinearLayout>
