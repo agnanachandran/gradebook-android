@@ -66,7 +66,7 @@ public class Terms extends Activity {
 		listView = (ListView) findViewById(R.id.lvTerms);
 
 		// read data from database
-
+		dataReadToList();
 
 		// input listview data
 		termslistAdapter = new TermsListAdapter(this, terms);
