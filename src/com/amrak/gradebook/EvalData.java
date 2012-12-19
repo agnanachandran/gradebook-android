@@ -54,6 +54,10 @@ public class EvalData {
 		return Double.valueOf(twoDForm.format(outOf));
 	}
 	
+	public int getOutOfNoDecimal() {
+		return (int) outOf;
+	}
+	
 	public double getWeight() {
 		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(weight));

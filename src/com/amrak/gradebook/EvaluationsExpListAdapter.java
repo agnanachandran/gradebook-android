@@ -55,9 +55,17 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		TextView tvEvalChildDate = (TextView) v.findViewById(R.id.tvEvalChildDate);
 		TextView tvEvalChildCategory = (TextView) v.findViewById(R.id.tvEvalChildCategory);
 		
-		tvEvalChildWeight.setText(String.valueOf((evalChild.getWeight())));
-		tvEvalChildDate.setText(evalChild.getDate());
-		tvEvalChildCategory.setText(String.valueOf(evalChild.getCategory()));
+		TextView tvEvalChildWeightValue = (TextView) v.findViewById(R.id.tvEvalChildWeightValue);
+		TextView tvEvalChildDateValue = (TextView) v.findViewById(R.id.tvEvalChildDateValue);
+		TextView tvEvalChildCategoryValue = (TextView) v.findViewById(R.id.tvEvalChildCategoryValue);
+		
+		tvEvalChildWeight.setText("Weight:");
+		tvEvalChildDate.setText("Date:");
+		tvEvalChildCategory.setText("Category:");
+		
+		tvEvalChildWeightValue.setText(String.valueOf((evalChild.getWeight())));
+		tvEvalChildDateValue.setText(evalChild.getDate());
+		tvEvalChildCategoryValue.setText(String.valueOf(evalChild.getCategory()));
 	
 		return v;
 	}
@@ -94,7 +102,7 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		TextView mark = (TextView) v.findViewById(R.id.tvEvalParentMark);
 
 		title.setText(evalParent.getTitle());
-		mark.setText(Double.toString(evalParent.getMark()));
+		mark.setText(Double.toString(evalParent.getMark()) + "/" + Integer.toString(evalParent.getOutOfNoDecimal()));
 		return v;
 		
 	}
