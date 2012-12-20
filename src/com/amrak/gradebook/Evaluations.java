@@ -126,13 +126,13 @@ public class Evaluations extends Activity {
 
 			public void onGroupExpand(int groupPosition) {
 				// TODO Auto-generated method stub
-			        int len = expListAdapter.getGroupCount();
+/*			        int len = expListAdapter.getGroupCount();
 
 			        for(int i=0; i<len; i++) {
 			            if(i != groupPosition) {
 			            	expListView.collapseGroup(i);
 			            }
-			        }
+			        } */
 			}
 			
 		});
