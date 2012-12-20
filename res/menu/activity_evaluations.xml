@@ -34,5 +34,11 @@
         android:alphabeticShortcut="f"
         android:numericShortcut="6"
         android:title="@string/menu_sort_weight"/>
+    
+    <item 
+        android:id="@+id/sortByCategory"
+        android:alphabeticShortcut="g"
+        android:numericShortcut="7"
+        android:title="@string/menu_sort_category"/>
 
 </menu>

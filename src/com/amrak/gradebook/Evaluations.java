@@ -48,14 +48,26 @@ public class Evaluations extends Activity {
 	int[] refIDPass_Evaluation;
 	int refIDGet_Term;
 	int refIDGet_Course;
+	// this is initiated for savedInstanceState bundle; savedInstanceState needs Category ref when
+	// previous state was in filtered mode. Refer to protected void savedInstanceState method
+	int refIDGet_Category = 0;
 	int contextSelection;
 	
 	// variable passed into datareadtolist for sorting; default to zero, which is sorting by date
 	int sort = 0;
+	int prevSort = 0; // variable used for context menu when unfiltering, returns to old sorted format
+	
+	// string constant for sort when you place in the onSavedInstanceState() method to keep 
+	// sort value even when phone has been turned so filters and sort options are not changed
+	static final String SORT = "sortVariable";
+	static final String REFIDCAT = "refIdCat";
 	
 	// data
 	public static final int CONTEXT_EDIT = 0;
 	public static final int CONTEXT_DELETE = 1;
+	public static final int CONTEXT_FILTER = 2;
+	public static final int CONTEXT_UNFILTER = 3;
+
 	CourseData courseData;
 	// expListview parent rows
 	ArrayList<EvalData> eval_parent = new ArrayList<EvalData>();
@@ -63,6 +75,7 @@ public class Evaluations extends Activity {
 	ArrayList<ArrayList<EvalData>> eval_childs = new ArrayList<ArrayList<EvalData>>();
 	ArrayList<EvalData> eval_child = new ArrayList<EvalData>();
 
+	// when phone rotates, onCreate is called again
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,6 +109,12 @@ public class Evaluations extends Activity {
 		courseMark.setText(String.valueOf(courseData.getMark()));
 		coursesDB.close();
 		
+		// if there was a onSavedInstanceState before, retrieve original sort variable
+		if (savedInstanceState != null){
+			sort = savedInstanceState.getInt(SORT);
+			refIDGet_Category = savedInstanceState.getInt(REFIDCAT);
+		}
+		
 		// read database
 		dataReadToList();
 		
@@ -119,6 +138,15 @@ public class Evaluations extends Activity {
 		});
 		registerForContextMenu(expListView);
 		
+	}
+	
+	//saved instance state to store bundle information (e.g. sort variable used for determining 
+	//how the data is sorted) so it prevents data from resetting when phone is turned sideways (example) 
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putInt(SORT, sort);
+		savedInstanceState.putInt(REFIDCAT, refIDGet_Category);
 	}
 
 	@Override
@@ -166,11 +194,15 @@ public class Evaluations extends Activity {
 			sort = 2;
 			dataReset();
 			break;
+		case R.id.sortByCategory:
+			sort = 3;
+			dataReset();
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	// Context menu
+	// Context menu setup
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 
@@ -184,12 +216,18 @@ public class Evaluations extends Activity {
 			// Array created earlier when we built the expandable list
 			EvalData evalSelected = (EvalData) expListAdapter.getGroup(group);
 			String evalTitle = evalSelected.getTitle();
+			
+			// this is used when filtering a category, filters are controlled in the context menu
+			refIDGet_Category = evalSelected.getCategoryRef();
 			menu.setHeaderTitle(evalTitle);
 			menu.add(0, CONTEXT_EDIT, 0, "Edit Evaluation");
 			menu.add(0, CONTEXT_DELETE, 0, "Delete Evaluation");
+			menu.add(0, CONTEXT_FILTER, 0, "Filter by this Category");
+			menu.add(0, CONTEXT_UNFILTER, 0, "Remove Filter");
 		}
 	}
 	
+	// context menu selecting options (4 different options managed by a switch statement
 	public boolean onContextItemSelected(MenuItem menuItem) {
 		ExpandableListContextMenuInfo info =
 		(ExpandableListContextMenuInfo) menuItem.getMenuInfo();
@@ -248,11 +286,27 @@ public class Evaluations extends Activity {
 		    .show();
 			
 			return true;
+		case CONTEXT_FILTER:
+			prevSort = sort;
+			sort = 4;
+			dataReset();
+			
+			return true;
+			
+		case CONTEXT_UNFILTER: 
+			
+			sort = prevSort;
+			dataReset();
+			
+			return true;
+			
 		default:
 			return super.onContextItemSelected(menuItem);
 		}
 	}
 	
+	// clears the vectors and then reads new information before repopulating
+	// useful when an evaluation is deleted or added or a way to sort data is chosen
 	public void dataReset() {
 		//clear data
 		eval_parent.clear();
@@ -262,15 +316,19 @@ public class Evaluations extends Activity {
 		// read database
 		dataReadToList();
 
-		// input listview data
+		// update listview with new data
 		expListAdapter.notifyDataSetChanged();
 	}
 	
+	// reads data from the database to the vectors
 	public void dataReadToList() {
 		evalsDB.open();
 
 		Cursor c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
 		
+		// sort variables determine which cursor is chosen. The cursor chosen returns a specific 
+		// set of data a specific way. sort == 0 gives a cursor that returns evaluations based on 
+		// date in ascending order. .getEvaluationSortByDate() functions are found in EvaluationsDBAdapter.java
 		if (sort == 0) {
 			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);			
 		}
@@ -280,8 +338,21 @@ public class Evaluations extends Activity {
 		else if (sort == 2){
 			c = evalsDB.getEvaluationSortByWeight(refIDGet_Course);
 		}
+		else if (sort == 3){
+			c = evalsDB.getEvaluationSortByCategory(refIDGet_Course);
+		}
+		else if (sort == 4){
+			c = evalsDB.getEvaluationsOfCategory(refIDGet_Category);
+		}
+		else {
+			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
+		}
 		
+		// adding data from the database to the vectors
 		int i = 0;
+		
+		// an array that is used to store column indexes of each evaluation for later use
+		// such as in deleting an evaluation. Size is the number of evaluations to be put in vectors
 		refIDPass_Evaluation = new int[c.getCount()];
 		if (c.moveToFirst()) {
 			do {

@@ -76,7 +76,7 @@ public class EvalData {
 	}
 	
 	public int getCategoryRef() {
-		return course;
+		return category;
 	}
 	
 	public String getCategory() {

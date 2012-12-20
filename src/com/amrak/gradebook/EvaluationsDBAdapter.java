@@ -1,6 +1,5 @@
 package com.amrak.gradebook;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -177,7 +176,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-    @SuppressLint("NewApi")
+    // cursor that gets evaluations by date in asc order, look at second last parameter of the query function    
 	public Cursor getEvaluationSortByDate (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
@@ -190,7 +189,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-    @SuppressLint("NewApi")
+	// cursor that gets evaluations by name in asc order, look at second last parameter of the query function
 	public Cursor getEvaluationSortByName (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
@@ -203,7 +202,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-    @SuppressLint("NewApi")
+	// cursor that gets evaluations by weight in desc order, look at second last parameter of the query function
 	public Cursor getEvaluationSortByWeight (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
@@ -215,6 +214,19 @@ public class EvaluationsDBAdapter extends DBAdapter {
     	        }
     	        return mCursor;
     }
+	
+	// cursor that gets evaluations by category in asc order, look at second last parameter of the query function
+	public Cursor getEvaluationSortByCategory (long courseRefID) throws SQLException {
+		Cursor mCursor =
+				
+				mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, CATEGORY_REFERENCE + " ASC", null);
+		
+				if (mCursor != null) {
+		            mCursor.moveToFirst();
+		        }
+		        return mCursor;
+	}
 
     /**
      * Update the evaluation.
