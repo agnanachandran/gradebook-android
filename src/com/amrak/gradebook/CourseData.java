@@ -2,6 +2,8 @@ package com.amrak.gradebook;
 
 import java.text.DecimalFormat;
 
+import android.content.Context;
+
 public class CourseData {
 
 	int courseID = -1;
@@ -11,9 +13,12 @@ public class CourseData {
 	double mark = 0;
 	String notes = null;
 	int refTermID = -1;
+	
+	Context context;
+	EvaluationsDBAdapter evalsDB;
 
 	public CourseData(int inputCourseID, String inputTitle, String inputCode,
-			double inputUnits, String inputNotes, int inputRefTermID) {
+			double inputUnits, String inputNotes, int inputRefTermID, Context inputContext) {
 		courseID = inputCourseID;
 		title = inputTitle;
 		code = inputCode;
@@ -21,6 +26,8 @@ public class CourseData {
 		mark = calcMarkFromDatabase(inputCourseID);
 		notes = inputNotes;
 		refTermID = inputRefTermID;
+		context = inputContext;
+		evalsDB = new EvaluationsDBAdapter(context);
 
 	}
 

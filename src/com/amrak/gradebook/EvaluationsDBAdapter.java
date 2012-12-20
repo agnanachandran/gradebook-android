@@ -182,7 +182,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
     	Cursor mCursor =
     			
     	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_DATE + " ASC", null, null);
+        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_DATE + " ASC", null);
     	
     	if (mCursor != null) {
             mCursor.moveToFirst();
@@ -195,7 +195,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
     	Cursor mCursor =
     			
     	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_TITLE + " ASC", null, null);
+        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_TITLE + " ASC", null);
     	
     	if (mCursor != null) {
             mCursor.moveToFirst();
@@ -208,7 +208,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
     	Cursor mCursor =
     			
     	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_WEIGHT + " DESC", null, null);
+    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_WEIGHT + " DESC", null);
     	    	
     	    	if (mCursor != null) {
     	            mCursor.moveToFirst();

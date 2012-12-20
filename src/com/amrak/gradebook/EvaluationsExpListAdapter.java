@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -102,7 +103,13 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		TextView mark = (TextView) v.findViewById(R.id.tvEvalParentMark);
 
 		title.setText(evalParent.getTitle());
-		mark.setText(Double.toString(evalParent.getMark()) + "/" + Integer.toString(evalParent.getOutOfNoDecimal()));
+		
+		//mark.setText(Double.toString(evalParent.getMark()) + "/" + Integer.toString(evalParent.getOutOfNoDecimal()));
+		//Display mark in percentage
+		double percent = evalParent.getMark()/evalParent.getOutOf()*100;
+		DecimalFormat twoDForm = new DecimalFormat("###.##");
+		mark.setText(twoDForm.format(percent));
+
 		return v;
 		
 	}

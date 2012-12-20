@@ -244,7 +244,8 @@ public class Courses extends Activity {
 						c.getString(c.getColumnIndex("courseCode")), 
 						c.getInt(c.getColumnIndex("courseUnits")), 
 						c.getString(c.getColumnIndex("notes")), 
-						c.getInt(c.getColumnIndex("termRef"))));
+						c.getInt(c.getColumnIndex("termRef")),
+						context));
 				i++;
 			} while (c.moveToNext());
 		}

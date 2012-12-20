@@ -88,7 +88,8 @@ public class Evaluations extends Activity {
 				cCourse.getString(cCourse.getColumnIndex("courseCode")), 
 				cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
 				cCourse.getString(cCourse.getColumnIndex("notes")), 
-				cCourse.getInt(cCourse.getColumnIndex("termRef")));
+				cCourse.getInt(cCourse.getColumnIndex("termRef")),
+				context);
 		
 		courseTitle.setText(courseData.getTitle());
 		courseCode.setText(courseData.getCode()); 
