@@ -26,7 +26,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Title"
-                android:textSize="25sp" />
+                android:textSize="28sp" />
 
             <TextView
                 android:id="@+id/tvEvalCourseCode"

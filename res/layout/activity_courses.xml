@@ -25,7 +25,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Title"
-                android:textSize="20sp" />
+                android:textSize="28sp" />
 
             <TextView
                 android:id="@+id/tvCoursesTermDate"
@@ -44,6 +44,11 @@
             android:text="Mark"
             android:textSize="26sp" />
     </LinearLayout>
+    
+    <View
+    	android:layout_width="fill_parent"
+    	android:layout_height="1dp"
+    	android:background="@android:color/darker_gray"/>
 
     <ListView
         android:id="@+id/lvCourses"
