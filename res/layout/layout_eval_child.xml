@@ -21,21 +21,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Weight"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvEvalChildDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvEvalChildCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
         
     </LinearLayout>
     
@@ -54,21 +54,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Weight"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvEvalChildDateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvEvalChildCategoryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
         
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -174,6 +175,45 @@ public class EvaluationsDBAdapter extends DBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    @SuppressLint("NewApi")
+	public Cursor getEvaluationSortByDate (long courseRefID) throws SQLException{
+    	Cursor mCursor =
+    			
+    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_DATE + " ASC", null, null);
+    	
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+    @SuppressLint("NewApi")
+	public Cursor getEvaluationSortByName (long courseRefID) throws SQLException{
+    	Cursor mCursor =
+    			
+    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_TITLE + " ASC", null, null);
+    	
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+    @SuppressLint("NewApi")
+	public Cursor getEvaluationSortByWeight (long courseRefID) throws SQLException{
+    	Cursor mCursor =
+    			
+    	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_WEIGHT + " DESC", null, null);
+    	    	
+    	    	if (mCursor != null) {
+    	            mCursor.moveToFirst();
+    	        }
+    	        return mCursor;
     }
 
     /**

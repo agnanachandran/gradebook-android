@@ -16,5 +16,23 @@
         android:alphabeticShortcut="c"
         android:numericShortcut="3"
         android:title="@string/menu_add_category"/>
+    
+    <item 
+        android:id="@+id/sortByDate"
+        android:alphabeticShortcut="d"
+        android:numericShortcut="4"
+        android:title="@string/menu_sort_date"/>
+    
+    <item 
+        android:id="@+id/sortByName"
+        android:alphabeticShortcut="e"
+        android:numericShortcut="5"
+        android:title="@string/menu_sort_name"/>
+    
+    <item 
+        android:id="@+id/sortByWeight"
+        android:alphabeticShortcut="f"
+        android:numericShortcut="6"
+        android:title="@string/menu_sort_weight"/>
 
 </menu>

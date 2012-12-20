@@ -16,6 +16,9 @@
     <string name="menu_add_course">Add a Course</string>
     <string name="menu_add_evaluation">Add an Evaluation</string>
     <string name="menu_add_category">Add a Category</string>
+    <string name="menu_sort_date">Sort by Date</string>
+    <string name="menu_sort_name">Sort by Name</string>
+    <string name="menu_sort_weight">Sort by Weight</string>
     <string name="hint_term_title">Term</string>
     <string name="term_to"> - </string>
     <string name="doneAddTerm">Add Term</string>

@@ -50,6 +50,9 @@ public class Evaluations extends Activity {
 	int refIDGet_Course;
 	int contextSelection;
 	
+	// variable passed into datareadtolist for sorting; default to zero, which is sorting by date
+	int sort = 0;
+	
 	// data
 	public static final int CONTEXT_EDIT = 0;
 	public static final int CONTEXT_DELETE = 1;
@@ -149,6 +152,18 @@ public class Evaluations extends Activity {
 			iAddCat.putExtra("refID_Course", refIDGet_Course);
 			iAddCat.putExtra("refID_Term", refIDGet_Term);
 			startActivity(iAddCat);
+			break;
+		case R.id.sortByDate:
+			sort = 0;
+			dataReset();
+			break;
+		case R.id.sortByName:
+			sort = 1;
+			dataReset();
+			break;
+		case R.id.sortByWeight:
+			sort = 2;
+			dataReset();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -253,7 +268,18 @@ public class Evaluations extends Activity {
 	public void dataReadToList() {
 		evalsDB.open();
 
-		Cursor c = evalsDB.getEvaluationsOfCourse(refIDGet_Course);
+		Cursor c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
+		
+		if (sort == 0) {
+			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);			
+		}
+		else if (sort == 1){
+			c = evalsDB.getEvaluationSortByName(refIDGet_Course);
+		}
+		else if (sort == 2){
+			c = evalsDB.getEvaluationSortByWeight(refIDGet_Course);
+		}
+		
 		int i = 0;
 		refIDPass_Evaluation = new int[c.getCount()];
 		if (c.moveToFirst()) {
