@@ -20,6 +20,7 @@
     <string name="menu_sort_name">Sort by Name</string>
     <string name="menu_sort_weight">Sort by Weight</string>
     <string name="menu_sort_category">Sort by Category</string>
+    <string name="menu_collapse_all">Collapse Evaluations</string>
     <string name="hint_term_title">Term</string>
     <string name="term_to"> - </string>
     <string name="doneAddTerm">Add Term</string>
@@ -30,6 +31,7 @@
     <string name="hint_notes">Notes and Description</string>
     <string name="doneAddCourse">Add Course</string>
     <string name="doneEditCourse">Edit Course</string>
+    <string name="doneEditCat">Edit Category</string>
     <string name="hint_category_title">Category Name</string>
     <string name="hint_category_weight">Weight</string>
     <string name="doneAddCategory">Add Category</string>

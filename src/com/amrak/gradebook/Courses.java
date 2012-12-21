@@ -100,12 +100,12 @@ public class Courses extends Activity {
 					long id) {
 				try {
 					@SuppressWarnings("rawtypes")
-					Class cEvaluations;
-					cEvaluations = Class.forName("com.amrak.gradebook.Evaluations");
-					Intent iEvaluations = new Intent(Courses.this, cEvaluations);
-					iEvaluations.putExtra("refID_Term", refIDGet_Term);
-					iEvaluations.putExtra("refID_Course", refIDPass_Course[position]);
-					startActivity(iEvaluations);
+					Class cCategories;
+					cCategories = Class.forName("com.amrak.gradebook.Categories");
+					Intent iCategories = new Intent(Courses.this, cCategories);
+					iCategories.putExtra("refID_Term", refIDGet_Term);
+					iCategories.putExtra("refID_Course", refIDPass_Course[position]);
+					startActivity(iCategories);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -58,6 +58,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.amrak.gradebook.Categories"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.CATEGORIES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.amrak.gradebook.Evaluations"
             android:label="@string/app_name" >
             <intent-filter>

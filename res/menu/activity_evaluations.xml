@@ -40,5 +40,11 @@
         android:alphabeticShortcut="g"
         android:numericShortcut="7"
         android:title="@string/menu_sort_category"/>
+    
+    <item
+        android:id="@+id/collapseAll"
+        android:alphabeticShortcut="h"
+        android:numericShortcut="8"
+        android:title="@string/menu_collapse_all"/>
 
 </menu>

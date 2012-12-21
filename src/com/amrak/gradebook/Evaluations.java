@@ -198,6 +198,12 @@ public class Evaluations extends Activity {
 			sort = 3;
 			dataReset();
 			break;
+		case R.id.collapseAll:
+			int len = expListAdapter.getGroupCount();
+
+	        for(int h=0; h<len; h++) {   	
+	            	expListView.collapseGroup(h);
+	        }
 		}
 		return super.onOptionsItemSelected(item);
 	}
