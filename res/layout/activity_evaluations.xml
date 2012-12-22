@@ -1,12 +1,12 @@
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
-
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,9 +23,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+
+
+
+
+
+
+
             <TextView
-                android:id="@+id/tvEvalCourseTitle"
+                android:id="@+id/tvEvalCatTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="Consolas"
@@ -34,9 +40,11 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:typeface="normal" />
-
+
+
+
             <TextView
-                android:id="@+id/tvEvalCourseCode"
+                android:id="@+id/tvEvalCourseName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textDate"
@@ -44,9 +52,11 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
-
+
+
+
         <TextView
-            android:id="@+id/tvEvalCourseMark"
+            android:id="@+id/tvEvalCatMark"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="3"
@@ -56,11 +66,13 @@
             android:textSize="26sp" />
 
     </LinearLayout>
-
+
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@color/Black" />
+        android:background="@color/Black" />
+
     <ExpandableListView
         android:id="@+id/elvEvalList"
         android:layout_width="match_parent"

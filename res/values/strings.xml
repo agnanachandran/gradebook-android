@@ -54,5 +54,7 @@
     <string name="pickDate">Pick a Date</string>
     <string name="pickStartDate">Pick Start Date</string>
     <string name="pickEndDate">Pick End Date</string>
+    <string name="catTitle">Category</string>
+    <string name="catGrade">Grade</string>
 
 </resources>

@@ -19,6 +19,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,6 +31,7 @@ public class Categories extends Activity{
 	CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
 	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
 	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
+	RelativeLayout rLayoutLabels;
 		
 	// context
 	Context context = this;
@@ -73,6 +75,7 @@ public class Categories extends Activity{
 		courseTitle = (TextView) findViewById (R.id.tvCategoriesCourseTitle);
 		courseMark = (TextView) findViewById (R.id.tvCategoriesCourseMark);
 		courseCode = (TextView) findViewById (R.id.tvCategoriesCourseCode);
+		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelCategories);
 		
 		// read from data base
 		coursesDB.open();
@@ -245,6 +248,16 @@ public class Categories extends Activity{
 						context));
 				i++;
 			} while (c.moveToNext());
+		}
+		
+		// set label and divider to visible/invisible if there is at least 1
+		// course
+		if (c.getCount() > 0) {
+			rLayoutLabels.setVisibility(View.VISIBLE);
+			//vDivLine.setVisibility(View.VISIBLE);
+		} else {
+			rLayoutLabels.setVisibility(View.INVISIBLE);
+			//vDivLine.setVisibility(View.INVISIBLE);
 		}
 		categoriesDB.close();
 	}

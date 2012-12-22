@@ -19,10 +19,10 @@ public class CategoryData {
 		categoryID = inputCategoryID;
 		title = inputTitle;
 		weight = inputWeight;
-		mark = calcMarkFromDatabase(inputRefCourseID, inputCategoryID);
 		course = inputRefCourseID;
 		term = inputRefTermID;
 		context = inputContext;
+		mark = calcMarkFromDatabase(inputRefCourseID, inputCategoryID);
 
 	}
 	

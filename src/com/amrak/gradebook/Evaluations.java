@@ -37,9 +37,9 @@ public class Evaluations extends Activity {
 
 	// view(s)
 	ExpandableListView expListView;
-	TextView courseTitle;
-	TextView courseMark;
-	TextView courseCode;
+	TextView catTitle;
+	TextView catMark;
+	TextView courseNameFull; //course title and course code, e.g. ECE 105
 
 	// listAdapters
 	private CoursesListAdapter courseslistAdapter;
@@ -52,7 +52,7 @@ public class Evaluations extends Activity {
 	int refIDGet_Course;
 	// this is initiated for savedInstanceState bundle; savedInstanceState needs Category ref when
 	// previous state was in filtered mode. Refer to protected void savedInstanceState method
-	int refIDGet_Category = 0;
+	int refIDGet_Category;
 	int contextSelection;
 	
 	// variable passed into datareadtolist for sorting; default to zero, which is sorting by date
@@ -71,6 +71,7 @@ public class Evaluations extends Activity {
 	public static final int CONTEXT_UNFILTER = 3;
 
 	CourseData courseData;
+	CategoryData categoryData;
 	// expListview parent rows
 	ArrayList<EvalData> eval_parent = new ArrayList<EvalData>();
 	// expListview child rows
@@ -84,19 +85,24 @@ public class Evaluations extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluations);
 		// initialization of views
-		courseTitle = (TextView) findViewById(R.id.tvEvalCourseTitle);
-		courseMark = (TextView) findViewById(R.id.tvEvalCourseMark);
-		courseCode = (TextView) findViewById(R.id.tvEvalCourseCode);
+		catTitle = (TextView) findViewById(R.id.tvEvalCatTitle);
+		catMark = (TextView) findViewById(R.id.tvEvalCatMark);
+		courseNameFull = (TextView) findViewById(R.id.tvEvalCourseName);
 		expListView = (ExpandableListView) findViewById(R.id.elvEvalList);
 
 		// initialization of values
 		Intent iEvaluations = getIntent();
 		refIDGet_Term = iEvaluations.getIntExtra("refID_Term", -1);
 		refIDGet_Course = iEvaluations.getIntExtra("refID_Course", -1);
+		refIDGet_Category = iEvaluations.getIntExtra("refID_Category", -1);
 		
 		//term
 		coursesDB.open();
 		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+		
+		//category
+		categoriesDB.open();
+		Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
 		
 		courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
 				cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
@@ -106,10 +112,20 @@ public class Evaluations extends Activity {
 				cCourse.getInt(cCourse.getColumnIndex("termRef")),
 				context);
 		
-		courseTitle.setText(courseData.getTitle());
-		courseCode.setText(courseData.getCode()); 
-		courseMark.setText(String.valueOf(courseData.getMark()));
 		coursesDB.close();
+		
+		categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
+				cCategory.getString(cCategory.getColumnIndex("catTitle")),
+				cCategory.getInt(cCategory.getColumnIndex("catWeight")),
+				cCategory.getInt(cCategory.getColumnIndex("courseRef")),
+				cCategory.getInt(cCategory.getColumnIndex("termRef")),
+				context);
+		
+		catTitle.setText(categoryData.getTitle());
+		courseNameFull.setText(courseData.getTitle() + " " + courseData.getCode());
+		catMark.setText(String.valueOf(categoryData.getMark()));
+		
+		categoriesDB.close();
 		
 		// if there was a onSavedInstanceState before, retrieve original sort variable
 		if (savedInstanceState != null){
