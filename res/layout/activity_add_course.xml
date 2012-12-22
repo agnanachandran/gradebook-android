@@ -1,74 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp" >
 
-    <ScrollView
-        android:id="@+id/svCourse"
+    <EditText
+        android:id="@+id/etCourseTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="48dp"
+        android:hint="@string/hint_course_title"
+        android:inputType="text"
+        android:maxLength="@integer/sixty"
+        android:nextFocusDown="@+id/etCourseCode" >
 
-        <LinearLayout
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/etCourseCode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp" >
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_course_code"
+            android:inputType="text"
+            android:maxLength="@integer/twenty"
+            android:nextFocusDown="@+id/etCourseUnits" />
 
-            <EditText
-                android:id="@+id/etCourseTitle"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="@string/hint_course_title"
-                android:inputType="text"
-                android:nextFocusDown="@+id/etCourseCode" >
+        <EditText
+            android:id="@+id/etCourseUnits"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/hint_course_units"
+            android:inputType="numberDecimal"
+            android:maxLength="@integer/eight"
+            android:nextFocusDown="@+id/etCourseNotes" />
+    </LinearLayout>
 
-                <requestFocus />
-            </EditText>
+    <EditText
+        android:id="@+id/etCourseNotes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/hint_notes"
+        android:inputType="textMultiLine"
+        android:minLines="3" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal" >
-
-                <EditText
-                    android:id="@+id/etCourseCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_course_code"
-                    android:inputType="text"
-                    android:nextFocusDown="@+id/etCourseUnits" />
-
-                <EditText
-                    android:id="@+id/etCourseUnits"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_course_units"
-                    android:inputType="numberDecimal"
-                    android:nextFocusDown="@+id/etCourseNotes" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/etCourseNotes"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="@string/hint_notes"
-                android:inputType="textMultiLine"
-                android:minLines="3" />
-
-            <Button
-                android:id="@+id/bCourseDone"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/doneAddCourse" />
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/bCourseDone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/doneAddCourse" />
 
 </LinearLayout>

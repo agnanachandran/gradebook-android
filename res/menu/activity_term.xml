@@ -1,14 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/preferences"
+        android:id="@+id/addterm"
         android:alphabeticShortcut="a"
         android:numericShortcut="1"
-        android:title="@string/preferences"/>
+        android:title="@string/menu_add_term"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_add"
+        
+        />
     <item
-        android:id="@+id/addterm"
+        android:id="@+id/preferences"
         android:alphabeticShortcut="b"
         android:numericShortcut="2"
-        android:title="@string/menu_add_term"/>
-    
+        android:title="@string/preferences"/>
+
 </menu>

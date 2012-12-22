@@ -94,9 +94,9 @@ public class AddEval extends Activity {
 		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
 		cCourse.moveToFirst();
 		if (idGet_Mode == 0) {
-			setTitle("Add a Evaluation to " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
+			setTitle("Add Evaluation to " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
 		} else if (idGet_Mode == 1) {
-			setTitle("Edit an Evaluation in " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
+			setTitle("Edit Evaluation in " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
 			bEvalDone.setText(R.string.doneEditEval);
 		}
 		coursesDB.close();
@@ -259,7 +259,16 @@ public class AddEval extends Activity {
 		    .setPositiveButton("OK", null)
 		    .show();
 			
-		} else {
+		}
+		
+		else if((Double.parseDouble(etEvalOutOf.getText().toString().trim())<=0.0) || ((Double.parseDouble(etEvalMark.getText().toString().trim())<0.0))) {
+			 new AlertDialog.Builder(this)
+			    .setMessage("Make sure all fields are entered correctly.")
+			    .setPositiveButton("OK", null)
+			    .show();
+		}
+		
+			else {
 			
 			String evalName = etEvalName.getText().toString();
 			double evalMark = 0.0;
@@ -319,5 +328,3 @@ public class AddEval extends Activity {
 		}
 	}
 }
-
-

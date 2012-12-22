@@ -58,10 +58,10 @@ public class AddCategory extends Activity {
 		cCourse.moveToFirst();
 		
 		if (idGet_Mode == 0) {
-			setTitle("Add a Category to " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
+			setTitle("Add Category to " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
 		}
 		else if (idGet_Mode == 1){
-			setTitle("Edit a Category from " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
+			setTitle("Edit Category from " + cCourse.getString(cCourse.getColumnIndex("courseTitle")));
 			bCatDone.setText(R.string.doneEditCat);
 		}
 		coursesDB.close();

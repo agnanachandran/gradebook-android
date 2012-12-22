@@ -1,50 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp" >
 
-    <ScrollView
-        android:id="@+id/svCat"
+    <EditText
+        android:id="@+id/etCatName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="48dp"
+        android:hint="@string/hint_category_title"
+        android:inputType="text"
+        android:maxLength="@integer/sixty"
+        android:nextFocusDown="@+id/etCatWeight" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp" >
+        <requestFocus />
+    </EditText>
 
-            <EditText
-                android:id="@+id/etCatName"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="@string/hint_category_title"
-                android:inputType="text"
-                android:nextFocusDown="@+id/etCatWeight" >
+    <EditText
+        android:id="@+id/etCatWeight"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:hint="@string/hint_category_weight"
+        android:inputType="numberDecimal"
+        android:maxLength="@integer/eight" />
 
-                <requestFocus />
-            </EditText>
-
-            <EditText
-                android:id="@+id/etCatWeight"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:hint="@string/hint_category_weight"
-                android:inputType="numberDecimal" />
-
-            <Button
-                android:id="@+id/bCatDone"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:onClick="addCat"
-                android:text="@string/doneAddCategory" />
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/bCatDone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:onClick="addCat"
+        android:text="@string/doneAddCategory" />
 
 </LinearLayout>

@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="@string/hint_term_title"
-        android:inputType="text" >
+        android:inputType="text" android:maxLength="@integer/sixty"
+        android:nextFocusDown="@+id/bTermPickStartDate">
+        <requestFocus />
     </EditText>
 
     <LinearLayout
@@ -30,7 +32,7 @@
             android:layout_marginTop="4dp"
             android:layout_weight="2"
             android:onClick="showDatePickerDialog"
-            android:text="Pick Start Date" />
+            android:text="@string/pickStartDate" />
 
         <TextView
             android:id="@+id/tvTermDash"
@@ -49,7 +51,7 @@
             android:layout_marginTop="4dp"
             android:layout_weight="2"
             android:onClick="showDatePickerDialog"
-            android:text="Pick End Date" />
+            android:text="@string/pickEndDate" />
     </LinearLayout>
 
     <Button

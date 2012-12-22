@@ -2,6 +2,7 @@ package com.amrak.gradebook;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -54,6 +55,7 @@ public class Terms extends Activity {
 	int[] refIDPass_Term;
 	int contextSelection;
 
+	@TargetApi(11)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,6 +67,8 @@ public class Terms extends Activity {
 		date = (TextView) findViewById(R.id.tvTermDate);
 		listView = (ListView) findViewById(R.id.lvTerms);
 
+		// change title back to Terms since default title is the app's name
+		getActionBar().setTitle("Terms");
 		// read data from database
 		dataReadToList();
 
@@ -109,8 +113,8 @@ public class Terms extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.preferences:
-			Intent i = new Intent("com.amrak.gradebook.SETTINGS");
-			startActivity(i);
+			Intent iSettings = new Intent("com.amrak.gradebook.SETTINGS");
+			startActivity(iSettings);
 			break;
 		case R.id.addterm:
 			Intent iAddTerm = new Intent("com.amrak.gradebook.ADDTERM");

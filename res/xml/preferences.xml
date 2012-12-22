@@ -7,6 +7,7 @@
         android:title="@string/pref_colour"
         android:summary="@string/pref_colour_summ"
         android:defaultValue="true"
+        android:enabled="false"
 	    />
 
 </PreferenceScreen>

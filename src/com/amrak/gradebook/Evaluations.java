@@ -2,12 +2,14 @@ package com.amrak.gradebook;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -76,11 +78,11 @@ public class Evaluations extends Activity {
 	ArrayList<EvalData> eval_child = new ArrayList<EvalData>();
 
 	// when phone rotates, onCreate is called again
+	@TargetApi(11)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluations);
-
 		// initialization of views
 		courseTitle = (TextView) findViewById(R.id.tvEvalCourseTitle);
 		courseMark = (TextView) findViewById(R.id.tvEvalCourseMark);

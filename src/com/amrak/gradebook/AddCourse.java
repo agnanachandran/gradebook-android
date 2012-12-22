@@ -57,9 +57,9 @@ public class AddCourse extends Activity {
 		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
 		cTerm.moveToFirst();
 		if (idGet_Mode == 0) {
-			setTitle("Add a Course to " + cTerm.getString(cTerm.getColumnIndex("termTitle")));
+			setTitle("Add Course to " + cTerm.getString(cTerm.getColumnIndex("termTitle")));
 		} else if (idGet_Mode == 1) {
-			setTitle("Edit an Course in " + cTerm.getString(cTerm.getColumnIndex("termTitle")));
+			setTitle("Edit Course in " + cTerm.getString(cTerm.getColumnIndex("termTitle")));
 			bCourseDone.setText(R.string.doneEditCourse);
 		}
 		termsDB.close();

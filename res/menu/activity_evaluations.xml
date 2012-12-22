@@ -2,45 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/preferences"
-        android:alphabeticShortcut="a"
-        android:numericShortcut="1"
-        android:title="@string/preferences"/>
-    <item
         android:id="@+id/addeval"
         android:alphabeticShortcut="b"
+        android:icon="@android:drawable/ic_menu_add"
         android:numericShortcut="2"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/menu_add_evaluation"/>
     <item
         android:id="@+id/addcat"
         android:alphabeticShortcut="c"
         android:numericShortcut="3"
         android:title="@string/menu_add_category"/>
-    
-    <item 
-        android:id="@+id/sortByDate"
-        android:alphabeticShortcut="d"
-        android:numericShortcut="4"
-        android:title="@string/menu_sort_date"/>
-    
-    <item 
+    <item
         android:id="@+id/sortByName"
         android:alphabeticShortcut="e"
         android:numericShortcut="5"
         android:title="@string/menu_sort_name"/>
-    
-    <item 
+    <item
+        android:id="@+id/sortByDate"
+        android:alphabeticShortcut="d"
+        android:numericShortcut="4"
+        android:title="@string/menu_sort_date"/>
+    <item
         android:id="@+id/sortByWeight"
         android:alphabeticShortcut="f"
         android:numericShortcut="6"
         android:title="@string/menu_sort_weight"/>
-    
-    <item 
+    <item
         android:id="@+id/sortByCategory"
         android:alphabeticShortcut="g"
         android:numericShortcut="7"
         android:title="@string/menu_sort_category"/>
-    
+    <item
+        android:id="@+id/preferences"
+        android:alphabeticShortcut="a"
+        android:numericShortcut="1"
+        android:title="@string/preferences"/>
     <item
         android:id="@+id/collapseAll"
         android:alphabeticShortcut="h"
