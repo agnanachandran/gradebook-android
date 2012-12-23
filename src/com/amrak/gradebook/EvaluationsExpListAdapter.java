@@ -107,8 +107,8 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		//mark.setText(Double.toString(evalParent.getMark()) + "/" + Integer.toString(evalParent.getOutOfNoDecimal()));
 		//Display mark in percentage
 		double percent = evalParent.getMark()/evalParent.getOutOf()*100;
-		DecimalFormat twoDForm = new DecimalFormat("###.##");
-		mark.setText(twoDForm.format(percent) + " %");
+		DecimalFormat twoDForm = new DecimalFormat("###.00");
+		mark.setText(twoDForm.format(percent));
 
 		return v;
 		

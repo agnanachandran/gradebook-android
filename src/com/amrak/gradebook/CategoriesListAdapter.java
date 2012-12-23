@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -63,7 +64,8 @@ public class CategoriesListAdapter extends BaseAdapter {
 			for (int i = 1; i < this.categories.size(); i++){
 				allPercent += this.categories.get(i).getMark() * (this.categories.get(i).getWeight()/allWeight);
 			}
-			mark.setText(String.valueOf(allWeight));
+			DecimalFormat twoDForm = new DecimalFormat("#.##");
+			mark.setText(String.valueOf(Double.valueOf(twoDForm.format(allPercent))));
 		}
 		else {
 			mark.setText(String.valueOf(categories.getMark()) + " %");		

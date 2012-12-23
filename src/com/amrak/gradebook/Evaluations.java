@@ -55,6 +55,10 @@ public class Evaluations extends Activity {
 	int refIDGet_Category;
 	int contextSelection;
 	
+	// this category id is for onCreate so that depending on which category sent the intent to
+	// this evaluations activity, the evaluations corresponding to the cat will show
+	int refIDReceive_Cat = -5;
+	
 	// variable passed into datareadtolist for sorting; default to zero, which is sorting by date
 	int sort = 0;
 	int prevSort = 0; // variable used for context menu when unfiltering, returns to old sorted format
@@ -63,6 +67,7 @@ public class Evaluations extends Activity {
 	// sort value even when phone has been turned so filters and sort options are not changed
 	static final String SORT = "sortVariable";
 	static final String REFIDCAT = "refIdCat";
+	static final String REFRECCAT = "refRecCat";
 	
 	// data
 	public static final int CONTEXT_EDIT = 0;
@@ -94,7 +99,7 @@ public class Evaluations extends Activity {
 		Intent iEvaluations = getIntent();
 		refIDGet_Term = iEvaluations.getIntExtra("refID_Term", -1);
 		refIDGet_Course = iEvaluations.getIntExtra("refID_Course", -1);
-		refIDGet_Category = iEvaluations.getIntExtra("refID_Category", -1);
+		refIDReceive_Cat = iEvaluations.getIntExtra("refID_Category", -1);
 		
 		//course
 		coursesDB.open();
@@ -110,14 +115,14 @@ public class Evaluations extends Activity {
 			
 		coursesDB.close();
 		
-		if (refIDGet_Category == 0){
+		if (refIDReceive_Cat == 0){
 			catTitle.setText("All");
 			catMark.setText(String.valueOf(courseData.getMark()));
 		}
-		else {
+		else{
 			//category
 			categoriesDB.open();
-			Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
+			Cursor cCategory = categoriesDB.getCategory(refIDReceive_Cat);
 			categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
 					cCategory.getString(cCategory.getColumnIndex("catTitle")),
 					cCategory.getInt(cCategory.getColumnIndex("catWeight")),
@@ -126,7 +131,8 @@ public class Evaluations extends Activity {
 					context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
-			catMark.setText(String.valueOf(categoryData.getMark()) + " %");
+			catMark.setText(String.valueOf(categoryData.getMark()));
+			sort = 5;
 		}
 		
 		courseNameFull.setText(courseData.getTitle() + " " + courseData.getCode());
@@ -135,6 +141,7 @@ public class Evaluations extends Activity {
 		if (savedInstanceState != null){
 			sort = savedInstanceState.getInt(SORT);
 			refIDGet_Category = savedInstanceState.getInt(REFIDCAT);
+			refIDReceive_Cat = savedInstanceState.getInt(REFRECCAT);
 		}
 		
 		// read database
@@ -169,6 +176,7 @@ public class Evaluations extends Activity {
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putInt(SORT, sort);
 		savedInstanceState.putInt(REFIDCAT, refIDGet_Category);
+		savedInstanceState.putInt(REFRECCAT, refIDReceive_Cat);
 	}
 
 	@Override
@@ -199,15 +207,18 @@ public class Evaluations extends Activity {
 			startActivity(iAddEval);
 			break;
 		case R.id.sortByDate:
-			sort = 0;
+			if (refIDReceive_Cat > 0) sort = 5;
+			else sort = 0;
 			dataReset();
 			break;
 		case R.id.sortByName:
-			sort = 1;
+			if (refIDReceive_Cat > 0) sort = 6;
+			else sort = 1;
 			dataReset();
 			break;
 		case R.id.sortByWeight:
-			sort = 2;
+			if (refIDReceive_Cat > 0) sort = 7;
+			else sort = 2;
 			dataReset();
 			break;
 		case R.id.sortByCategory:
@@ -244,8 +255,12 @@ public class Evaluations extends Activity {
 			menu.setHeaderTitle(evalTitle);
 			menu.add(0, CONTEXT_EDIT, 0, "Edit Evaluation");
 			menu.add(0, CONTEXT_DELETE, 0, "Delete Evaluation");
-			menu.add(0, CONTEXT_FILTER, 0, "Filter by this Category");
-			menu.add(0, CONTEXT_UNFILTER, 0, "Remove Filter");
+			if (refIDReceive_Cat > 0){	
+			}
+			else {
+				menu.add(0, CONTEXT_FILTER, 0, "Filter by this Category");
+				menu.add(0, CONTEXT_UNFILTER, 0, "Remove Filter");
+			}
 		}
 	}
 	
@@ -315,8 +330,7 @@ public class Evaluations extends Activity {
 			
 			return true;
 			
-		case CONTEXT_UNFILTER: 
-			
+		case CONTEXT_UNFILTER: 			
 			sort = prevSort;
 			dataReset();
 			
@@ -364,6 +378,8 @@ public class Evaluations extends Activity {
 		// sort variables determine which cursor is chosen. The cursor chosen returns a specific 
 		// set of data a specific way. sort == 0 gives a cursor that returns evaluations based on 
 		// date in ascending order. .getEvaluationSortByDate() functions are found in EvaluationsDBAdapter.java
+		
+		// for the "all" category
 		if (sort == 0) {
 			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);			
 		}
@@ -376,11 +392,23 @@ public class Evaluations extends Activity {
 		else if (sort == 3){
 			c = evalsDB.getEvaluationSortByCategory(refIDGet_Course);
 		}
+		// for the all category; filtering purposes
 		else if (sort == 4){
 			c = evalsDB.getEvaluationsOfCategory(refIDGet_Category);
+		// for specific categories
+		}
+		else if (sort == 5){
+			c = evalsDB.getEvalCatSortByDate(refIDReceive_Cat);
+		}
+		else if (sort == 6){
+			c = evalsDB.getEvalCatSortByName(refIDReceive_Cat);
+		}
+		else if (sort == 7){
+			c = evalsDB.getEvalCatSortByWeight(refIDReceive_Cat);
 		}
 		else {
-			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
+			if (refIDReceive_Cat > 0) c = evalsDB.getEvalCatSortByDate(refIDReceive_Cat);
+			else c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
 		}
 		
 		// adding data from the database to the vectors

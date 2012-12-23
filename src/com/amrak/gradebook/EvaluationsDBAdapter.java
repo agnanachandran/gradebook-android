@@ -176,7 +176,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-    // cursor that gets evaluations by date in asc order, look at second last parameter of the query function    
+    // (ALL CATEGORIES) cursor that gets evaluations by date in asc order, look at second last parameter of the query function    
 	public Cursor getEvaluationSortByDate (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
@@ -189,7 +189,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-	// cursor that gets evaluations by name in asc order, look at second last parameter of the query function
+	// (ALL CATEGORIES) cursor that gets evaluations by name in asc order, look at second last parameter of the query function
 	public Cursor getEvaluationSortByName (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
@@ -202,31 +202,68 @@ public class EvaluationsDBAdapter extends DBAdapter {
         return mCursor;
     }
     
-	// cursor that gets evaluations by weight in desc order, look at second last parameter of the query function
+	// (ALL CATEGORIES) cursor that gets evaluations by weight in desc order, look at second last parameter of the query function
 	public Cursor getEvaluationSortByWeight (long courseRefID) throws SQLException{
     	Cursor mCursor =
     			
-    	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_WEIGHT + " DESC", null);
-    	    	
-    	    	if (mCursor != null) {
-    	            mCursor.moveToFirst();
-    	        }
-    	        return mCursor;
+    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+    	   		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, EVAL_WEIGHT + " DESC", null);
+    	    
+    	if (mCursor != null) {
+    	     mCursor.moveToFirst();
+    	}
+    	return mCursor;
     }
 	
-	// cursor that gets evaluations by category in asc order, look at second last parameter of the query function
+	// (ALL CATEGORIES) cursor that gets evaluations by category in asc order, look at second last parameter of the query function
 	public Cursor getEvaluationSortByCategory (long courseRefID) throws SQLException {
 		Cursor mCursor =
 				
-				mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-    	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, CATEGORY_REFERENCE + " ASC", null);
+		mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+    	        EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, CATEGORY_REFERENCE + " ASC", null);
 		
-				if (mCursor != null) {
-		            mCursor.moveToFirst();
-		        }
-		        return mCursor;
+		if (mCursor != null) {
+		      mCursor.moveToFirst();
+		}
+		return mCursor;
 	}
+	
+	// (SPEC.CATEGORIES) cursor that gets evaluations by date in asc order, look at second last parameter of the query function    
+		public Cursor getEvalCatSortByDate (long categoryRefID) throws SQLException{
+	    	Cursor mCursor =
+	    			
+	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, CATEGORY_REFERENCE + "=" + categoryRefID, null, null, null, EVAL_DATE + " ASC", null);
+	    	
+	    	if (mCursor != null) {
+	            mCursor.moveToFirst();
+	        }
+	        return mCursor;
+	    }
+		
+		public Cursor getEvalCatSortByName (long categoryRefID) throws SQLException{
+	    	Cursor mCursor =
+	    			
+	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+	        		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, CATEGORY_REFERENCE + "=" + categoryRefID, null, null, null, EVAL_TITLE + " ASC", null);
+	    	
+	    	if (mCursor != null) {
+	            mCursor.moveToFirst();
+	        }
+	        return mCursor;
+	    }
+		
+		public Cursor getEvalCatSortByWeight (long categoryRefID) throws SQLException{
+	    	Cursor mCursor =
+	    			
+	    	mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
+	    	   		EVAL_TITLE, EVAL_MARK, EVAL_OUTOF, EVAL_WEIGHT, EVAL_DATE, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE }, CATEGORY_REFERENCE + "=" + categoryRefID, null, null, null, EVAL_WEIGHT + " DESC", null);
+	    	    
+	    	if (mCursor != null) {
+	    	     mCursor.moveToFirst();
+	    	}
+	    	return mCursor;
+	    }
 
     /**
      * Update the evaluation.

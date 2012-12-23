@@ -32,7 +32,6 @@ public class Categories extends Activity{
 	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
 	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
 	RelativeLayout rLayoutLabels;
-	View vDivLine;
 		
 	// context
 	Context context = this;
@@ -77,7 +76,6 @@ public class Categories extends Activity{
 		courseMark = (TextView) findViewById (R.id.tvCategoriesCourseMark);
 		courseCode = (TextView) findViewById (R.id.tvCategoriesCourseCode);
 		rLayoutLabels = (RelativeLayout) findViewById(R.id.rCatLayoutLabelCategories);
-		vDivLine = (View) findViewById(R.id.vCatDivLine);
 		
 		// read from data base
 		coursesDB.open();
@@ -277,10 +275,8 @@ public class Categories extends Activity{
 		// course
 		if (c.getCount() > 0) {
 			rLayoutLabels.setVisibility(View.VISIBLE);
-			vDivLine.setVisibility(View.VISIBLE);
 		} else {
 			rLayoutLabels.setVisibility(View.INVISIBLE);
-			vDivLine.setVisibility(View.INVISIBLE);
 		}
 		categoriesDB.close();
 	}

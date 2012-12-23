@@ -53,15 +53,15 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@color/Black" />
+        android:background="@color/DarkGrey" />
     <ExpandableListView
         android:id="@+id/elvEvalList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/LightGrey"
-        android:divider="@color/Grey"
-        android:dividerHeight="@dimen/divheight"
-        android:groupIndicator="@drawable/ic_menu_more" >
+        android:background="@color/White"
+        android:divider="@color/LightGrey"
+        android:dividerHeight="@dimen/divheight">
+<!-- android:groupIndicator="@drawable/ic_menu_more" -->
 
     </ExpandableListView>
 

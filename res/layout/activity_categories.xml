@@ -89,8 +89,8 @@
         android:id="@+id/lvCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/LightGrey"
-        android:divider="@color/Grey"
+        android:background="@color/White"
+        android:divider="@color/LightGrey"
         android:dividerHeight="@dimen/divheight" >
     </ListView>
 
