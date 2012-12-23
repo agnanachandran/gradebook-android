@@ -1,4 +1,4 @@
-package com.amrak.gradebook;
+	package com.amrak.gradebook;
 
 import java.util.ArrayList;
 
@@ -356,7 +356,7 @@ public class Evaluations extends Activity {
 		expListAdapter.notifyDataSetChanged();
 		
 		// update category mark after evaluations are changed
-		categoriesDB.open();
+/*		categoriesDB.open();
 		Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
 		categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
 				cCategory.getString(cCategory.getColumnIndex("catTitle")),
@@ -366,7 +366,7 @@ public class Evaluations extends Activity {
 				context);
 		categoriesDB.close();
 		System.out.println(categoryData.getMark());
-		catMark.setText(String.valueOf(categoryData.getMark()) + " %");
+		catMark.setText(String.valueOf(categoryData.getMark())); */
 	}
 	
 	// reads data from the database to the vectors
