@@ -230,6 +230,20 @@ public class Categories extends Activity{
 
 		// input listview data
 		categoriesListAdapter.notifyDataSetChanged();
+		
+		// refreshes mark after editing sublevels
+		coursesDB.open();
+		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+		courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
+				cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
+				cCourse.getString(cCourse.getColumnIndex("courseCode")), 
+				cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
+				cCourse.getString(cCourse.getColumnIndex("notes")), 
+				cCourse.getInt(cCourse.getColumnIndex("termRef")),
+				context);
+		courseMark.setText(String.valueOf(courseData.getMark()) + " %");
+		coursesDB.close();
+		
 	}
 	
 	public void dataReadToList(){

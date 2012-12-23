@@ -84,7 +84,8 @@ public class Courses extends Activity {
 		termData = new TermData(cTerm.getInt(cTerm.getColumnIndex("_id")),
 				cTerm.getString(cTerm.getColumnIndex("termTitle")),
 				cTerm.getString(cTerm.getColumnIndex("termStartDate")),
-				cTerm.getString(cTerm.getColumnIndex("termEndDate")));
+				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
+				context);
 
 		termTitle.setText(termData.getTitle());
 		termDate.setText(termData.getDateStart() + " - "
@@ -253,6 +254,19 @@ public class Courses extends Activity {
 
 		// input listview data
 		courseslistAdapter.notifyDataSetChanged();
+		
+		//refreshes term mark after sublevel changes
+		termsDB.open();
+		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
+
+		termData = new TermData(cTerm.getInt(cTerm.getColumnIndex("_id")),
+				cTerm.getString(cTerm.getColumnIndex("termTitle")),
+				cTerm.getString(cTerm.getColumnIndex("termStartDate")),
+				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
+				context);
+
+		termMark.setText(String.valueOf(termData.getMark()) + " %");
+		termsDB.close();
 	}
 
 	public void dataReadToList() {

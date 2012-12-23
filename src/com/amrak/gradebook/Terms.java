@@ -223,7 +223,8 @@ public class Terms extends Activity {
 				terms.add(new TermData(c.getInt(c.getColumnIndex("_id")), 
 						c.getString(c.getColumnIndex("termTitle")), 
 						c.getString(c.getColumnIndex("termStartDate")), 
-						c.getString(c.getColumnIndex("termEndDate"))));
+						c.getString(c.getColumnIndex("termEndDate")),
+						context));
 				i++;
 			} while (c.moveToNext());
 		}

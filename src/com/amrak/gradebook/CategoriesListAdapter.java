@@ -66,7 +66,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 			mark.setText(String.valueOf(allWeight));
 		}
 		else {
-			mark.setText(String.valueOf(categories.getMark()));		
+			mark.setText(String.valueOf(categories.getMark()) + " %");		
 		}
 		if (categories.getID() == 0){
 			weight.setText("");

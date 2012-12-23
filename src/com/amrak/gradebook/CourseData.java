@@ -3,6 +3,7 @@ package com.amrak.gradebook;
 import java.text.DecimalFormat;
 
 import android.content.Context;
+import android.database.Cursor;
 
 public class CourseData {
 
@@ -15,7 +16,7 @@ public class CourseData {
 	int refTermID = -1;
 	
 	Context context;
-	EvaluationsDBAdapter evalsDB;
+	CategoriesDBAdapter categoriesDB;
 
 	public CourseData(int inputCourseID, String inputTitle, String inputCode,
 			double inputUnits, String inputNotes, int inputRefTermID, Context inputContext) {
@@ -23,17 +24,42 @@ public class CourseData {
 		title = inputTitle;
 		code = inputCode;
 		units = inputUnits;
-		mark = calcMarkFromDatabase(inputCourseID);
 		notes = inputNotes;
 		refTermID = inputRefTermID;
 		context = inputContext;
-		evalsDB = new EvaluationsDBAdapter(context);
-
+		categoriesDB = new CategoriesDBAdapter(context);
+		mark = calcMarkFromDatabase(inputCourseID);
 	}
 
 	public double calcMarkFromDatabase(int courseID) {
 		// TODO Write function
 		double mark = 0;
+		int totalWeight = 0;
+		CategoryData categoryData;
+		
+		categoriesDB.open();
+		Cursor c = categoriesDB.getCategoriesOfCourse(courseID);
+		
+		if (c.moveToFirst()) {
+			do {
+				totalWeight += c.getInt(c.getColumnIndex("catWeight"));
+			} while(c.moveToNext());
+		}
+		
+		if (c.moveToFirst()) {
+			do {
+				double weightFraction = (double)c.getInt(c.getColumnIndex("catWeight"))/totalWeight;
+				categoryData = new CategoryData(c.getInt(c.getColumnIndex("_id")),
+						c.getString(c.getColumnIndex("catTitle")),
+						c.getInt(c.getColumnIndex("catWeight")),
+						c.getInt(c.getColumnIndex("courseRef")),
+						c.getInt(c.getColumnIndex("termRef")),
+						this.context);
+				mark += weightFraction*(double)categoryData.getMark();
+			} while(c.moveToNext());
+		}
+		
+		categoriesDB.close();
 
 		return mark;
 	}

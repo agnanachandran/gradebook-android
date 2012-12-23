@@ -126,7 +126,7 @@ public class Evaluations extends Activity {
 					context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
-			catMark.setText(String.valueOf(categoryData.getMark()));
+			catMark.setText(String.valueOf(categoryData.getMark()) + " %");
 		}
 		
 		courseNameFull.setText(courseData.getTitle() + " " + courseData.getCode());
@@ -340,6 +340,19 @@ public class Evaluations extends Activity {
 
 		// update listview with new data
 		expListAdapter.notifyDataSetChanged();
+		
+		// update category mark after evaluations are changed
+		categoriesDB.open();
+		Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
+		categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
+				cCategory.getString(cCategory.getColumnIndex("catTitle")),
+				cCategory.getInt(cCategory.getColumnIndex("catWeight")),
+				cCategory.getInt(cCategory.getColumnIndex("courseRef")),
+				cCategory.getInt(cCategory.getColumnIndex("termRef")),
+				context);
+		categoriesDB.close();
+		System.out.println(categoryData.getMark());
+		catMark.setText(String.valueOf(categoryData.getMark()) + " %");
 	}
 	
 	// reads data from the database to the vectors
