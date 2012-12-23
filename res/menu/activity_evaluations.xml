@@ -9,11 +9,6 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_add_evaluation"/>
     <item
-        android:id="@+id/addcat"
-        android:alphabeticShortcut="c"
-        android:numericShortcut="3"
-        android:title="@string/menu_add_category"/>
-    <item
         android:id="@+id/sortByName"
         android:alphabeticShortcut="e"
         android:numericShortcut="5"

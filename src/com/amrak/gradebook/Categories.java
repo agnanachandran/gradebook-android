@@ -32,6 +32,7 @@ public class Categories extends Activity{
 	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
 	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
 	RelativeLayout rLayoutLabels;
+	View vDivLine;
 		
 	// context
 	Context context = this;
@@ -75,7 +76,8 @@ public class Categories extends Activity{
 		courseTitle = (TextView) findViewById (R.id.tvCategoriesCourseTitle);
 		courseMark = (TextView) findViewById (R.id.tvCategoriesCourseMark);
 		courseCode = (TextView) findViewById (R.id.tvCategoriesCourseCode);
-		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelCategories);
+		rLayoutLabels = (RelativeLayout) findViewById(R.id.rCatLayoutLabelCategories);
+		vDivLine = (View) findViewById(R.id.vCatDivLine);
 		
 		// read from data base
 		coursesDB.open();
@@ -234,10 +236,17 @@ public class Categories extends Activity{
 		categoriesDB.open();
 		
 		Cursor c = categoriesDB.getCategoriesOfCourse(refIDGet_Course);
-		
+		refIDPass_Category = new int[c.getCount() + 1];
 		int i = 0;
-		refIDPass_Category = new int[c.getCount()];
 		if (c.moveToFirst()) {
+			categories.add(new CategoryData(0, 
+					"All", 
+					100,
+					c.getInt(c.getColumnIndex("courseRef")),
+					c.getInt(c.getColumnIndex("termRef")),
+					context));
+			refIDPass_Category[i] = 0;
+			i++;
 			do {
 				refIDPass_Category[i] = c.getInt(c.getColumnIndex("_id")); // get ids of each.
 				categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")), 
@@ -254,10 +263,10 @@ public class Categories extends Activity{
 		// course
 		if (c.getCount() > 0) {
 			rLayoutLabels.setVisibility(View.VISIBLE);
-			//vDivLine.setVisibility(View.VISIBLE);
+			vDivLine.setVisibility(View.VISIBLE);
 		} else {
 			rLayoutLabels.setVisibility(View.INVISIBLE);
-			//vDivLine.setVisibility(View.INVISIBLE);
+			vDivLine.setVisibility(View.INVISIBLE);
 		}
 		categoriesDB.close();
 	}

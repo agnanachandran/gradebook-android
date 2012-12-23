@@ -45,6 +45,9 @@ public class CategoriesListAdapter extends BaseAdapter {
 		} else {
 			v = inflater.inflate(R.layout.layout_categories, parent, false);
 		}
+		
+		double allWeight = 0;
+		double allPercent = 0;
 
 		CategoryData categories = (CategoryData) getItem(position);
 		TextView title = (TextView) v.findViewById(R.id.tvCategoryTitle);
@@ -52,8 +55,25 @@ public class CategoriesListAdapter extends BaseAdapter {
 		TextView weight = (TextView) v.findViewById(R.id.tvCategoryWeight);
 
 		title.setText(categories.getTitle());
-		mark.setText(String.valueOf(categories.getMark()));
-		weight.setText(String.valueOf(categories.getWeight()));
+		// position of listview objects starts at 0 and ID starts at 1
+		if (categories.getID() == 0){
+			for (int i = 1; i < this.categories.size(); i++){
+				allWeight +=  this.categories.get(i).getWeight();
+			}
+			for (int i = 1; i < this.categories.size(); i++){
+				allPercent += this.categories.get(i).getMark() * (this.categories.get(i).getWeight()/allWeight);
+			}
+			mark.setText(String.valueOf(allWeight));
+		}
+		else {
+			mark.setText(String.valueOf(categories.getMark()));		
+		}
+		if (categories.getID() == 0){
+			weight.setText("");
+		}
+		else {
+			weight.setText(String.valueOf(categories.getWeight()));
+		}
 		return v;
 
 	}

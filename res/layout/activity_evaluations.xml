@@ -1,12 +1,9 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,19 +14,11 @@
         android:paddingRight="25dp"
         android:paddingTop="10dp"
         android:weightSum="4" >
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
-
-
-
-
-
-
-
             <TextView
                 android:id="@+id/tvEvalCatTitle"
                 android:layout_width="fill_parent"
@@ -41,8 +30,6 @@
                 android:textStyle="bold"
                 android:typeface="normal" />
 
-
-
             <TextView
                 android:id="@+id/tvEvalCourseName"
                 android:layout_width="fill_parent"
@@ -50,11 +37,7 @@
                 android:text="@string/textDate"
                 android:textColor="@color/Black"
                 android:textSize="12sp" />
-
         </LinearLayout>
-
-
-
         <TextView
             android:id="@+id/tvEvalCatMark"
             android:layout_width="fill_parent"
@@ -62,21 +45,18 @@
             android:layout_weight="3"
             android:gravity="right|center_vertical"
             android:text="@string/textMark"
+            android:textStyle="bold"
             android:textColor="@color/Black"
             android:textSize="26sp" />
-
     </LinearLayout>
-
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/Black" />
-
     <ExpandableListView
         android:id="@+id/elvEvalList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/LightGrey"
         android:divider="@color/Grey"
         android:dividerHeight="@dimen/divheight"

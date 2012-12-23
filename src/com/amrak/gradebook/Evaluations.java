@@ -96,13 +96,9 @@ public class Evaluations extends Activity {
 		refIDGet_Course = iEvaluations.getIntExtra("refID_Course", -1);
 		refIDGet_Category = iEvaluations.getIntExtra("refID_Category", -1);
 		
-		//term
+		//course
 		coursesDB.open();
 		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
-		
-		//category
-		categoriesDB.open();
-		Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
 		
 		courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
 				cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
@@ -111,21 +107,29 @@ public class Evaluations extends Activity {
 				cCourse.getString(cCourse.getColumnIndex("notes")), 
 				cCourse.getInt(cCourse.getColumnIndex("termRef")),
 				context);
-		
+			
 		coursesDB.close();
 		
-		categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
-				cCategory.getString(cCategory.getColumnIndex("catTitle")),
-				cCategory.getInt(cCategory.getColumnIndex("catWeight")),
-				cCategory.getInt(cCategory.getColumnIndex("courseRef")),
-				cCategory.getInt(cCategory.getColumnIndex("termRef")),
-				context);
+		if (refIDGet_Category == 0){
+			catTitle.setText("All");
+			catMark.setText(String.valueOf(courseData.getMark()));
+		}
+		else {
+			//category
+			categoriesDB.open();
+			Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
+			categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
+					cCategory.getString(cCategory.getColumnIndex("catTitle")),
+					cCategory.getInt(cCategory.getColumnIndex("catWeight")),
+					cCategory.getInt(cCategory.getColumnIndex("courseRef")),
+					cCategory.getInt(cCategory.getColumnIndex("termRef")),
+					context);
+			categoriesDB.close();
+			catTitle.setText(categoryData.getTitle());
+			catMark.setText(String.valueOf(categoryData.getMark()));
+		}
 		
-		catTitle.setText(categoryData.getTitle());
 		courseNameFull.setText(courseData.getTitle() + " " + courseData.getCode());
-		catMark.setText(String.valueOf(categoryData.getMark()));
-		
-		categoriesDB.close();
 		
 		// if there was a onSavedInstanceState before, retrieve original sort variable
 		if (savedInstanceState != null){
@@ -193,12 +197,6 @@ public class Evaluations extends Activity {
 			iAddEval.putExtra("refID_Term", refIDGet_Term);
 			iAddEval.putExtra("id_Mode", 0);
 			startActivity(iAddEval);
-			break;
-		case R.id.addcat:
-			Intent iAddCat = new Intent("com.amrak.gradebook.ADDCAT");
-			iAddCat.putExtra("refID_Course", refIDGet_Course);
-			iAddCat.putExtra("refID_Term", refIDGet_Term);
-			startActivity(iAddCat);
 			break;
 		case R.id.sortByDate:
 			sort = 0;

@@ -8,6 +8,9 @@
         android:id="@+id/lvTerms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/LightGrey"
+        android:divider="@color/Grey"
+        android:dividerHeight="@dimen/divheight"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
     </ListView>
