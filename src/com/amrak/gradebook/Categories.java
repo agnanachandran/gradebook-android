@@ -94,7 +94,7 @@ public class Categories extends Activity{
 		
 		courseTitle.setText(courseData.getTitle());
 		courseCode.setText(courseData.getCode()); 
-		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
+		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		coursesDB.close();
 		
 		dataReadToList();
@@ -242,7 +242,7 @@ public class Categories extends Activity{
 				cCourse.getString(cCourse.getColumnIndex("notes")), 
 				cCourse.getInt(cCourse.getColumnIndex("termRef")),
 				context);
-		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
+		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		coursesDB.close();
 		
 	}

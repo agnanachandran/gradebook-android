@@ -92,7 +92,7 @@ public class Courses extends Activity {
 		termTitle.setText(termData.getTitle());
 		termDate.setText(termData.getDateStart() + " - "
 				+ termData.getDateEnd());
-		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())));
 		termsDB.close();
 
 		// read data from database
@@ -267,7 +267,7 @@ public class Courses extends Activity {
 				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
 				context);
 
-		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())));
 		termsDB.close();
 	}
 
