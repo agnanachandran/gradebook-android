@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -7,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TermsListAdapter extends BaseAdapter {
 
@@ -21,6 +20,8 @@ public class TermsListAdapter extends BaseAdapter {
 
 	// data
 	private ArrayList<TermData> terms;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public TermsListAdapter(Context context, ArrayList<TermData> terms) {
 		this.context = context;
@@ -54,7 +55,7 @@ public class TermsListAdapter extends BaseAdapter {
 		TextView date = (TextView) v.findViewById(R.id.tvTermDate);
 
 		title.setText(term.getTitle());
-		mark.setText(String.valueOf(term.getMark()) + " %");
+		mark.setText(String.valueOf(twoDForm.format(term.getMark())) + " %");		
 		date.setText(term.getDateStart() + " - " + term.getDateEnd());
 		return v;
 	}

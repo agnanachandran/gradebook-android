@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -48,6 +49,7 @@ public class Courses extends Activity {
 	public static final int CONTEXT_EDIT = 0;
 	public static final int CONTEXT_DELETE = 1;
 	TermData termData;
+	
 	// courses
 	ArrayList<CourseData> courses = new ArrayList<CourseData>();
 
@@ -56,6 +58,8 @@ public class Courses extends Activity {
 	int[] refIDPass_Course;
 	int refIDGet_Term;
 	int contextSelection;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +92,7 @@ public class Courses extends Activity {
 		termTitle.setText(termData.getTitle());
 		termDate.setText(termData.getDateStart() + " - "
 				+ termData.getDateEnd());
-		termMark.setText(String.valueOf(termData.getMark()));
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
 		termsDB.close();
 
 		// read data from database
@@ -263,7 +267,7 @@ public class Courses extends Activity {
 				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
 				context);
 
-		termMark.setText(String.valueOf(termData.getMark()) + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
 		termsDB.close();
 	}
 

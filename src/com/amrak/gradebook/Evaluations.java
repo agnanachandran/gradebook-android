@@ -1,5 +1,6 @@
 	package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.annotation.TargetApi;
@@ -82,6 +83,8 @@ public class Evaluations extends Activity {
 	// expListview child rows
 	ArrayList<ArrayList<EvalData>> eval_childs = new ArrayList<ArrayList<EvalData>>();
 	ArrayList<EvalData> eval_child = new ArrayList<EvalData>();
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	// when phone rotates, onCreate is called again
 	@TargetApi(11)
@@ -117,7 +120,7 @@ public class Evaluations extends Activity {
 		
 		if (refIDReceive_Cat == 0){
 			catTitle.setText("All");
-			catMark.setText(String.valueOf(courseData.getMark()));
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
 		}
 		else{
 			//category
@@ -131,7 +134,7 @@ public class Evaluations extends Activity {
 					context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
-			catMark.setText(String.valueOf(categoryData.getMark()));
+			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark())) + " %");
 			sort = 5;
 		}
 		
@@ -356,17 +359,31 @@ public class Evaluations extends Activity {
 		expListAdapter.notifyDataSetChanged();
 		
 		// update category mark after evaluations are changed
-/*		categoriesDB.open();
-		Cursor cCategory = categoriesDB.getCategory(refIDGet_Category);
-		categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
-				cCategory.getString(cCategory.getColumnIndex("catTitle")),
-				cCategory.getInt(cCategory.getColumnIndex("catWeight")),
-				cCategory.getInt(cCategory.getColumnIndex("courseRef")),
-				cCategory.getInt(cCategory.getColumnIndex("termRef")),
-				context);
-		categoriesDB.close();
-		System.out.println(categoryData.getMark());
-		catMark.setText(String.valueOf(categoryData.getMark())); */
+		if (refIDReceive_Cat > 0){
+			categoriesDB.open();
+			Cursor cCategory = categoriesDB.getCategory(refIDReceive_Cat);
+			categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
+					cCategory.getString(cCategory.getColumnIndex("catTitle")),
+					cCategory.getInt(cCategory.getColumnIndex("catWeight")),
+					cCategory.getInt(cCategory.getColumnIndex("courseRef")),
+					cCategory.getInt(cCategory.getColumnIndex("termRef")),
+					context);
+			categoriesDB.close();
+			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark())) + " %"); 
+		}
+		else {
+			coursesDB.open();
+			Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+			courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
+					cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
+					cCourse.getString(cCourse.getColumnIndex("courseCode")), 
+					cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
+					cCourse.getString(cCourse.getColumnIndex("notes")), 
+					cCourse.getInt(cCourse.getColumnIndex("termRef")),
+					context);
+			coursesDB.close();
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
+		}
 	}
 	
 	// reads data from the database to the vectors

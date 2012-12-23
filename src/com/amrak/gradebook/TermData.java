@@ -15,6 +15,8 @@ public class TermData {
 	
 	Context context;
 	CoursesDBAdapter coursesDB;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public TermData(int inputTermID, String inputTitle, String inputDateStart,
 			String inputDateEnd, Context inputContext) {
@@ -69,7 +71,6 @@ public class TermData {
 	}
 
 	public double getMark() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(mark));
 	}
 

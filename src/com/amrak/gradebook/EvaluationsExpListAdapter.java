@@ -22,6 +22,8 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 	// data
 	private ArrayList<EvalData> eval_parent;
 	private ArrayList<ArrayList<EvalData>> eval_child;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public EvaluationsExpListAdapter(Context context,
 			ArrayList<EvalData> eval_parent,
@@ -106,9 +108,8 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		
 		//mark.setText(Double.toString(evalParent.getMark()) + "/" + Integer.toString(evalParent.getOutOfNoDecimal()));
 		//Display mark in percentage
-		double percent = evalParent.getMark()/evalParent.getOutOf()*100;
-		DecimalFormat twoDForm = new DecimalFormat("###.00");
-		mark.setText(twoDForm.format(percent));
+		double percent = (evalParent.getMark()/evalParent.getOutOf())*100;
+		mark.setText(twoDForm.format(percent) + " %");
 
 		return v;
 		

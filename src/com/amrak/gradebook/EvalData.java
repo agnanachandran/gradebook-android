@@ -21,7 +21,6 @@ public class EvalData {
 	int term = 0;
 	int course = 0;
 	int category = 0;
-	
 
 	public EvalData(String inputTitle, double inputMark, double inputOutOf,
 			double inputWeight, String inputDate, int inputTerm, int inputCourse, int inputCategory, Context inputContext) {

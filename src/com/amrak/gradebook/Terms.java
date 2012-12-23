@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.annotation.TargetApi;
@@ -54,6 +55,8 @@ public class Terms extends Activity {
 	final private String TAG = "Terms";
 	int[] refIDPass_Term;
 	int contextSelection;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	@TargetApi(11)
 	@Override

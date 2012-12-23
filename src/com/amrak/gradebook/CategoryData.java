@@ -16,6 +16,7 @@ public class CategoryData {
 	int course = 0;
 	int term = 0;
 	EvaluationsDBAdapter evalsDB;
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 	
 	public CategoryData(int inputCategoryID, String inputTitle, int inputWeight, int inputRefCourseID, int inputRefTermID, Context inputContext) {
 		categoryID = inputCategoryID;
@@ -66,7 +67,6 @@ public class CategoryData {
 	}
 	
 	public double getMark(){
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(mark));
 	}
 	

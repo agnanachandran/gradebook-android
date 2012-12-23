@@ -1,5 +1,6 @@
 package com.amrak.gradebook;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -20,6 +21,8 @@ public class CoursesListAdapter extends BaseAdapter {
 
 	// data
 	private ArrayList<CourseData> courses;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public CoursesListAdapter(Context context, ArrayList<CourseData> courses) {
 		this.context = context;
@@ -53,7 +56,7 @@ public class CoursesListAdapter extends BaseAdapter {
 		TextView code = (TextView) v.findViewById(R.id.tvCourseCode);
 
 		title.setText(course.getTitle());
-		mark.setText(String.valueOf(course.getMark()) + " %");
+		mark.setText(String.valueOf(twoDForm.format(course.getMark())) + " %");
 		code.setText(course.getCode());
 		return v;
 

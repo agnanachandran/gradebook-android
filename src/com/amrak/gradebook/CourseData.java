@@ -17,6 +17,8 @@ public class CourseData {
 	
 	Context context;
 	CategoriesDBAdapter categoriesDB;
+	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public CourseData(int inputCourseID, String inputTitle, String inputCode,
 			double inputUnits, String inputNotes, int inputRefTermID, Context inputContext) {
@@ -77,12 +79,11 @@ public class CourseData {
 	}
 
 	public double getUnits() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return Double.valueOf(twoDForm.format(units));
+		DecimalFormat twoDForm2 = new DecimalFormat("#.##");
+		return Double.valueOf(twoDForm2.format(units));
 	}
 
 	public double getMark() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(mark));
 	}
 

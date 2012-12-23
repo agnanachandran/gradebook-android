@@ -21,6 +21,8 @@ public class CategoriesListAdapter extends BaseAdapter {
 	// data
 	private ArrayList<CategoryData> categories;
 	
+	DecimalFormat twoDForm = new DecimalFormat("0.00");
+	
 	public CategoriesListAdapter(Context context, ArrayList<CategoryData> categories) {
 		this.context = context;
 		this.categories = categories;
@@ -64,11 +66,10 @@ public class CategoriesListAdapter extends BaseAdapter {
 			for (int i = 1; i < this.categories.size(); i++){
 				allPercent += this.categories.get(i).getMark() * (this.categories.get(i).getWeight()/allWeight);
 			}
-			DecimalFormat twoDForm = new DecimalFormat("#.##");
-			mark.setText(String.valueOf(Double.valueOf(twoDForm.format(allPercent))));
+			mark.setText(String.valueOf(twoDForm.format(allPercent)) + " %");
 		}
 		else {
-			mark.setText(String.valueOf(categories.getMark()) + " %");		
+			mark.setText(String.valueOf(twoDForm.format(categories.getMark())) + " %");		
 		}
 		if (categories.getID() == 0){
 			weight.setText("");
