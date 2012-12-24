@@ -140,8 +140,7 @@ public class Evaluations extends Activity {
 
 		if (refIDReceive_Cat == 0) {
 			catTitle.setText("All");
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
-					+ " %");
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		} else {
 			// category
 			categoriesDB.open();
@@ -155,7 +154,7 @@ public class Evaluations extends Activity {
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
-					.getMark())) + " %");
+					.getMark())));
 			sort = 5;
 		}
 
@@ -432,7 +431,7 @@ public class Evaluations extends Activity {
 					.getColumnIndex("termRef")), context);
 			categoriesDB.close();
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
-					.getMark())) + " %");
+					.getMark())));
 		} else {
 			coursesDB.open();
 			Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
@@ -444,8 +443,7 @@ public class Evaluations extends Activity {
 					.getColumnIndex("notes")), cCourse.getInt(cCourse
 					.getColumnIndex("termRef")), context);
 			coursesDB.close();
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
-					+ " %");
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		}
 	}
 

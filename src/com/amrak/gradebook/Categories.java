@@ -100,8 +100,7 @@ public class Categories extends Activity {
 		courseTitle.setText(courseData.getTitle());
 		courseCode.setText(courseData.getCode());
 		courseMark
-				.setText(String.valueOf(twoDForm.format(courseData.getMark()))
-						+ " %");
+				.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		coursesDB.close();
 
 		dataReadToList();
@@ -180,9 +179,11 @@ public class Categories extends Activity {
 		CategoryData catSelected = (CategoryData) categoriesListAdapter
 				.getItem(info.position);
 		String evalTitle = catSelected.getTitle();
-		menu.setHeaderTitle(evalTitle);
-		menu.add(0, CONTEXT_EDIT, 0, "Edit Category");
-		menu.add(0, CONTEXT_DELETE, 0, "Delete Category");
+		if (evalTitle != "All"){
+			menu.setHeaderTitle(evalTitle);
+			menu.add(0, CONTEXT_EDIT, 0, "Edit Category");
+			menu.add(0, CONTEXT_DELETE, 0, "Delete Category");
+		}
 	}
 
 	public boolean onContextItemSelected(MenuItem menuItem) {
@@ -279,8 +280,7 @@ public class Categories extends Activity {
 				.getColumnIndex("notes")), cCourse.getInt(cCourse
 				.getColumnIndex("termRef")), context);
 		courseMark
-				.setText(String.valueOf(twoDForm.format(courseData.getMark()))
-						+ " %");
+				.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		coursesDB.close();
 
 	}
