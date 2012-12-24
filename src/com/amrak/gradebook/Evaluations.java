@@ -1,4 +1,4 @@
-	package com.amrak.gradebook;
+package com.amrak.gradebook;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,11 @@ public class Evaluations extends Activity {
 	ExpandableListView expListView;
 	TextView catTitle;
 	TextView catMark;
-	TextView courseNameFull; //course title and course code, e.g. ECE 105
+	TextView courseNameFull; // course title and course code, e.g. ECE 105
+	TextView noEvalAddEval;
+	TextView tvNoEvals;
+	RelativeLayout rLayoutLabels;
+	View vEvalDivLine;
 
 	// listAdapters
 	private CoursesListAdapter courseslistAdapter;
@@ -51,25 +56,33 @@ public class Evaluations extends Activity {
 	int[] refIDPass_Evaluation;
 	int refIDGet_Term;
 	int refIDGet_Course;
-	// this is initiated for savedInstanceState bundle; savedInstanceState needs Category ref when
-	// previous state was in filtered mode. Refer to protected void savedInstanceState method
+	// this is initiated for savedInstanceState bundle; savedInstanceState needs
+	// Category ref when
+	// previous state was in filtered mode. Refer to protected void
+	// savedInstanceState method
 	int refIDGet_Category;
 	int contextSelection;
-	
-	// this category id is for onCreate so that depending on which category sent the intent to
-	// this evaluations activity, the evaluations corresponding to the cat will show
+
+	// this category id is for onCreate so that depending on which category sent
+	// the intent to
+	// this evaluations activity, the evaluations corresponding to the cat will
+	// show
 	int refIDReceive_Cat = -5;
-	
-	// variable passed into datareadtolist for sorting; default to zero, which is sorting by date
+
+	// variable passed into datareadtolist for sorting; default to zero, which
+	// is sorting by date
 	int sort = 0;
-	int prevSort = 0; // variable used for context menu when unfiltering, returns to old sorted format
-	
-	// string constant for sort when you place in the onSavedInstanceState() method to keep 
-	// sort value even when phone has been turned so filters and sort options are not changed
+	int prevSort = 0; // variable used for context menu when unfiltering,
+						// returns to old sorted format
+
+	// string constant for sort when you place in the onSavedInstanceState()
+	// method to keep
+	// sort value even when phone has been turned so filters and sort options
+	// are not changed
 	static final String SORT = "sortVariable";
 	static final String REFIDCAT = "refIdCat";
 	static final String REFRECCAT = "refRecCat";
-	
+
 	// data
 	public static final int CONTEXT_EDIT = 0;
 	public static final int CONTEXT_DELETE = 1;
@@ -83,7 +96,7 @@ public class Evaluations extends Activity {
 	// expListview child rows
 	ArrayList<ArrayList<EvalData>> eval_childs = new ArrayList<ArrayList<EvalData>>();
 	ArrayList<EvalData> eval_child = new ArrayList<EvalData>();
-	
+
 	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	// when phone rotates, onCreate is called again
@@ -92,88 +105,100 @@ public class Evaluations extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluations);
+
+		// up button in action bar
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// initialization of views
 		catTitle = (TextView) findViewById(R.id.tvEvalCatTitle);
 		catMark = (TextView) findViewById(R.id.tvEvalCatMark);
 		courseNameFull = (TextView) findViewById(R.id.tvEvalCourseName);
 		expListView = (ExpandableListView) findViewById(R.id.elvEvalList);
+		tvNoEvals = (TextView) findViewById(R.id.tvNoEvals);
+		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelEvaluations);
+		vEvalDivLine = (View) findViewById(R.id.vEvalDivLine);
 
 		// initialization of values
 		Intent iEvaluations = getIntent();
 		refIDGet_Term = iEvaluations.getIntExtra("refID_Term", -1);
 		refIDGet_Course = iEvaluations.getIntExtra("refID_Course", -1);
 		refIDReceive_Cat = iEvaluations.getIntExtra("refID_Category", -1);
-		
-		//course
+
+		// course
 		coursesDB.open();
 		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
-		
-		courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
-				cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
-				cCourse.getString(cCourse.getColumnIndex("courseCode")), 
-				cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
-				cCourse.getString(cCourse.getColumnIndex("notes")), 
-				cCourse.getInt(cCourse.getColumnIndex("termRef")),
-				context);
-			
+
+		courseData = new CourseData(cCourse.getInt(cCourse
+				.getColumnIndex("_id")), cCourse.getString(cCourse
+				.getColumnIndex("courseTitle")), cCourse.getString(cCourse
+				.getColumnIndex("courseCode")), cCourse.getInt(cCourse
+				.getColumnIndex("courseUnits")), cCourse.getString(cCourse
+				.getColumnIndex("notes")), cCourse.getInt(cCourse
+				.getColumnIndex("termRef")), context);
+
 		coursesDB.close();
-		
-		if (refIDReceive_Cat == 0){
+
+		if (refIDReceive_Cat == 0) {
 			catTitle.setText("All");
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
-		}
-		else{
-			//category
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
+					+ " %");
+		} else {
+			// category
 			categoriesDB.open();
 			Cursor cCategory = categoriesDB.getCategory(refIDReceive_Cat);
-			categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
-					cCategory.getString(cCategory.getColumnIndex("catTitle")),
-					cCategory.getInt(cCategory.getColumnIndex("catWeight")),
-					cCategory.getInt(cCategory.getColumnIndex("courseRef")),
-					cCategory.getInt(cCategory.getColumnIndex("termRef")),
-					context);
+			categoryData = new CategoryData(cCategory.getInt(cCategory
+					.getColumnIndex("_id")), cCategory.getString(cCategory
+					.getColumnIndex("catTitle")), cCategory.getInt(cCategory
+					.getColumnIndex("catWeight")), cCategory.getInt(cCategory
+					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
+					.getColumnIndex("termRef")), context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
-			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark())) + " %");
+			catMark.setText(String.valueOf(twoDForm.format(categoryData
+					.getMark())) + " %");
 			sort = 5;
 		}
-		
-		courseNameFull.setText(courseData.getTitle() + " " + courseData.getCode());
-		
-		// if there was a onSavedInstanceState before, retrieve original sort variable
-		if (savedInstanceState != null){
+
+		courseNameFull.setText(courseData.getTitle() + " "
+				+ courseData.getCode());
+
+		// if there was a onSavedInstanceState before, retrieve original sort
+		// variable
+		if (savedInstanceState != null) {
 			sort = savedInstanceState.getInt(SORT);
 			refIDGet_Category = savedInstanceState.getInt(REFIDCAT);
 			refIDReceive_Cat = savedInstanceState.getInt(REFRECCAT);
 		}
-		
+
 		// read database
 		dataReadToList();
-		
+
 		// input listview data
-		expListAdapter = new EvaluationsExpListAdapter(this, eval_parent, eval_childs);
+		expListAdapter = new EvaluationsExpListAdapter(this, eval_parent,
+				eval_childs);
 		expListView.setAdapter(expListAdapter);
-		
+
 		expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
 
 			public void onGroupExpand(int groupPosition) {
 				// TODO Auto-generated method stub
-/*			        int len = expListAdapter.getGroupCount();
-
-			        for(int i=0; i<len; i++) {
-			            if(i != groupPosition) {
-			            	expListView.collapseGroup(i);
-			            }
-			        } */
+				/*
+				 * int len = expListAdapter.getGroupCount();
+				 * 
+				 * for(int i=0; i<len; i++) { if(i != groupPosition) {
+				 * expListView.collapseGroup(i); } }
+				 */
 			}
-			
+
 		});
 		registerForContextMenu(expListView);
-		
+
 	}
-	
-	//saved instance state to store bundle information (e.g. sort variable used for determining 
-	//how the data is sorted) so it prevents data from resetting when phone is turned sideways (example) 
+
+	// saved instance state to store bundle information (e.g. sort variable used
+	// for determining
+	// how the data is sorted) so it prevents data from resetting when phone is
+	// turned sideways (example)
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
@@ -188,7 +213,7 @@ public class Evaluations extends Activity {
 		dataReset();
 	}
 
-	// Options menu 
+	// Options menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_evaluations, menu);
@@ -210,18 +235,24 @@ public class Evaluations extends Activity {
 			startActivity(iAddEval);
 			break;
 		case R.id.sortByDate:
-			if (refIDReceive_Cat > 0) sort = 5;
-			else sort = 0;
+			if (refIDReceive_Cat > 0)
+				sort = 5;
+			else
+				sort = 0;
 			dataReset();
 			break;
 		case R.id.sortByName:
-			if (refIDReceive_Cat > 0) sort = 6;
-			else sort = 1;
+			if (refIDReceive_Cat > 0)
+				sort = 6;
+			else
+				sort = 1;
 			dataReset();
 			break;
 		case R.id.sortByWeight:
-			if (refIDReceive_Cat > 0) sort = 7;
-			else sort = 2;
+			if (refIDReceive_Cat > 0)
+				sort = 7;
+			else
+				sort = 2;
 			dataReset();
 			break;
 		case R.id.sortByCategory:
@@ -231,9 +262,18 @@ public class Evaluations extends Activity {
 		case R.id.collapseAll:
 			int len = expListAdapter.getGroupCount();
 
-	        for(int h=0; h<len; h++) {   	
-	            	expListView.collapseGroup(h);
-	        }
+			for (int h = 0; h < len; h++) {
+				expListView.collapseGroup(h);
+			}
+			break;
+		case android.R.id.home:
+			Intent iCategories = new Intent(this, Categories.class);
+			iCategories.putExtra("refID_Course", refIDGet_Course);
+			iCategories.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+					| Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(iCategories);
+			finish();
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -244,110 +284,132 @@ public class Evaluations extends Activity {
 
 		super.onCreateContextMenu(menu, v, menuInfo);
 		ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
-		int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-		int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-		int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
+		int type = ExpandableListView
+				.getPackedPositionType(info.packedPosition);
+		int group = ExpandableListView
+				.getPackedPositionGroup(info.packedPosition);
+		int child = ExpandableListView
+				.getPackedPositionChild(info.packedPosition);
 		// Only create a context menu for child items
 		if (type == 0) {
 			// Array created earlier when we built the expandable list
 			EvalData evalSelected = (EvalData) expListAdapter.getGroup(group);
 			String evalTitle = evalSelected.getTitle();
-			
-			// this is used when filtering a category, filters are controlled in the context menu
+
+			// this is used when filtering a category, filters are controlled in
+			// the context menu
 			refIDGet_Category = evalSelected.getCategoryRef();
 			menu.setHeaderTitle(evalTitle);
 			menu.add(0, CONTEXT_EDIT, 0, "Edit Evaluation");
 			menu.add(0, CONTEXT_DELETE, 0, "Delete Evaluation");
-			if (refIDReceive_Cat > 0){	
-			}
-			else {
+			if (refIDReceive_Cat > 0) {
+			} else {
 				menu.add(0, CONTEXT_FILTER, 0, "Filter by this Category");
 				menu.add(0, CONTEXT_UNFILTER, 0, "Remove Filter");
 			}
 		}
 	}
-	
-	// context menu selecting options (4 different options managed by a switch statement
+
+	// context menu selecting options (4 different options managed by a switch
+	// statement
 	public boolean onContextItemSelected(MenuItem menuItem) {
-		ExpandableListContextMenuInfo info =
-		(ExpandableListContextMenuInfo) menuItem.getMenuInfo();
+		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) menuItem
+				.getMenuInfo();
 		int groupPos = 0, childPos = 0;
-		int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+		int type = ExpandableListView
+				.getPackedPositionType(info.packedPosition);
 		if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-		groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-		childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+			groupPos = ExpandableListView
+					.getPackedPositionGroup(info.packedPosition);
+			childPos = ExpandableListView
+					.getPackedPositionChild(info.packedPosition);
 		}
-		//Pull values from the array we built when we created the list
+		// Pull values from the array we built when we created the list
 		contextSelection = groupPos;
-		
+
 		switch (menuItem.getItemId()) {
 		case CONTEXT_EDIT:
 			Intent iAddEval = new Intent("com.amrak.gradebook.ADDEVAL");
 			iAddEval.putExtra("refID_Course", refIDGet_Course);
 			iAddEval.putExtra("refID_Term", refIDGet_Term);
-			iAddEval.putExtra("idEdit_Item", refIDPass_Evaluation[contextSelection]);
+			iAddEval.putExtra("idEdit_Item",
+					refIDPass_Evaluation[contextSelection]);
 			iAddEval.putExtra("id_Mode", 1);
 			startActivity(iAddEval);
 			dataReset();
 			return true;
 		case CONTEXT_DELETE:
-			
+
 			evalsDB.open();
-			Cursor cDelete = evalsDB.getEvaluation(refIDPass_Evaluation[contextSelection]);
-			String titleDelete = cDelete.getString(cDelete.getColumnIndex("evalTitle"));
+			Cursor cDelete = evalsDB
+					.getEvaluation(refIDPass_Evaluation[contextSelection]);
+			String titleDelete = cDelete.getString(cDelete
+					.getColumnIndex("evalTitle"));
 			evalsDB.close();
-			
-		    new AlertDialog.Builder(this)
-		    .setTitle("Delete Evaluation?")
-		    .setMessage("Are you sure you want to delete \"" + titleDelete + "\"?")
-		    .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					
-					evalsDB.open();
-					Cursor cDelete = evalsDB.getEvaluation(refIDPass_Evaluation[contextSelection]);
-					String titleDelete = cDelete.getString(cDelete.getColumnIndex("evalTitle"));
-					evalsDB.deleteEvaluation(refIDPass_Evaluation[contextSelection]);
-					evalsDB.close();
-					
-					Toast toast = Toast.makeText(context, titleDelete + " was deleted successfully.", Toast.LENGTH_SHORT);
-					try {
-						//center toast
-						((TextView)((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
-					} catch (ClassCastException cce) {
-						Log.d(TAG, cce.getMessage());
-					}
-					toast.show();
-					dataReset();
-				}
-			})
-		    .setNegativeButton("Cancel", null)
-		    .show();
-			
+
+			new AlertDialog.Builder(this)
+					.setTitle("Delete Evaluation?")
+					.setMessage(
+							"Are you sure you want to delete \"" + titleDelete
+									+ "\"?")
+					.setPositiveButton("Delete",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+
+									evalsDB.open();
+									Cursor cDelete = evalsDB
+											.getEvaluation(refIDPass_Evaluation[contextSelection]);
+									String titleDelete = cDelete.getString(cDelete
+											.getColumnIndex("evalTitle"));
+									evalsDB.deleteEvaluation(refIDPass_Evaluation[contextSelection]);
+									evalsDB.close();
+
+									Toast toast = Toast
+											.makeText(
+													context,
+													titleDelete
+															+ " was deleted successfully.",
+													Toast.LENGTH_SHORT);
+									try {
+										// center toast
+										((TextView) ((LinearLayout) toast
+												.getView()).getChildAt(0))
+												.setGravity(Gravity.CENTER_HORIZONTAL);
+									} catch (ClassCastException cce) {
+										Log.d(TAG, cce.getMessage());
+									}
+									toast.show();
+									dataReset();
+								}
+							}).setNegativeButton("Cancel", null).show();
+
 			return true;
 		case CONTEXT_FILTER:
 			prevSort = sort;
 			sort = 4;
 			dataReset();
-			
+
 			return true;
-			
-		case CONTEXT_UNFILTER: 			
+
+		case CONTEXT_UNFILTER:
 			sort = prevSort;
 			dataReset();
-			
+
 			return true;
-			
+
 		default:
 			return super.onContextItemSelected(menuItem);
 		}
 	}
-	
+
 	// clears the vectors and then reads new information before repopulating
-	// useful when an evaluation is deleted or added or a way to sort data is chosen
+	// useful when an evaluation is deleted or added or a way to sort data is
+	// chosen
 	public void dataReset() {
-		//clear data
+		// clear data
 		eval_parent.clear();
 		eval_child.clear();
 		eval_childs.clear();
@@ -357,108 +419,121 @@ public class Evaluations extends Activity {
 
 		// update listview with new data
 		expListAdapter.notifyDataSetChanged();
-		
+
 		// update category mark after evaluations are changed
-		if (refIDReceive_Cat > 0){
+		if (refIDReceive_Cat > 0) {
 			categoriesDB.open();
 			Cursor cCategory = categoriesDB.getCategory(refIDReceive_Cat);
-			categoryData = new CategoryData(cCategory.getInt(cCategory.getColumnIndex("_id")),
-					cCategory.getString(cCategory.getColumnIndex("catTitle")),
-					cCategory.getInt(cCategory.getColumnIndex("catWeight")),
-					cCategory.getInt(cCategory.getColumnIndex("courseRef")),
-					cCategory.getInt(cCategory.getColumnIndex("termRef")),
-					context);
+			categoryData = new CategoryData(cCategory.getInt(cCategory
+					.getColumnIndex("_id")), cCategory.getString(cCategory
+					.getColumnIndex("catTitle")), cCategory.getInt(cCategory
+					.getColumnIndex("catWeight")), cCategory.getInt(cCategory
+					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
+					.getColumnIndex("termRef")), context);
 			categoriesDB.close();
-			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark())) + " %"); 
-		}
-		else {
+			catMark.setText(String.valueOf(twoDForm.format(categoryData
+					.getMark())) + " %");
+		} else {
 			coursesDB.open();
 			Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
-			courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
-					cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
-					cCourse.getString(cCourse.getColumnIndex("courseCode")), 
-					cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
-					cCourse.getString(cCourse.getColumnIndex("notes")), 
-					cCourse.getInt(cCourse.getColumnIndex("termRef")),
-					context);
+			courseData = new CourseData(cCourse.getInt(cCourse
+					.getColumnIndex("_id")), cCourse.getString(cCourse
+					.getColumnIndex("courseTitle")), cCourse.getString(cCourse
+					.getColumnIndex("courseCode")), cCourse.getInt(cCourse
+					.getColumnIndex("courseUnits")), cCourse.getString(cCourse
+					.getColumnIndex("notes")), cCourse.getInt(cCourse
+					.getColumnIndex("termRef")), context);
 			coursesDB.close();
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())) + " %");
+			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
+					+ " %");
 		}
 	}
-	
+
 	// reads data from the database to the vectors
 	public void dataReadToList() {
 		evalsDB.open();
 
 		Cursor c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
-		
-		// sort variables determine which cursor is chosen. The cursor chosen returns a specific 
-		// set of data a specific way. sort == 0 gives a cursor that returns evaluations based on 
-		// date in ascending order. .getEvaluationSortByDate() functions are found in EvaluationsDBAdapter.java
-		
+
+		// sort variables determine which cursor is chosen. The cursor chosen
+		// returns a specific
+		// set of data a specific way. sort == 0 gives a cursor that returns
+		// evaluations based on
+		// date in ascending order. .getEvaluationSortByDate() functions are
+		// found in EvaluationsDBAdapter.java
+
 		// for the "all" category
 		if (sort == 0) {
-			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);			
-		}
-		else if (sort == 1){
+			c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
+		} else if (sort == 1) {
 			c = evalsDB.getEvaluationSortByName(refIDGet_Course);
-		}
-		else if (sort == 2){
+		} else if (sort == 2) {
 			c = evalsDB.getEvaluationSortByWeight(refIDGet_Course);
-		}
-		else if (sort == 3){
+		} else if (sort == 3) {
 			c = evalsDB.getEvaluationSortByCategory(refIDGet_Course);
 		}
 		// for the all category; filtering purposes
-		else if (sort == 4){
+		else if (sort == 4) {
 			c = evalsDB.getEvaluationsOfCategory(refIDGet_Category);
-		// for specific categories
-		}
-		else if (sort == 5){
+			// for specific categories
+		} else if (sort == 5) {
 			c = evalsDB.getEvalCatSortByDate(refIDReceive_Cat);
-		}
-		else if (sort == 6){
+		} else if (sort == 6) {
 			c = evalsDB.getEvalCatSortByName(refIDReceive_Cat);
-		}
-		else if (sort == 7){
+		} else if (sort == 7) {
 			c = evalsDB.getEvalCatSortByWeight(refIDReceive_Cat);
+		} else {
+			if (refIDReceive_Cat > 0)
+				c = evalsDB.getEvalCatSortByDate(refIDReceive_Cat);
+			else
+				c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
 		}
-		else {
-			if (refIDReceive_Cat > 0) c = evalsDB.getEvalCatSortByDate(refIDReceive_Cat);
-			else c = evalsDB.getEvaluationSortByDate(refIDGet_Course);
-		}
-		
+
 		// adding data from the database to the vectors
 		int i = 0;
-		
-		// an array that is used to store column indexes of each evaluation for later use
-		// such as in deleting an evaluation. Size is the number of evaluations to be put in vectors
+
+		// an array that is used to store column indexes of each evaluation for
+		// later use
+		// such as in deleting an evaluation. Size is the number of evaluations
+		// to be put in vectors
 		refIDPass_Evaluation = new int[c.getCount()];
 		if (c.moveToFirst()) {
 			do {
 				refIDPass_Evaluation[i] = c.getInt(c.getColumnIndex("_id"));
-				eval_parent.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), 
-						c.getInt(c.getColumnIndex("evalMark")), 
-						c.getInt(c.getColumnIndex("evalOutOf")),
-						c.getInt(c.getColumnIndex("evalWeight")),
-						c.getString(c.getColumnIndex("evalDate")),
-						c.getInt(c.getColumnIndex("termRef")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("catRef")),
-						context));
-				eval_child.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), 
-						c.getInt(c.getColumnIndex("evalMark")), 
-						c.getInt(c.getColumnIndex("evalOutOf")),
-						c.getInt(c.getColumnIndex("evalWeight")),
-						c.getString(c.getColumnIndex("evalDate")),
-						c.getInt(c.getColumnIndex("termRef")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("catRef")), 
-						context));
+				eval_parent.add(new EvalData(c.getString(c
+						.getColumnIndex("evalTitle")), c.getInt(c
+						.getColumnIndex("evalMark")), c.getInt(c
+						.getColumnIndex("evalOutOf")), c.getInt(c
+						.getColumnIndex("evalWeight")), c.getString(c
+						.getColumnIndex("evalDate")), c.getInt(c
+						.getColumnIndex("termRef")), c.getInt(c
+						.getColumnIndex("courseRef")), c.getInt(c
+						.getColumnIndex("catRef")), context));
+				eval_child.add(new EvalData(c.getString(c
+						.getColumnIndex("evalTitle")), c.getInt(c
+						.getColumnIndex("evalMark")), c.getInt(c
+						.getColumnIndex("evalOutOf")), c.getInt(c
+						.getColumnIndex("evalWeight")), c.getString(c
+						.getColumnIndex("evalDate")), c.getInt(c
+						.getColumnIndex("termRef")), c.getInt(c
+						.getColumnIndex("courseRef")), c.getInt(c
+						.getColumnIndex("catRef")), context));
 				eval_childs.add(eval_child);
 				eval_child = new ArrayList<EvalData>();
 				i++;
 			} while (c.moveToNext());
+
+		}
+		if (c.getCount() > 0) {
+			rLayoutLabels.setVisibility(View.VISIBLE);
+			vEvalDivLine.setVisibility(View.VISIBLE);
+			tvNoEvals.setVisibility(View.INVISIBLE);
+
+		} else {
+			rLayoutLabels.setVisibility(View.INVISIBLE);
+			vEvalDivLine.setVisibility(View.INVISIBLE);
+			tvNoEvals.setVisibility(View.VISIBLE);
+
 		}
 
 		evalsDB.close();

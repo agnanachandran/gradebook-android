@@ -56,5 +56,11 @@
     <string name="pickEndDate">Pick End Date</string>
     <string name="catTitle">Category</string>
     <string name="catGrade">Grade</string>
+    <string name="noTermAddTerm">Start by adding a term!</string>
+    <string name="blueArrow">Blue Arrow</string>
+    <string name ="noCourseAddCourse">Start by adding a course!</string>
+    <string name="noEvalAddEval">Add an evaluation!</string>
+    <string name="evalTitle">Evaluation</string>
+    <string name="evalGrade">Grade</string>
 
 </resources>

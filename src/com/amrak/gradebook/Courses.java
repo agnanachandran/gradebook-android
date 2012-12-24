@@ -3,6 +3,7 @@ package com.amrak.gradebook;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,6 +34,7 @@ public class Courses extends Activity {
 	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
 	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
 	RelativeLayout rLayoutLabels;
+	TextView tvNoCourses;
 	// context
 	Context context = this;
 
@@ -41,7 +43,7 @@ public class Courses extends Activity {
 	TextView termTitle;
 	TextView termDate;
 	TextView termMark;
-
+	View vCourseDivLine;
 	// listAdapters
 	private CoursesListAdapter courseslistAdapter;
 
@@ -49,7 +51,7 @@ public class Courses extends Activity {
 	public static final int CONTEXT_EDIT = 0;
 	public static final int CONTEXT_DELETE = 1;
 	TermData termData;
-	
+
 	// courses
 	ArrayList<CourseData> courses = new ArrayList<CourseData>();
 
@@ -58,13 +60,17 @@ public class Courses extends Activity {
 	int[] refIDPass_Course;
 	int refIDGet_Term;
 	int contextSelection;
-	
+
 	DecimalFormat twoDForm = new DecimalFormat("0.00");
 
+	@TargetApi(11)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_courses);
+
+		// up button in action bar
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent iCourse = getIntent();
 		refIDGet_Term = iCourse.getIntExtra("refID_Term", -1);
@@ -78,7 +84,9 @@ public class Courses extends Activity {
 		termMark = (TextView) findViewById(R.id.tvCoursesTermMark);
 		listView = (ListView) findViewById(R.id.lvCourses);
 		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelCourses);
-
+		tvNoCourses = (TextView) findViewById(R.id.tvNoCourses);
+		vCourseDivLine = (View) findViewById(R.id.vCourseDivLine);
+		
 		// term
 		termsDB.open();
 		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
@@ -86,13 +94,13 @@ public class Courses extends Activity {
 		termData = new TermData(cTerm.getInt(cTerm.getColumnIndex("_id")),
 				cTerm.getString(cTerm.getColumnIndex("termTitle")),
 				cTerm.getString(cTerm.getColumnIndex("termStartDate")),
-				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
-				context);
+				cTerm.getString(cTerm.getColumnIndex("termEndDate")), context);
 
 		termTitle.setText(termData.getTitle());
 		termDate.setText(termData.getDateStart() + " - "
 				+ termData.getDateEnd());
-		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark()))
+				+ " %");
 		termsDB.close();
 
 		// read data from database
@@ -149,6 +157,15 @@ public class Courses extends Activity {
 			Intent iAddCourse = new Intent("com.amrak.gradebook.ADDCOURSE");
 			iAddCourse.putExtra("refID_Term", refIDGet_Term);
 			startActivity(iAddCourse);
+			break;
+		case android.R.id.home:
+			// This is called when the Home (Up) button is pressed
+			// in the Action Bar.
+			Intent parentActivityIntent = new Intent(this, Terms.class);
+			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+					| Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(parentActivityIntent);
+			finish();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -256,18 +273,18 @@ public class Courses extends Activity {
 
 		// input listview data
 		courseslistAdapter.notifyDataSetChanged();
-		
-		//refreshes term mark after sublevel changes
+
+		// refreshes term mark after sublevel changes
 		termsDB.open();
 		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
 
 		termData = new TermData(cTerm.getInt(cTerm.getColumnIndex("_id")),
 				cTerm.getString(cTerm.getColumnIndex("termTitle")),
 				cTerm.getString(cTerm.getColumnIndex("termStartDate")),
-				cTerm.getString(cTerm.getColumnIndex("termEndDate")),
-				context);
+				cTerm.getString(cTerm.getColumnIndex("termEndDate")), context);
 
-		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())) + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark()))
+				+ " %");
 		termsDB.close();
 	}
 
@@ -280,9 +297,9 @@ public class Courses extends Activity {
 		if (c.moveToFirst()) {
 			do {
 				refIDPass_Course[i] = c.getInt(c.getColumnIndex("_id")); // get
-																			// ids
-																			// of
-																			// each.
+				// ids
+				// of
+				// each.
 				courses.add(new CourseData(c.getInt(c.getColumnIndex("_id")), c
 						.getString(c.getColumnIndex("courseTitle")), c
 						.getString(c.getColumnIndex("courseCode")), c.getInt(c
@@ -297,8 +314,14 @@ public class Courses extends Activity {
 		// course
 		if (c.getCount() > 0) {
 			rLayoutLabels.setVisibility(View.VISIBLE);
+			vCourseDivLine.setVisibility(View.VISIBLE);
+			tvNoCourses.setVisibility(View.INVISIBLE);
+			
 		} else {
 			rLayoutLabels.setVisibility(View.INVISIBLE);
+			vCourseDivLine.setVisibility(View.INVISIBLE);
+
+			tvNoCourses.setVisibility(View.VISIBLE);
 		}
 
 		coursesDB.close();

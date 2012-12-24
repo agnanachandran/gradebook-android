@@ -1,18 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Term" >
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	tools:context=".Term" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListView
-        android:id="@+id/lvTerms"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/White"
-        android:divider="@color/DarkGrey"
-        android:dividerHeight="@dimen/divheight"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-    </ListView>
+	<ListView android:id="@+id/lvTerms" android:layout_width="match_parent"
+		android:layout_height="match_parent" android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="false" android:background="@color/White"
+		android:divider="@color/DarkGrey" android:dividerHeight="@dimen/divheight">
+
+	</ListView>
+
+	<TextView android:id="@+id/tvNoTerms" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="false"
+		android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+		android:text="@string/noTermAddTerm" android:textAppearance="?android:attr/textAppearanceLarge" />
+	<ImageView android:id="@+id/ivBlueArrowNoTerms"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="310dp" android:layout_marginLeft="170dp" android:layout_marginRight="60dp" android:layout_marginTop="20dp" android:contentDescription="@string/blueArrow" android:scaleType="fitXY" android:src="@drawable/bluearrow"/>
 
 </RelativeLayout>

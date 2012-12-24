@@ -13,13 +13,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class Terms extends Activity {
 	TextView title;
 	TextView mark;
 	TextView date;
+	TextView tvNoTerms;
+	ImageView ivNoTerms;
 
 	// listAdapters
 	private TermsListAdapter termslistAdapter;
@@ -69,6 +72,8 @@ public class Terms extends Activity {
 		mark = (TextView) findViewById(R.id.tvTermMark);
 		date = (TextView) findViewById(R.id.tvTermDate);
 		listView = (ListView) findViewById(R.id.lvTerms);
+		ivNoTerms = (ImageView) findViewById(R.id.ivBlueArrowNoTerms);
+		tvNoTerms = (TextView) findViewById(R.id.tvNoTerms);
 
 		// change title back to Terms since default title is the app's name
 		getActionBar().setTitle("Terms");
@@ -231,6 +236,16 @@ public class Terms extends Activity {
 				i++;
 			} while (c.moveToNext());
 		}
+		
+		if(c.getCount()>0) {
+			ivNoTerms.setVisibility(View.INVISIBLE);
+			tvNoTerms.setVisibility(View.INVISIBLE);
+		}
+		else {
+			ivNoTerms.setVisibility(View.VISIBLE);
+			tvNoTerms.setVisibility(View.VISIBLE);
+		}
+		
 		termsDB.close();
 	}
 	
