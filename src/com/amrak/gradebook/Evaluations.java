@@ -150,7 +150,7 @@ public class Evaluations extends Activity {
 					.getColumnIndex("catTitle")), cCategory.getInt(cCategory
 					.getColumnIndex("catWeight")), cCategory.getInt(cCategory
 					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
-					.getColumnIndex("termRef")), context);
+					.getColumnIndex("termRef")), cCategory.getInt(cCategory.getColumnIndex("catColor")), context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
@@ -433,7 +433,7 @@ public class Evaluations extends Activity {
 					.getColumnIndex("catTitle")), cCategory.getInt(cCategory
 					.getColumnIndex("catWeight")), cCategory.getInt(cCategory
 					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
-					.getColumnIndex("termRef")), context);
+					.getColumnIndex("termRef")), cCategory.getInt(cCategory.getColumnIndex("catColor")),context);
 			categoriesDB.close();
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
 					.getMark())));

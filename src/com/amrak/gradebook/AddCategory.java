@@ -9,13 +9,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddCategory extends Activity {
+public class AddCategory extends Activity implements OnItemSelectedListener {
 
 	// database
 	CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
@@ -27,6 +31,8 @@ public class AddCategory extends Activity {
 	// views
 	EditText etCatName;
 	EditText etCatWeight;
+	Spinner sCatColor;
+	ArrayAdapter<CharSequence> spinnerAdapter;
 	Button bCatDone;
 
 	// variables
@@ -37,6 +43,7 @@ public class AddCategory extends Activity {
 	int refIDGet_Course;
 	int idGet_Mode; // mode 0: add, mode 1: edit
 	int idEdit_Item;
+	int catColor = 0; // 0: black, 1: red, 2: yellow, 3: blue, 4: green
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class AddCategory extends Activity {
 
 		etCatName = (EditText) findViewById(R.id.etCatName);
 		etCatWeight = (EditText) findViewById(R.id.etCatWeight);
+		sCatColor = (Spinner) findViewById(R.id.sCatColorPicker);
 		bCatDone = (Button) findViewById(R.id.bCatDone);
 
 		Intent iAddCat = getIntent();
@@ -74,6 +82,12 @@ public class AddCategory extends Activity {
 			etCatWeight.setText(cCategory.getString(cCategory.getColumnIndex("catWeight")));
 			categoriesDB.close();
 		}
+		
+		spinnerAdapter = ArrayAdapter.createFromResource(this, 
+				R.array.cat_colors, android.R.layout.simple_spinner_item);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sCatColor.setAdapter(spinnerAdapter);
+		sCatColor.setOnItemSelectedListener(this);
 	}
 	
 	public void addCat(View v) {
@@ -100,7 +114,7 @@ public class AddCategory extends Activity {
 		     
 		     if (idGet_Mode == 0){
 		    	 categoriesDB.open();
-					categoriesDB.createCategory(catName, catWeight, refIDGet_Term, refIDGet_Course);
+					categoriesDB.createCategory(catName, catWeight, refIDGet_Term, refIDGet_Course, catColor);
 					categoriesDB.close();
 					
 					Toast toast = Toast.makeText(context, "Category " + catName + " added successfully.", Toast.LENGTH_SHORT);
@@ -118,7 +132,7 @@ public class AddCategory extends Activity {
 		     }
 		     else if (idGet_Mode == 1){
 		    	 categoriesDB.open();
-		    	 categoriesDB.updateCategory(idEdit_Item, catName, catWeight, refIDGet_Term, refIDGet_Course);
+		    	 categoriesDB.updateCategory(idEdit_Item, catName, catWeight, refIDGet_Term, refIDGet_Course, catColor);
 		    	 categoriesDB.close();
 		    	 
 		    	 Toast toast = Toast.makeText(context, "Category" + catName + " edited successfully.", Toast.LENGTH_SHORT);
@@ -136,5 +150,24 @@ public class AddCategory extends Activity {
 			
 		}
 		
+	}
+	
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		String color = (String) parent.getItemAtPosition(pos);
+		if (color.equals("Black"))
+			catColor = 0;
+		else if (color.equals("Red"))
+			catColor = 1;
+		else if (color.equals("Yellow"))
+			catColor = 2;
+		else if (color.equals("Blue"))
+			catColor = 3;
+		else if (color.equals("Green"))
+			catColor = 4;
+		//System.out.println(catColor);
+	}
+	
+	public void onNothingSelected(AdapterView<?> parent) {
+		//System.out.println("Nothing selected");
 	}
 }

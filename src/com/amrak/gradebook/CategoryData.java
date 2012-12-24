@@ -15,15 +15,17 @@ public class CategoryData {
 	double mark = 0;
 	int course = 0;
 	int term = 0;
+	int color = 0;
 	EvaluationsDBAdapter evalsDB;
 	DecimalFormat twoDForm = new DecimalFormat("0.00");
 	
-	public CategoryData(int inputCategoryID, String inputTitle, int inputWeight, int inputRefCourseID, int inputRefTermID, Context inputContext) {
+	public CategoryData(int inputCategoryID, String inputTitle, int inputWeight, int inputRefCourseID, int inputRefTermID, int inputColor, Context inputContext) {
 		categoryID = inputCategoryID;
 		title = inputTitle;
 		weight = inputWeight;
 		course = inputRefCourseID;
 		term = inputRefTermID;
+		color = inputColor;
 		context = inputContext;
 		evalsDB = new EvaluationsDBAdapter(context);
 		mark = calcMarkFromDatabase(inputRefCourseID, inputCategoryID);
@@ -91,5 +93,9 @@ public class CategoryData {
 	
 	public int getRefTermID(){
 		return term;
+	}
+	
+	public int getColor() {
+		return color;
 	}
 }

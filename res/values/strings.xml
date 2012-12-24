@@ -68,5 +68,5 @@
     <string name="pref_exportdb">Export Data</string>
     <string name="pref_importdb_summ">Import Database</string>
     <string name="pref_exportdb_summ">Export Database</string>
-
+    <string name="hint_category_color">Color</string>
 </resources>
