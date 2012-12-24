@@ -47,18 +47,23 @@ public class TermData {
 			} while(c.moveToNext());
 		}
 		
-		if (c.moveToFirst()) {
-			do {
-				double weightFraction = c.getDouble(c.getColumnIndex("courseUnits"))/totalWeight;
-				courseData = new CourseData(c.getInt(c.getColumnIndex("_id")), 
-						c.getString(c.getColumnIndex("courseTitle")), 
-						c.getString(c.getColumnIndex("courseCode")), 
-						c.getInt(c.getColumnIndex("courseUnits")), 
-						c.getString(c.getColumnIndex("notes")), 
-						c.getInt(c.getColumnIndex("termRef")),
-						context);
-				mark += weightFraction*courseData.getMark();
-			} while(c.moveToNext());
+		// when user has a course that doesn't count for anything
+		if (totalWeight == 0)
+			return 100.00;		
+		else {
+			if (c.moveToFirst()) {
+				do {
+					double weightFraction = c.getDouble(c.getColumnIndex("courseUnits"))/totalWeight;
+					courseData = new CourseData(c.getInt(c.getColumnIndex("_id")), 
+							c.getString(c.getColumnIndex("courseTitle")), 
+							c.getString(c.getColumnIndex("courseCode")), 
+							c.getInt(c.getColumnIndex("courseUnits")), 
+							c.getString(c.getColumnIndex("notes")), 
+							c.getInt(c.getColumnIndex("termRef")),
+							context);
+					mark += weightFraction*courseData.getMark();
+				} while(c.moveToNext());
+			}			
 		}
 		
 		coursesDB.close();

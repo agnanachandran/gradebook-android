@@ -51,17 +51,23 @@ public class CourseData {
 			} while(c.moveToNext());
 		}
 		
-		if (c.moveToFirst()) {
-			do {
-				double weightFraction = (double)c.getInt(c.getColumnIndex("catWeight"))/totalWeight;
-				categoryData = new CategoryData(c.getInt(c.getColumnIndex("_id")),
-						c.getString(c.getColumnIndex("catTitle")),
-						c.getInt(c.getColumnIndex("catWeight")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("termRef")),
-						this.context);
-				mark += weightFraction*categoryData.getMark();
-			} while(c.moveToNext());
+		//When the user has a category that doesn't count for anything
+		if (totalWeight == 0)
+			return 100.00;
+		
+		else {
+			if (c.moveToFirst()) {
+				do {
+					double weightFraction = (double)c.getInt(c.getColumnIndex("catWeight"))/totalWeight;
+					categoryData = new CategoryData(c.getInt(c.getColumnIndex("_id")),
+							c.getString(c.getColumnIndex("catTitle")),
+							c.getInt(c.getColumnIndex("catWeight")),
+							c.getInt(c.getColumnIndex("courseRef")),
+							c.getInt(c.getColumnIndex("termRef")),
+							this.context);
+					mark += weightFraction*categoryData.getMark();
+				} while(c.moveToNext());
+			}			
 		}
 		
 		categoriesDB.close();

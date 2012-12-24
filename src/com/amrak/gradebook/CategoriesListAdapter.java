@@ -63,10 +63,14 @@ public class CategoriesListAdapter extends BaseAdapter {
 			for (int i = 1; i < this.categories.size(); i++){
 				allWeight +=  this.categories.get(i).getWeight();
 			}
-			for (int i = 1; i < this.categories.size(); i++){
-				allPercent += this.categories.get(i).getMark() * (this.categories.get(i).getWeight()/allWeight);
+			if (allWeight > -0.001 && allWeight < 0.001)
+				mark.setText(String.valueOf(100.00));
+			else {
+				for (int i = 1; i < this.categories.size(); i++){
+					allPercent += this.categories.get(i).getMark() * (this.categories.get(i).getWeight()/allWeight);
+				}
+				mark.setText(String.valueOf(twoDForm.format(allPercent)));				
 			}
-			mark.setText(String.valueOf(twoDForm.format(allPercent)));
 		}
 		else {
 			mark.setText(String.valueOf(twoDForm.format(categories.getMark())));		
