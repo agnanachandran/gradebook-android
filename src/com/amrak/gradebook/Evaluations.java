@@ -255,8 +255,13 @@ public class Evaluations extends Activity {
 			dataReset();
 			break;
 		case R.id.sortByCategory:
-			sort = 3;
-			dataReset();
+			if (refIDReceive_Cat > 0){
+				break;
+			}
+			else {
+				sort = 3;
+				dataReset();
+			}
 			break;
 		case R.id.collapseAll:
 			int len = expListAdapter.getGroupCount();
