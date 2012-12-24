@@ -160,11 +160,6 @@ public class Categories extends Activity {
 			startActivity(iAddCat);
 			break;
 		case android.R.id.home:
-			Intent iCourse = new Intent(this, Courses.class);
-			iCourse.putExtra("refID_Term", refIDGet_Term);
-			iCourse.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-					| Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(iCourse);
 			finish();
 			break;
 		}
