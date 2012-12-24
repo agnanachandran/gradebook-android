@@ -9,5 +9,21 @@
         android:defaultValue="true"
         android:enabled="false"
 	    />
+	<ListPreference 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:key="pref_exportdb"
+        android:title="@string/pref_exportdb"
+        android:summary="@string/pref_exportdb_summ"
+        android:defaultValue="true"
+        android:enabled="false"
+	    />
+		<ListPreference 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:key="pref_importdb"
+        android:title="@string/pref_importdb"
+        android:summary="@string/pref_importdb_summ"
+        android:defaultValue="true"
+        android:enabled="false"
+	    />
 
 </PreferenceScreen>

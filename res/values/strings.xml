@@ -64,5 +64,9 @@
     <string name="evalGrade">Grade</string>
     <string name="textWeight">Weight</string>
     <string name="textCategory">Category</string>
+    <string name="pref_importdb">Import Data</string>
+    <string name="pref_exportdb">Export Data</string>
+    <string name="pref_importdb_summ">Import Database</string>
+    <string name="pref_exportdb_summ">Export Database</string>
 
 </resources>
