@@ -73,7 +73,7 @@ public class Evaluations extends Activity {
 	// is sorting by date
 	int sort = 0;
 	int prevSort = 0; // variable used for context menu when unfiltering,
-						// returns to old sorted format
+	// returns to old sorted format
 
 	// string constant for sort when you place in the onSavedInstanceState()
 	// method to keep
@@ -140,17 +140,10 @@ public class Evaluations extends Activity {
 
 		if (refIDReceive_Cat == 0) {
 			catTitle.setText("All");
-<<<<<<< HEAD
 			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
 					+ " %");
 		} else {
 			// category
-=======
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
-		}
-		else{
-			//category
->>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 			categoriesDB.open();
 			Cursor cCategory = categoriesDB.getCategory(refIDReceive_Cat);
 			categoryData = new CategoryData(cCategory.getInt(cCategory
@@ -161,12 +154,8 @@ public class Evaluations extends Activity {
 					.getColumnIndex("termRef")), context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
-<<<<<<< HEAD
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
 					.getMark())) + " %");
-=======
-			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark())));
->>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 			sort = 5;
 		}
 
@@ -442,15 +431,9 @@ public class Evaluations extends Activity {
 					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
 					.getColumnIndex("termRef")), context);
 			categoriesDB.close();
-<<<<<<< HEAD
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
 					.getMark())) + " %");
 		} else {
-=======
-			catMark.setText(String.valueOf(twoDForm.format(categoryData.getMark()))); 
-		}
-		else {
->>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 			coursesDB.open();
 			Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
 			courseData = new CourseData(cCourse.getInt(cCourse
@@ -461,12 +444,8 @@ public class Evaluations extends Activity {
 					.getColumnIndex("notes")), cCourse.getInt(cCourse
 					.getColumnIndex("termRef")), context);
 			coursesDB.close();
-<<<<<<< HEAD
 			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark()))
 					+ " %");
-=======
-			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
->>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 		}
 	}
 
@@ -521,7 +500,6 @@ public class Evaluations extends Activity {
 		if (c.moveToFirst()) {
 			do {
 				refIDPass_Evaluation[i] = c.getInt(c.getColumnIndex("_id"));
-<<<<<<< HEAD
 				eval_parent.add(new EvalData(c.getString(c
 						.getColumnIndex("evalTitle")), c.getInt(c
 						.getColumnIndex("evalMark")), c.getInt(c
@@ -540,26 +518,6 @@ public class Evaluations extends Activity {
 						.getColumnIndex("termRef")), c.getInt(c
 						.getColumnIndex("courseRef")), c.getInt(c
 						.getColumnIndex("catRef")), context));
-=======
-				eval_parent.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), 
-						c.getDouble(c.getColumnIndex("evalMark")), 
-						c.getDouble(c.getColumnIndex("evalOutOf")),
-						c.getDouble(c.getColumnIndex("evalWeight")),
-						c.getString(c.getColumnIndex("evalDate")),
-						c.getInt(c.getColumnIndex("termRef")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("catRef")),
-						context));
-				eval_child.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), 
-						c.getDouble(c.getColumnIndex("evalMark")), 
-						c.getDouble(c.getColumnIndex("evalOutOf")),
-						c.getDouble(c.getColumnIndex("evalWeight")),
-						c.getString(c.getColumnIndex("evalDate")),
-						c.getInt(c.getColumnIndex("termRef")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("catRef")), 
-						context));
->>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 				eval_childs.add(eval_child);
 				eval_child = new ArrayList<EvalData>();
 				i++;
