@@ -287,9 +287,11 @@ public class Categories extends Activity {
 		refIDPass_Category = new int[c.getCount() + 1];
 		int i = 0;
 		if (c.moveToFirst()) {
-			categories.add(new CategoryData(0, "All", 100, c.getInt(c
-					.getColumnIndex("courseRef")), c.getInt(c
-					.getColumnIndex("termRef")), context));
+			categories.add(new CategoryData(0, "All", 100,
+					c.getInt(c.getColumnIndex("courseRef")),
+					c.getInt(c.getColumnIndex("termRef")),
+					c.getInt(c.getColumnIndex("catColor")),
+					context));
 			refIDPass_Category[i] = 0;
 			i++;
 			do {
@@ -297,12 +299,13 @@ public class Categories extends Activity {
 																			// ids
 																			// of
 																			// each.
-				categories.add(new CategoryData(c.getInt(c
-						.getColumnIndex("_id")), c.getString(c
-						.getColumnIndex("catTitle")), c.getInt(c
-						.getColumnIndex("catWeight")), c.getInt(c
-						.getColumnIndex("courseRef")), c.getInt(c
-						.getColumnIndex("termRef")), context));
+				categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")),
+						c.getString(c.getColumnIndex("catTitle")),
+						c.getInt(c.getColumnIndex("catWeight")),
+						c.getInt(c.getColumnIndex("courseRef")),
+						c.getInt(c.getColumnIndex("termRef")),
+						c.getInt(c.getColumnIndex("catColor")),
+						context));
 				i++;
 			} while (c.moveToNext());
 		}

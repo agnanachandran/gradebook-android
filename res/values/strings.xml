@@ -64,5 +64,6 @@
     <string name="evalGrade">Grade</string>
     <string name="textWeight">Weight</string>
     <string name="textCategory">Category</string>
+    <string name="hint_category_color">Color</string>
 
 </resources>

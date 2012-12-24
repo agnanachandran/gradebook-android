@@ -64,6 +64,7 @@ public class CourseData {
 							c.getInt(c.getColumnIndex("catWeight")),
 							c.getInt(c.getColumnIndex("courseRef")),
 							c.getInt(c.getColumnIndex("termRef")),
+							c.getInt(c.getColumnIndex("catColor")),
 							this.context);
 					mark += weightFraction*categoryData.getMark();
 				} while(c.moveToNext());

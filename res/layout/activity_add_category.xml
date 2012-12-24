@@ -28,6 +28,12 @@
         android:hint="@string/hint_category_weight"
         android:inputType="numberDecimal"
         android:maxLength="@integer/eight" />
+    
+    <Spinner 
+        android:id="@+id/sCatColorPicker"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_category_color" />"
 
     <Button
         android:id="@+id/bCatDone"
