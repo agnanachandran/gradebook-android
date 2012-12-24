@@ -34,13 +34,16 @@ public class CourseData {
 	}
 
 	public double calcMarkFromDatabase(int courseID) {
-		// TODO Write function
 		double mark = 0;
 		int totalWeight = 0;
 		CategoryData categoryData;
 		
 		categoriesDB.open();
 		Cursor c = categoriesDB.getCategoriesOfCourse(courseID);
+		
+		//default mark is 100.00
+		if (c.getCount() == 0)
+			return 100.00;
 		
 		if (c.moveToFirst()) {
 			do {
@@ -57,7 +60,7 @@ public class CourseData {
 						c.getInt(c.getColumnIndex("courseRef")),
 						c.getInt(c.getColumnIndex("termRef")),
 						this.context);
-				mark += weightFraction*(double)categoryData.getMark();
+				mark += weightFraction*categoryData.getMark();
 			} while(c.moveToNext());
 		}
 		

@@ -30,13 +30,17 @@ public class TermData {
 	}
 
 	public double calcMarkFromDatabase(int termID) {
-		// TODO Write function
 		double mark = 0;
 		double totalWeight = 0; //courseUnits can be doubles
 		CourseData courseData;
 		
 		coursesDB.open();
 		Cursor c = coursesDB.getCoursesOfTerm(termID);
+		
+		//default mark is 100.00
+		if (c.getCount() == 0)
+			return 100.00;
+		
 		if (c.moveToFirst()) {
 			do {
 				totalWeight += c.getDouble(c.getColumnIndex("courseUnits"));

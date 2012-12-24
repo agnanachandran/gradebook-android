@@ -24,7 +24,6 @@ public class EvalData {
 
 	public EvalData(String inputTitle, double inputMark, double inputOutOf,
 			double inputWeight, String inputDate, int inputTerm, int inputCourse, int inputCategory, Context inputContext) {
-		// TODO Auto-generated constructor stub
 		title = inputTitle;
 		mark = inputMark;
 		outOf = inputOutOf;
@@ -36,8 +35,6 @@ public class EvalData {
 		context = inputContext;
 		categoriesDB = new CategoriesDBAdapter(context);
 	}
-
-	// calcFromDatabase(); (have yet to write the function)
 
 	public String getTitle() {
 		return title;

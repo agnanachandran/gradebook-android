@@ -35,19 +35,34 @@ public class CategoryData {
 		
 		evalsDB.open();
 		Cursor c = evalsDB.getEvaluationsOfCategory(categoryID);
+		
+		//default mark is 100.00
+		if (c.getCount() == 0)
+			return 100.00;
+		
 		if (c.moveToFirst()) {
 			do {
 				totalWeight += c.getInt(c.getColumnIndex("evalWeight"));
 			} while(c.moveToNext());
 		}
 		
-		if (c.moveToFirst()) {
-			do {
-				double weightFraction = (double)c.getInt(c.getColumnIndex("evalWeight"))/totalWeight;
-				mark += 100*weightFraction*(double)c.getInt(c.getColumnIndex("evalMark"))/c.getInt(c.getColumnIndex("evalOutOf"));
-			} while(c.moveToNext());
+		//When the user leaves weight blank
+		if (totalWeight == 0) {
+			int count = c.getCount();
+			if (c.moveToFirst()) {
+				do {
+					mark += 100*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"))/count;
+				} while(c.moveToNext());
+			}
 		}
-		//System.out.println(mark);
+		else {			
+			if (c.moveToFirst()) {
+				do {
+					double weightFraction = c.getDouble(c.getColumnIndex("evalWeight"))/totalWeight;
+					mark += 100*weightFraction*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"));
+				} while(c.moveToNext());
+			}			
+		}
 		
 		evalsDB.close();
 		
