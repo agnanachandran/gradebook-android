@@ -9,7 +9,7 @@
         android:id="@+id/tvEvalParentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="@string/textTitle"
         android:textSize="20sp" />
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:text="Mark"
+        android:text="@string/textMark"
         android:textSize="20sp" />
 
 </LinearLayout>

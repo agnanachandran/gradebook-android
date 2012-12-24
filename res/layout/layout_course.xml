@@ -19,30 +19,32 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/tvCourseTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:text="@string/textTitle"
                 android:textSize="20sp" />
-
+
             <TextView
                 android:id="@+id/tvCourseCode"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="@string/textDate"
                 android:textSize="12sp" />
-        </LinearLayout>
 
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvCourseMark"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="3"
             android:gravity="right|center_vertical"
-            android:text="Mark"
+            android:text="@string/textMark"
             android:textSize="20sp" />
+
     </LinearLayout>
 
 </LinearLayout>

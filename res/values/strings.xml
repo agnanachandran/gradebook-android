@@ -62,5 +62,7 @@
     <string name="noEvalAddEval">Add an evaluation!</string>
     <string name="evalTitle">Evaluation</string>
     <string name="evalGrade">Grade</string>
+    <string name="textWeight">Weight</string>
+    <string name="textCategory">Category</string>
 
 </resources>
