@@ -42,7 +42,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 		return (long) (position);
 	}
 	
-	public void changeColor(TextView title, TextView mark, TextView weight, int targetColor) {
+	public void changeColor(TextView title, TextView mark, TextView weight, View lineColor, int targetColor) {
 		String colorCode = new String("#000000");
 		if (targetColor == 0)
 			colorCode = new String("#000000");
@@ -55,9 +55,10 @@ public class CategoriesListAdapter extends BaseAdapter {
 		else if (targetColor == 4)
 			colorCode = new String("#228B22");
 		
-		title.setTextColor(Color.parseColor(colorCode));
-		mark.setTextColor(Color.parseColor(colorCode));
-		weight.setTextColor(Color.parseColor(colorCode));
+//		title.setTextColor(Color.parseColor(colorCode));
+//		mark.setTextColor(Color.parseColor(colorCode));
+//		weight.setTextColor(Color.parseColor(colorCode));
+		lineColor.setBackgroundColor(Color.parseColor(colorCode));
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -75,11 +76,12 @@ public class CategoriesListAdapter extends BaseAdapter {
 		TextView title = (TextView) v.findViewById(R.id.tvCategoryTitle);
 		TextView mark = (TextView) v.findViewById(R.id.tvCategoryMark);
 		TextView weight = (TextView) v.findViewById(R.id.tvCategoryWeight);
+		View lineColor = (View) v.findViewById(R.id.line_Color);
 		
 		title.setText(categories.getTitle());
 
 		if (!categories.getTitle().equals("All"))
-			changeColor(title, mark, weight, categories.getColor());		
+			changeColor(title, mark, weight, lineColor, categories.getColor());		
 		
 		// position of listview objects starts at 0 and ID starts at 1
 		if (categories.getID() == 0){
