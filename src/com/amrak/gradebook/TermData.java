@@ -30,31 +30,40 @@ public class TermData {
 	}
 
 	public double calcMarkFromDatabase(int termID) {
-		// TODO Write function
 		double mark = 0;
 		double totalWeight = 0; //courseUnits can be doubles
 		CourseData courseData;
 		
 		coursesDB.open();
 		Cursor c = coursesDB.getCoursesOfTerm(termID);
+		
+		//default mark is 100.00
+		if (c.getCount() == 0)
+			return 100.00;
+		
 		if (c.moveToFirst()) {
 			do {
 				totalWeight += c.getDouble(c.getColumnIndex("courseUnits"));
 			} while(c.moveToNext());
 		}
 		
-		if (c.moveToFirst()) {
-			do {
-				double weightFraction = c.getDouble(c.getColumnIndex("courseUnits"))/totalWeight;
-				courseData = new CourseData(c.getInt(c.getColumnIndex("_id")), 
-						c.getString(c.getColumnIndex("courseTitle")), 
-						c.getString(c.getColumnIndex("courseCode")), 
-						c.getInt(c.getColumnIndex("courseUnits")), 
-						c.getString(c.getColumnIndex("notes")), 
-						c.getInt(c.getColumnIndex("termRef")),
-						context);
-				mark += weightFraction*courseData.getMark();
-			} while(c.moveToNext());
+		// when user has a course that doesn't count for anything
+		if (totalWeight == 0)
+			return 100.00;		
+		else {
+			if (c.moveToFirst()) {
+				do {
+					double weightFraction = c.getDouble(c.getColumnIndex("courseUnits"))/totalWeight;
+					courseData = new CourseData(c.getInt(c.getColumnIndex("_id")), 
+							c.getString(c.getColumnIndex("courseTitle")), 
+							c.getString(c.getColumnIndex("courseCode")), 
+							c.getInt(c.getColumnIndex("courseUnits")), 
+							c.getString(c.getColumnIndex("notes")), 
+							c.getInt(c.getColumnIndex("termRef")),
+							context);
+					mark += weightFraction*courseData.getMark();
+				} while(c.moveToNext());
+			}			
 		}
 		
 		coursesDB.close();

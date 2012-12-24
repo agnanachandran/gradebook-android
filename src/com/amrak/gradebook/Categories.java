@@ -98,10 +98,15 @@ public class Categories extends Activity {
 				.getColumnIndex("termRef")), context);
 
 		courseTitle.setText(courseData.getTitle());
+<<<<<<< HEAD
 		courseCode.setText(courseData.getCode());
 		courseMark
 				.setText(String.valueOf(twoDForm.format(courseData.getMark()))
 						+ " %");
+=======
+		courseCode.setText(courseData.getCode()); 
+		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
+>>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 		coursesDB.close();
 
 		dataReadToList();
@@ -271,6 +276,7 @@ public class Categories extends Activity {
 		// refreshes mark after editing sublevels
 		coursesDB.open();
 		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+<<<<<<< HEAD
 		courseData = new CourseData(cCourse.getInt(cCourse
 				.getColumnIndex("_id")), cCourse.getString(cCourse
 				.getColumnIndex("courseTitle")), cCourse.getString(cCourse
@@ -281,6 +287,16 @@ public class Categories extends Activity {
 		courseMark
 				.setText(String.valueOf(twoDForm.format(courseData.getMark()))
 						+ " %");
+=======
+		courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")), 
+				cCourse.getString(cCourse.getColumnIndex("courseTitle")), 
+				cCourse.getString(cCourse.getColumnIndex("courseCode")), 
+				cCourse.getInt(cCourse.getColumnIndex("courseUnits")), 
+				cCourse.getString(cCourse.getColumnIndex("notes")), 
+				cCourse.getInt(cCourse.getColumnIndex("termRef")),
+				context);
+		courseMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
+>>>>>>> f028b30e1ffb819d078b9829d400cb0f98475296
 		coursesDB.close();
 
 	}

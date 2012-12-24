@@ -86,7 +86,7 @@ public class Courses extends Activity {
 		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelCourses);
 		tvNoCourses = (TextView) findViewById(R.id.tvNoCourses);
 		vCourseDivLine = (View) findViewById(R.id.vCourseDivLine);
-		
+
 		// term
 		termsDB.open();
 		Cursor cTerm = termsDB.getTerm(refIDGet_Term);
@@ -101,6 +101,7 @@ public class Courses extends Activity {
 				+ termData.getDateEnd());
 		termMark.setText(String.valueOf(twoDForm.format(termData.getMark()))
 				+ " %");
+		// termMark.setText(String.valueOf(twoDForm.format(termData.getMark())));
 		termsDB.close();
 
 		// read data from database
@@ -283,8 +284,9 @@ public class Courses extends Activity {
 				cTerm.getString(cTerm.getColumnIndex("termStartDate")),
 				cTerm.getString(cTerm.getColumnIndex("termEndDate")), context);
 
-		termMark.setText(String.valueOf(twoDForm.format(termData.getMark()))
-				+ " %");
+		// termMark.setText(String.valueOf(twoDForm.format(termData.getMark()))
+		// + " %");
+		termMark.setText(String.valueOf(twoDForm.format(termData.getMark())));
 		termsDB.close();
 	}
 
@@ -316,7 +318,7 @@ public class Courses extends Activity {
 			rLayoutLabels.setVisibility(View.VISIBLE);
 			vCourseDivLine.setVisibility(View.VISIBLE);
 			tvNoCourses.setVisibility(View.INVISIBLE);
-			
+
 		} else {
 			rLayoutLabels.setVisibility(View.INVISIBLE);
 			vCourseDivLine.setVisibility(View.INVISIBLE);

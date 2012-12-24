@@ -55,7 +55,7 @@ public class TermsListAdapter extends BaseAdapter {
 		TextView date = (TextView) v.findViewById(R.id.tvTermDate);
 
 		title.setText(term.getTitle());
-		mark.setText(String.valueOf(twoDForm.format(term.getMark())) + " %");		
+		mark.setText(String.valueOf(twoDForm.format(term.getMark())));		
 		date.setText(term.getDateStart() + " - " + term.getDateEnd());
 		return v;
 	}

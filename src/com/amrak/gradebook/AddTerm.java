@@ -313,7 +313,7 @@ public class AddTerm extends Activity {
 							selectedSDate, selectedEDate);
 					termsDB.close();
 
-					Toast toast = Toast.makeText(context, "Term " + termTitle
+					Toast toast = Toast.makeText(context, "Term" + termTitle
 							+ " was edited successfully.", Toast.LENGTH_SHORT);
 					try {
 						// center toast

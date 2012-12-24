@@ -121,7 +121,7 @@ public class AddCategory extends Activity {
 		    	 categoriesDB.updateCategory(idEdit_Item, catName, catWeight, refIDGet_Term, refIDGet_Course);
 		    	 categoriesDB.close();
 		    	 
-		    	 Toast toast = Toast.makeText(context, "Category " + catName + " edited successfully.", Toast.LENGTH_SHORT);
+		    	 Toast toast = Toast.makeText(context, "Category" + catName + " edited successfully.", Toast.LENGTH_SHORT);
 					try {
 						//center toast
 						((TextView)((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
