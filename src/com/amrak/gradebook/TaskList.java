@@ -56,6 +56,9 @@ public class TaskList extends Activity {
 		setContentView(R.layout.activity_task_list);
 
 		// initialization of views
+		listView = (ListView) findViewById(R.id.lvTasks);
+
+		
 		// change title back to Tasks since default title is the app's name
 		getActionBar().setTitle("Tasks");
 		// read data from database
