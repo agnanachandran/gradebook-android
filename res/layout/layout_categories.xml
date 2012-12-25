@@ -18,8 +18,8 @@
         android:layout_width="10px"
         android:layout_height="match_parent"
         android:background="@color/Grey"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="35px">        
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="15dp">        
         </View>
 
         <LinearLayout

@@ -29,11 +29,23 @@
         android:inputType="numberDecimal"
         android:maxLength="@integer/eight" />
     
-    <Spinner 
-        android:id="@+id/sCatColorPicker"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_category_color" />"
+    <View
+        android:id="@+id/catColorPreview"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/Grey"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp">        
+        </View>
+    
+    <Button
+        android:id="@+id/bCatChooseColor"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:onClick="openColorPickerDiag"
+        android:text="@string/chooseColor" />
 
     <Button
         android:id="@+id/bCatDone"

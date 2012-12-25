@@ -65,5 +65,11 @@
     <string name="textWeight">Weight</string>
     <string name="textCategory">Category</string>
     <string name="hint_category_color">Color</string>
+    <string name="chooseColor">Pick Category Color</string>
+	<string name="pref_importdb">Import Data</string> 
+	<string name="pref_exportdb">Export Data</string>
+	<string name="pref_importdb_summ">Import Database</string>
+	<string name="pref_exportdb_summ">Export Database</string>
+    
 
 </resources>

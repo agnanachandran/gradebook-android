@@ -43,22 +43,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 	}
 	
 	public void changeColor(TextView title, TextView mark, TextView weight, View lineColor, int targetColor) {
-		String colorCode = new String("#000000");
-		if (targetColor == 0)
-			colorCode = new String("#000000");
-		else if (targetColor == 1)
-			colorCode = new String("#B22222");
-		else if (targetColor == 2)
-			colorCode = new String("#FFA500");
-		else if (targetColor == 3)
-			colorCode = new String("#1E90FF");
-		else if (targetColor == 4)
-			colorCode = new String("#228B22");
-		
-//		title.setTextColor(Color.parseColor(colorCode));
-//		mark.setTextColor(Color.parseColor(colorCode));
-//		weight.setTextColor(Color.parseColor(colorCode));
-		lineColor.setBackgroundColor(Color.parseColor(colorCode));
+		lineColor.setBackgroundColor(targetColor);
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
