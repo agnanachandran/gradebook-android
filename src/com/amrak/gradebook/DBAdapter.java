@@ -18,6 +18,15 @@ public abstract class DBAdapter {
     public static final int DATABASE_VERSION = 1;
 
     //Sql query for creating tables
+    
+    private static final String CREATE_TABLE_TASK =
+    	       "CREATE TABLE IF NOT EXISTS tasks (_id INTEGER primary key autoincrement, " //$NON-NLS-1$
+    	    + TaskDBAdapter.TASK_TITLE + " VARCHAR not null," //$NON-NLS-1$
+    	    + TaskDBAdapter.TASK_DATEMADE + " DATETIME," //$NON-NLS-1$
+    	    + TaskDBAdapter.TASK_DATEDUE + " DATETIME," //$NON-NLS-1$
+    	    + TaskDBAdapter.TASK_DATEDUETIME + " DATETIME"  //$NON-NLS-1$
+    	    + ");"; //$NON-NLS-1$ //$NON-NLS-2$
+    
     private static final String CREATE_TABLE_TERM =
        "CREATE TABLE IF NOT EXISTS terms (_id INTEGER primary key autoincrement, " //$NON-NLS-1$
     + TermsDBAdapter.TERM_TITLE + " VARCHAR not null," //$NON-NLS-1$
@@ -63,6 +72,7 @@ public abstract class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+        	db.execSQL(CREATE_TABLE_TASK);
             db.execSQL(CREATE_TABLE_TERM);
         	db.execSQL(CREATE_TABLE_COURSE);
             db.execSQL(CREATE_TABLE_CATEGORY);
