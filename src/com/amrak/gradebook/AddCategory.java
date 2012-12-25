@@ -3,23 +3,21 @@ package com.amrak.gradebook;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddCategory extends Activity implements OnItemSelectedListener {
+public class AddCategory extends Activity{
 
 	// database
 	CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
@@ -31,9 +29,9 @@ public class AddCategory extends Activity implements OnItemSelectedListener {
 	// views
 	EditText etCatName;
 	EditText etCatWeight;
-	Spinner sCatColor;
-	ArrayAdapter<CharSequence> spinnerAdapter;
+	Button bChooseColor;
 	Button bCatDone;
+	View previewColor;
 
 	// variables
 	final private String TAG = "AddCat";
@@ -43,7 +41,7 @@ public class AddCategory extends Activity implements OnItemSelectedListener {
 	int refIDGet_Course;
 	int idGet_Mode; // mode 0: add, mode 1: edit
 	int idEdit_Item;
-	int catColor = 0; // 0: black, 1: red, 2: yellow, 3: blue, 4: green
+	int catColor = 0xff888888; //default is gray
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,8 @@ public class AddCategory extends Activity implements OnItemSelectedListener {
 
 		etCatName = (EditText) findViewById(R.id.etCatName);
 		etCatWeight = (EditText) findViewById(R.id.etCatWeight);
-		sCatColor = (Spinner) findViewById(R.id.sCatColorPicker);
+		previewColor = (View) findViewById(R.id.catColorPreview);
+		bChooseColor = (Button) findViewById(R.id.bCatChooseColor);
 		bCatDone = (Button) findViewById(R.id.bCatDone);
 
 		Intent iAddCat = getIntent();
@@ -80,14 +79,10 @@ public class AddCategory extends Activity implements OnItemSelectedListener {
 			cCategory.moveToFirst();
 			etCatName.setText(cCategory.getString(cCategory.getColumnIndex("catTitle")));
 			etCatWeight.setText(cCategory.getString(cCategory.getColumnIndex("catWeight")));
+			catColor = cCategory.getInt(cCategory.getColumnIndex("catColor"));
+			previewColor.setBackgroundColor(catColor);
 			categoriesDB.close();
 		}
-		
-		spinnerAdapter = ArrayAdapter.createFromResource(this, 
-				R.array.cat_colors, android.R.layout.simple_spinner_item);
-		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		sCatColor.setAdapter(spinnerAdapter);
-		sCatColor.setOnItemSelectedListener(this);
 	}
 	
 	public void addCat(View v) {
@@ -152,22 +147,25 @@ public class AddCategory extends Activity implements OnItemSelectedListener {
 		
 	}
 	
-	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-		String color = (String) parent.getItemAtPosition(pos);
-		if (color.equals("Black"))
-			catColor = 0;
-		else if (color.equals("Red"))
-			catColor = 1;
-		else if (color.equals("Yellow"))
-			catColor = 2;
-		else if (color.equals("Blue"))
-			catColor = 3;
-		else if (color.equals("Green"))
-			catColor = 4;
-		//System.out.println(catColor);
-	}
-	
-	public void onNothingSelected(AdapterView<?> parent) {
-		//System.out.println("Nothing selected");
+	@SuppressWarnings("deprecation")
+	public void openColorPickerDiag(View v) {
+		final ColorPickerDialog d = new ColorPickerDialog(this, catColor);
+		d.setAlphaSliderVisible(true);
+		d.setButton("OK", new DialogInterface.OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				catColor = d.getColor();
+				//Update previewColor
+				previewColor.setBackgroundColor(catColor);
+			}
+		});
+		d.setButton2("Cancel", new DialogInterface.OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		
+		d.show();
+
 	}
 }

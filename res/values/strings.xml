@@ -69,7 +69,6 @@
     <string name="pref_importdb_summ">Import Database</string>
     <string name="pref_exportdb_summ">Export Database</string>
     <string name="hint_category_color">Color</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_task_list">Task List</string>
     <string name="menu_add_task">Add Task</string>
     <string name="title_activity_add_task">AddTask</string>
@@ -77,5 +76,6 @@
     <string name="doneAddTask">Add Task</string>
     <string name="doneEditTask">Done</string>
     <string name="menu_tasks">Tasks</string>
-
+	<string name="chooseColor">Pick Category Color</string>
+    
 </resources>
