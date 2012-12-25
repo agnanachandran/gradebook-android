@@ -94,5 +94,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.amrak.gradebook.TaskList"
+            android:label="@string/title_activity_task_list" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.TASKLIST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.amrak.gradebook.AddTask"
+            android:label="@string/title_activity_add_task" >
+            <intent-filter>
+                <action android:name="com.amrak.gradebook.ADDTASK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
-    </manifest>
+
+</manifest>

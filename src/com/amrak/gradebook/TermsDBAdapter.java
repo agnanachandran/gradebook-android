@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 public class TermsDBAdapter extends DBAdapter {
 	
@@ -32,15 +30,15 @@ public class TermsDBAdapter extends DBAdapter {
      * Create a term. If the term is successfully created return the new
      * rowId for that term, otherwise return a -1 to indicate failure.
      * 
-     * @param termTite title of term
+     * @param termTitle title of term
      * @param termDateStart start date of term
      * @param termDateEnd end date of term
      * @return rowId or -1 if failed
      */
-    public long createTerm(String termTite, String termDateStart, String termDateEnd){
+    public long createTerm(String termTitle, String termDateStart, String termDateEnd){
         ContentValues initialValues = new ContentValues();
         
-        initialValues.put(TERM_TITLE, termTite);
+        initialValues.put(TERM_TITLE, termTitle);
         initialValues.put(TERM_DATESTART, termDateStart);
         initialValues.put(TERM_DATEEND, termDateEnd);
         
@@ -97,10 +95,10 @@ public class TermsDBAdapter extends DBAdapter {
      * @param termDateEnd end date of term
      * @return true if the note was successfully updated, false otherwise
      */
-    public boolean updateTerm(long rowId, String termTite, String termDateStart, String termDateEnd){
+    public boolean updateTerm(long rowId, String termTitle, String termDateStart, String termDateEnd){
         ContentValues args = new ContentValues();
         
-        args.put(TERM_TITLE, termTite);
+        args.put(TERM_TITLE, termTitle);
         args.put(TERM_DATESTART, termDateStart);
         args.put(TERM_DATEEND, termDateEnd);
 

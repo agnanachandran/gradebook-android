@@ -128,7 +128,11 @@ public class Terms extends Activity {
 			Intent iAddTerm = new Intent("com.amrak.gradebook.ADDTERM");
 			startActivity(iAddTerm);
 			break;
-		}
+		case R.id.tasks:
+			Intent iTask = new Intent("com.amrak.gradebook.TASKLIST");
+			startActivity(iTask);
+			break;
+	}
 		return super.onOptionsItemSelected(item);
 	}
 

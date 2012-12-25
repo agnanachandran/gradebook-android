@@ -58,7 +58,7 @@
     <string name="catGrade">Grade</string>
     <string name="noTermAddTerm">Start by adding a term!</string>
     <string name="blueArrow">Blue Arrow</string>
-    <string name ="noCourseAddCourse">Start by adding a course!</string>
+    <string name="noCourseAddCourse">Start by adding a course!</string>
     <string name="noEvalAddEval">Add an evaluation!</string>
     <string name="evalTitle">Evaluation</string>
     <string name="evalGrade">Grade</string>
@@ -69,4 +69,13 @@
     <string name="pref_importdb_summ">Import Database</string>
     <string name="pref_exportdb_summ">Export Database</string>
     <string name="hint_category_color">Color</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_task_list">Task List</string>
+    <string name="menu_add_task">Add Task</string>
+    <string name="title_activity_add_task">AddTask</string>
+    <string name="hint_task_title">Task Title</string>
+    <string name="doneAddTask">Add Task</string>
+    <string name="doneEditTask">Done</string>
+    <string name="menu_tasks">Tasks</string>
+
 </resources>
