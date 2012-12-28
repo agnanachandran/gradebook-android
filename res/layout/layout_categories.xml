@@ -15,7 +15,7 @@
         
         <View
         android:id="@+id/line_Color"
-        android:layout_width="10px"
+        android:layout_width="5dp"
         android:layout_height="match_parent"
         android:background="@color/Grey"
         android:layout_marginLeft="5dp"

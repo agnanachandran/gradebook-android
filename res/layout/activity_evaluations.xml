@@ -15,10 +15,19 @@
             android:background="@color/White"
             android:orientation="horizontal"
             android:paddingBottom="10dp"
-            android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:paddingTop="10dp"
             android:weightSum="4" >
+            
+            <View
+	        android:id="@+id/catColorEvalAct"
+	        android:layout_width="7dp"
+	        android:layout_height="match_parent"
+	        android:background="@color/Grey"
+	        android:layout_marginLeft="9dp"
+	        android:layout_marginRight="9dp"
+	        android:visibility="visible">        
+	        </View>
 
             <LinearLayout
                 android:layout_width="fill_parent"

@@ -41,6 +41,7 @@ public class Evaluations extends Activity {
 	ExpandableListView expListView;
 	TextView catTitle;
 	TextView catMark;
+	View catColor;
 	TextView courseNameFull; // course title and course code, e.g. ECE 105
 	TextView noEvalAddEval;
 	TextView tvNoEvals;
@@ -112,6 +113,7 @@ public class Evaluations extends Activity {
 		// initialization of views
 		catTitle = (TextView) findViewById(R.id.tvEvalCatTitle);
 		catMark = (TextView) findViewById(R.id.tvEvalCatMark);
+		catColor = (View) findViewById(R.id.catColorEvalAct);
 		courseNameFull = (TextView) findViewById(R.id.tvEvalCourseName);
 		expListView = (ExpandableListView) findViewById(R.id.elvEvalList);
 		tvNoEvals = (TextView) findViewById(R.id.tvNoEvals);
@@ -141,6 +143,7 @@ public class Evaluations extends Activity {
 		if (refIDReceive_Cat == 0) {
 			catTitle.setText("All");
 			catMark.setText(String.valueOf(twoDForm.format(courseData.getMark())));
+			catColor.setVisibility(View.INVISIBLE);
 		} else {
 			// category
 			categoriesDB.open();
@@ -150,11 +153,13 @@ public class Evaluations extends Activity {
 					.getColumnIndex("catTitle")), cCategory.getInt(cCategory
 					.getColumnIndex("catWeight")), cCategory.getInt(cCategory
 					.getColumnIndex("courseRef")), cCategory.getInt(cCategory
-					.getColumnIndex("termRef")), cCategory.getInt(cCategory.getColumnIndex("catColor")), context);
+					.getColumnIndex("termRef")), cCategory.getInt(cCategory
+					.getColumnIndex("catColor")), context);
 			categoriesDB.close();
 			catTitle.setText(categoryData.getTitle());
 			catMark.setText(String.valueOf(twoDForm.format(categoryData
 					.getMark())));
+			catColor.setBackgroundColor(categoryData.getColor());
 			sort = 5;
 		}
 

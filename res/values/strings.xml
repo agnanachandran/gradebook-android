@@ -76,6 +76,6 @@
     <string name="doneAddTask">Add Task</string>
     <string name="doneEditTask">Done</string>
     <string name="menu_tasks">Tasks</string>
-	<string name="chooseColor">Pick Category Color</string>
+	<string name="chooseColor">Pick Colour</string>
     
 </resources>
