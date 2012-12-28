@@ -29,23 +29,31 @@
         android:inputType="numberDecimal"
         android:maxLength="@integer/eight" />
     
-    <View
-        android:id="@+id/catColorPreview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/Grey"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp">        
-        </View>
-    
-    <Button
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <Button
         android:id="@+id/bCatChooseColor"
-        android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_width="fill_parent"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:onClick="openColorPickerDiag"
-        android:text="@string/chooseColor" />
+        android:text="@string/chooseColor"
+        android:layout_weight="1" />
+        
+        <View
+        android:id="@+id/catColorPreview"
+        android:layout_marginTop="8.6dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/Grey"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"/>        
+        
+    </LinearLayout>
 
     <Button
         android:id="@+id/bCatDone"

@@ -64,6 +64,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 		View lineColor = (View) v.findViewById(R.id.line_Color);
 		
 		title.setText(categories.getTitle());
+		lineColor.setBackgroundColor(0xff888888);
 
 		if (!categories.getTitle().equals("All"))
 			changeColor(title, mark, weight, lineColor, categories.getColor());		
