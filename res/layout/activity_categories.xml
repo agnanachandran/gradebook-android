@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="top|center_horizontal"
         android:orientation="vertical" >
-
+
         <TextView
             android:id="@+id/tvCategoriesCourseTitle"
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:text="@string/textTitle"
-            android:textSize="21sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView

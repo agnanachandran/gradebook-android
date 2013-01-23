@@ -27,25 +27,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/tvCategoryTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textTitle"
-                android:textColor="@color/White"
                 android:textSize="20sp" />
-
+
             <TextView
                 android:id="@+id/tvCategoryWeight"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textWeight"
-                android:textColor="@color/DarkGrey"
+                android:textColor="@color/Grey"
                 android:textSize="12sp" />
 
         </LinearLayout>
-
+
         <TextView
             android:id="@+id/tvCategoryMark"
             android:layout_width="fill_parent"
@@ -53,7 +52,6 @@
             android:layout_weight="3"
             android:gravity="right|center_vertical"
             android:text="@string/textMark"
-            android:textColor="@color/White"
             android:textSize="20sp" />
 
     </LinearLayout>

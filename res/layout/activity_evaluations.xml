@@ -34,24 +34,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:orientation="vertical" >
-
+
                 <TextView
                     android:id="@+id/tvEvalCatTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:text="@string/textTitle"
                     android:textColor="@color/Black"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:typeface="normal" />
-
+
                 <TextView
                     android:id="@+id/tvEvalCourseName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/textDate"
+                    android:text="@string/textCourseCode"
                     android:textColor="@color/Black"
                     android:textSize="12sp" />
+
             </LinearLayout>
 
             <TextView

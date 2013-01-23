@@ -42,7 +42,7 @@ public class Evaluations extends Activity {
 	TextView catTitle;
 	TextView catMark;
 	View catColor;
-	TextView courseNameFull; // course title and course code, e.g. ECE 105
+	TextView courseName; // course title and course code, e.g. ECE 105
 	TextView noEvalAddEval;
 	TextView tvNoEvals;
 	RelativeLayout rLayoutLabels;
@@ -114,7 +114,7 @@ public class Evaluations extends Activity {
 		catTitle = (TextView) findViewById(R.id.tvEvalCatTitle);
 		catMark = (TextView) findViewById(R.id.tvEvalCatMark);
 		catColor = (View) findViewById(R.id.catColorEvalAct);
-		courseNameFull = (TextView) findViewById(R.id.tvEvalCourseName);
+		courseName = (TextView) findViewById(R.id.tvEvalCourseName);
 		expListView = (ExpandableListView) findViewById(R.id.elvEvalList);
 		tvNoEvals = (TextView) findViewById(R.id.tvNoEvals);
 		rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelEvaluations);
@@ -163,8 +163,7 @@ public class Evaluations extends Activity {
 			sort = 5;
 		}
 
-		courseNameFull.setText(courseData.getTitle() + " "
-				+ courseData.getCode());
+		courseName.setText(courseData.getCode());
 
 		// if there was a onSavedInstanceState before, retrieve original sort
 		// variable
