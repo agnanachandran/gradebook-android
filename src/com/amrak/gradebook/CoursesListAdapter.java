@@ -13,53 +13,59 @@ import android.widget.Toast;
 
 public class CoursesListAdapter extends BaseAdapter {
 
-	// context
-	private Context context;
+    // context
+    private Context context;
 
-	// views
-	private LayoutInflater inflater;
+    // views
+    private LayoutInflater inflater;
 
-	// data
-	private ArrayList<CourseData> courses;
-	
-	DecimalFormat twoDForm = new DecimalFormat("0.00");
+    // data
+    private ArrayList<CourseData> courses;
 
-	public CoursesListAdapter(Context context, ArrayList<CourseData> courses) {
-		this.context = context;
-		this.courses = courses;
-		inflater = LayoutInflater.from(context);
+    DecimalFormat twoDForm = new DecimalFormat("0.00");
+
+    public CoursesListAdapter(Context context, ArrayList<CourseData> courses) {
+	this.context = context;
+	this.courses = courses;
+	inflater = LayoutInflater.from(context);
+    }
+
+    public int getCount() {
+	return courses.size();
+    }
+
+    public Object getItem(int position) {
+	return courses.get(position);
+    }
+
+    public long getItemId(int position) {
+	return (long) (position);
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+	int[] colors = new int[] { 0x30ffffff, 0x30404040 };
+
+	View v = null;
+	if (convertView != null)
+	{
+	    v = convertView;
 	}
-
-	public int getCount() {
-		return courses.size();
+	else
+	{
+	    v = inflater.inflate(R.layout.layout_course, parent, false);
 	}
+	v.setBackgroundColor(colors[position % 2]);
 
-	public Object getItem(int position) {
-		return courses.get(position);
-	}
+	CourseData course = (CourseData) getItem(position);
+	TextView title = (TextView) v.findViewById(R.id.tvCourseTitle);
+	TextView mark = (TextView) v.findViewById(R.id.tvCourseMark);
+	TextView code = (TextView) v.findViewById(R.id.tvCourseCode);
 
-	public long getItemId(int position) {
-		return (long) (position);
-	}
+	title.setText(course.getTitle());
+	mark.setText(String.valueOf(twoDForm.format(course.getMark())));
+	code.setText(course.getCode());
+	return v;
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = null;
-		if (convertView != null) {
-			v = convertView;
-		} else {
-			v = inflater.inflate(R.layout.layout_course, parent, false);
-		}
-
-		CourseData course = (CourseData) getItem(position);
-		TextView title = (TextView) v.findViewById(R.id.tvCourseTitle);
-		TextView mark = (TextView) v.findViewById(R.id.tvCourseMark);
-		TextView code = (TextView) v.findViewById(R.id.tvCourseCode);
-
-		title.setText(course.getTitle());
-		mark.setText(String.valueOf(twoDForm.format(course.getMark())));
-		code.setText(course.getCode());
-		return v;
-
-	}
+    }
 
 }

@@ -77,5 +77,6 @@
     <string name="doneEditTask">Done</string>
     <string name="menu_tasks">Tasks</string>
 	<string name="chooseColor">Pick Colour</string>
+	<string name="textCourseCode">Course Code</string>
     
 </resources>

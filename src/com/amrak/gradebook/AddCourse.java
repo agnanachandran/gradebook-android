@@ -129,7 +129,7 @@ public class AddCourse extends Activity {
 				coursesDB.updateCourse(idEditGet_Item, courseTitle, courseCode, courseUnits, courseNotes, refIDGet_Term);
 				coursesDB.close();
 
-				Toast toast = Toast.makeText(context, "Course" + courseTitle + " was edited successfully.", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(context, "Course " + courseTitle + " was edited successfully.", Toast.LENGTH_SHORT);
 				try {
 					//center toast
 					((TextView)((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);

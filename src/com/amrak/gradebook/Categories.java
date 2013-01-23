@@ -41,7 +41,7 @@ public class Categories extends Activity {
 	// view(s)
 	ListView listView;
 	TextView courseTitle;
-	TextView courseMark;
+	//TextView courseMark;
 	TextView courseCode;
 	View vCatDivLine;
 
@@ -81,7 +81,7 @@ public class Categories extends Activity {
 		// initialization of views
 		listView = (ListView) findViewById(R.id.lvCategories);
 		courseTitle = (TextView) findViewById(R.id.tvCategoriesCourseTitle);
-		courseMark = (TextView) findViewById(R.id.tvCategoriesCourseMark);
+		//courseMark = (TextView) findViewById(R.id.tvCategoriesCourseMark);
 		courseCode = (TextView) findViewById(R.id.tvCategoriesCourseCode);
 		rLayoutLabels = (RelativeLayout) findViewById(R.id.rCatLayoutLabelCategories);
 		vCatDivLine = (View) findViewById(R.id.vCatDivLine);
@@ -97,10 +97,10 @@ public class Categories extends Activity {
 				.getColumnIndex("notes")), cCourse.getInt(cCourse
 				.getColumnIndex("termRef")), context);
 
-		courseTitle.setText(courseData.getTitle());
+		courseTitle.setText(courseData.getTitle() + " (" + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
 		courseCode.setText(courseData.getCode());
-		courseMark
-				.setText(String.valueOf(twoDForm.format(courseData.getMark())));
+		//courseMark
+		//.setText(String.valueOf(twoDForm.format(courseData.getMark())));
 		coursesDB.close();
 
 		dataReadToList();
@@ -274,8 +274,8 @@ public class Categories extends Activity {
 				.getColumnIndex("courseUnits")), cCourse.getString(cCourse
 				.getColumnIndex("notes")), cCourse.getInt(cCourse
 				.getColumnIndex("termRef")), context);
-		courseMark
-				.setText(String.valueOf(twoDForm.format(courseData.getMark())));
+		courseTitle.setText(courseData.getTitle() + " (" + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
+
 		coursesDB.close();
 
 	}
@@ -312,14 +312,14 @@ public class Categories extends Activity {
 
 		// set label and divider to visible/invisible if there is at least 1
 		// category
-		if (c.getCount() > 0) {
+		/*if (c.getCount() > 0) {
 			rLayoutLabels.setVisibility(View.VISIBLE);
 			vCatDivLine.setVisibility(View.VISIBLE);
 		} else {
 			rLayoutLabels.setVisibility(View.INVISIBLE);
 			vCatDivLine.setVisibility(View.INVISIBLE);
 
-		}
+		}*/
 		categoriesDB.close();
 	}
 
