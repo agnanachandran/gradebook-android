@@ -34,15 +34,6 @@
             android:layout_marginTop="4dp"
             android:onClick="showDatePickerDialog"
             android:text="Deadline" />
-
-        <Button
-            android:id="@+id/bTaskPickEndDate"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            android:onClick="showDatePickerDialog"
-            android:text="Time Due" />
     </LinearLayout>
 
     <Button

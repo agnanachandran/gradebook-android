@@ -36,7 +36,6 @@ public class AddTask extends Activity {
 	// views
 	EditText etTaskTitle;
 	Button bTaskPickStartDate;
-	Button bTaskPickEndDate;
 	Button bTaskDone;
 
 	// date and time
@@ -77,7 +76,6 @@ public class AddTask extends Activity {
 
 		etTaskTitle = (EditText) findViewById(R.id.etTaskTitle);
 		bTaskPickStartDate = (Button) findViewById(R.id.bTaskPickStartDate);
-		bTaskPickEndDate = (Button) findViewById(R.id.bTaskPickEndDate);
 		bTaskDone = (Button) findViewById(R.id.bTaskDone);
 
 		if (idGet_Mode == 0) {
@@ -91,13 +89,6 @@ public class AddTask extends Activity {
 			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				showDialog(DATE_START_DIALOG_ID);
-			}
-		});
-
-		bTaskPickEndDate.setOnClickListener(new View.OnClickListener() {
-			@SuppressWarnings("deprecation")
-			public void onClick(View v) {
-				showDialog(DATE_END_DIALOG_ID);
 			}
 		});
 
@@ -167,8 +158,6 @@ public class AddTask extends Activity {
 				+ "-" + twoDigit.format(mSDay));
 		selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
 				+ twoDigit.format(mEDay);
-		bTaskPickEndDate.setText(mEYear + "-" + twoDigit.format(mEMonth + 1)
-				+ "-" + twoDigit.format(mEDay));
 
 		bTaskDone.setOnClickListener(new View.OnClickListener() {
 
@@ -249,9 +238,7 @@ public class AddTask extends Activity {
 			mEDay = dayOfMonth;
 			selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
 					+ twoDigit.format(mEDay);
-			bTaskPickEndDate.setText(mEYear + "-"
-					+ twoDigit.format(mEMonth + 1) + "-"
-					+ twoDigit.format(mEDay));
+		
 		}
 	};
 
@@ -264,7 +251,7 @@ public class AddTask extends Activity {
 
 	public void addTask(View v) {
 
-		Log.d(TAG, "Adding of Editing Task.");
+		Log.d(TAG, "Adding or Editing Task.");
 
 		if (etTaskTitle.getText().toString().trim().equals("")) {
 			// TODO Check: start date must be before end date
