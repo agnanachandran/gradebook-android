@@ -67,6 +67,7 @@ public class AddEval extends Activity {
 	String selectedDate;
 	int refIDGet_Term;
 	int refIDGet_Course;
+	int refIDGet_Category;
 	int idGet_Mode; // mode 0: add, mode 1: edit
 	int idEditGet_Item;
 	
@@ -87,6 +88,7 @@ public class AddEval extends Activity {
 		Intent iAddEval = getIntent();
 		refIDGet_Term = iAddEval.getIntExtra("refID_Term", -1);
 		refIDGet_Course = iAddEval.getIntExtra("refID_Course", -1);
+		refIDGet_Category = iAddEval.getIntExtra("refID_Category", -1);
 		idGet_Mode = iAddEval.getIntExtra("id_Mode", 0); // mode 0: add, mode 1: edit
 		idEditGet_Item = iAddEval.getIntExtra("idEdit_Item", -1);
 
@@ -170,6 +172,7 @@ public class AddEval extends Activity {
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sEvalCat.setAdapter(dataAdapter);
+		sEvalCat.setSelection(refIDGet_Category);
 		sEvalCat.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
