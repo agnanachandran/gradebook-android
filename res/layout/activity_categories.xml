@@ -8,9 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvCategoriesCourseTitle"
@@ -19,6 +17,7 @@
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"
+            android:paddingTop="5dp"
             android:scrollHorizontally="true"
             android:text="@string/textTitle"
             android:textColor="@color/Black"
@@ -30,6 +29,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+			android:paddingBottom="5dp"
+			android:paddingTop="1dp"
             android:text="@string/textDate"
             android:textColor="@color/Grey"
             android:textSize="12sp" />

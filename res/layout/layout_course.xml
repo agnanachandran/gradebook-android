@@ -29,7 +29,7 @@
                 android:scrollHorizontally="true"
                 android:text="@string/textTitle"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCourseCode"
