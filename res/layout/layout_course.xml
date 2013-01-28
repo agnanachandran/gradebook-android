@@ -19,7 +19,7 @@
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/tvCourseTitle"
                 android:layout_width="fill_parent"
@@ -29,7 +29,7 @@
                 android:scrollHorizontally="true"
                 android:text="@string/textTitle"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCourseCode"

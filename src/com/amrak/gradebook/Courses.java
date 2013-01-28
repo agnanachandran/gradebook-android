@@ -98,8 +98,8 @@ public class Courses extends Activity {
 
 	termTitle.setText(termData.getTitle() + " ("
 		+ String.valueOf(twoDForm.format(termData.getMark())) + ")");
-	termDate.setText(Tool.toMonthYear(termData.getDateStart()) + " - "
-		+ Tool.toMonthYear(termData.getDateEnd()));
+	termDate.setText(Tool.toFullMonthYear(termData.getDateStart()) + " - "
+		+ Tool.toFullMonthYear(termData.getDateEnd()));
 	// termMark.setText(String.valueOf(twoDForm.format(termData.getMark())));
 	termsDB.close();
 

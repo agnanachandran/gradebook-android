@@ -19,15 +19,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/tvTermTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textTitle"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/tvTermDate"
                 android:layout_width="fill_parent"
@@ -38,7 +37,7 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
-
+
         <TextView
             android:id="@+id/tvTermMark"
             android:layout_width="fill_parent"
@@ -46,7 +45,7 @@
             android:layout_weight="3"
             android:gravity="right|center_vertical"
             android:text="@string/textMark"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="normal" />
 
     </LinearLayout>

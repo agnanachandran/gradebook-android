@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class Terms extends Activity {
     TextView date;
     TextView tvNoTerms;
     ImageView ivNoTerms;
+    View vTermDivLine;
+    RelativeLayout rLayoutLabels;
 
     // listAdapters
     private TermsListAdapter termslistAdapter;
@@ -61,6 +64,7 @@ public class Terms extends Activity {
 
     DecimalFormat twoDForm = new DecimalFormat("0.00");
 
+
     @TargetApi(11)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,8 @@ public class Terms extends Activity {
 	listView = (ListView) findViewById(R.id.lvTerms);
 	ivNoTerms = (ImageView) findViewById(R.id.ivBlueArrowNoTerms);
 	tvNoTerms = (TextView) findViewById(R.id.tvNoTerms);
-
+	rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelTerms);
+	vTermDivLine = (View) findViewById(R.id.vTermDivLine);
 	// change title back to Terms since default title is the app's name
 	getActionBar().setTitle("Terms");
 	// read data from database
@@ -266,13 +271,18 @@ public class Terms extends Activity {
 
 	if (c.getCount() > 0)
 	{
+	    rLayoutLabels.setVisibility(View.VISIBLE);
+	    vTermDivLine.setVisibility(View.VISIBLE);
 	    ivNoTerms.setVisibility(View.INVISIBLE);
 	    tvNoTerms.setVisibility(View.INVISIBLE);
 	}
 	else
 	{
+	    rLayoutLabels.setVisibility(View.INVISIBLE);
+	    vTermDivLine.setVisibility(View.INVISIBLE);
 	    ivNoTerms.setVisibility(View.VISIBLE);
 	    tvNoTerms.setVisibility(View.VISIBLE);
+	 
 	}
 
 	termsDB.close();

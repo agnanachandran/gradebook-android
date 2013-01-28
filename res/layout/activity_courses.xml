@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-
+
         <TextView
             android:id="@+id/tvCoursesTermTitle"
             android:layout_width="match_parent"
@@ -14,19 +14,20 @@
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"
-            android:paddingTop="4dp"
+            android:paddingTop="5dp"
             android:scrollHorizontally="true"
             android:text="@string/textTitle"
             android:textColor="@color/Black"
             android:textSize="20sp"
             android:textStyle="bold" />
-
+
         <TextView
             android:id="@+id/tvCoursesTermDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:paddingBottom="4dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="1dp"
             android:text="@string/textDate"
             android:textColor="@color/Grey"
             android:textSize="12sp" />
