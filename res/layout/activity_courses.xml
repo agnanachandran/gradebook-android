@@ -6,36 +6,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/tvCoursesTermTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:paddingTop="4dp"
+            android:scrollHorizontally="true"
+            android:text="@string/textTitle"
+            android:textColor="@color/Black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCoursesTermDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tvCoursesTermTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="@string/textTitle"
-                android:textColor="@color/Black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvCoursesTermDate"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/textDate"
-                android:textColor="@color/Grey"
-                android:textSize="12sp" />
-        </LinearLayout>
-
+            android:gravity="center_horizontal"
+            android:paddingBottom="4dp"
+            android:text="@string/textDate"
+            android:textColor="@color/Grey"
+            android:textSize="12sp" />
+
         <RelativeLayout
             android:id="@+id/rLayoutLabelCourses"
             android:layout_width="fill_parent"
@@ -44,16 +39,14 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:baselineAligned="true"
-            android:paddingBottom="3dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:visibility="visible" >
-
+
             <TextView
                 android:id="@+id/tvTitleLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_gravity="left"
                 android:text="@string/courseTitle"
                 android:textAppearance="?android:attr/textAppearanceMedium"

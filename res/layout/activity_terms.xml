@@ -14,7 +14,7 @@
         android:dividerHeight="@dimen/divheight" >
 
     </ListView>
-
+
     <TextView
         android:id="@+id/tvNoTerms"
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_centerVertical="true"
         android:text="@string/noTermAddTerm"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/White" />
+        android:textColor="@color/Black" />
 
     <ImageView
         android:id="@+id/ivBlueArrowNoTerms"
