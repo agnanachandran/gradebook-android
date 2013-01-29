@@ -93,12 +93,12 @@ public class CategoriesListAdapter extends BaseAdapter {
 		    allPercent += this.categories.get(i).getMark()
 			    * (this.categories.get(i).getWeight() / allWeight);
 		}
-		mark.setText(String.valueOf(twoDForm.format(allPercent)));
+		mark.setText(twoDForm.format(allPercent));
 	    }
 	}
 	else
 	{
-	    mark.setText(String.valueOf(twoDForm.format(categories.getMark())));
+	    mark.setText(twoDForm.format(categories.getMark()));
 	}
 	if (categories.getID() == 0)
 	{
@@ -106,7 +106,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 	}
 	else
 	{
-	    weight.setText(String.valueOf(categories.getWeight()));
+	    weight.setText(twoDForm.format(categories.getWeight()));
 	}
 	return v;
 

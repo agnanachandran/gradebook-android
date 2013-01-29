@@ -63,7 +63,7 @@ public class TermsListAdapter extends BaseAdapter {
 
 	
 	title.setText(term.getTitle());
-	mark.setText(String.valueOf(twoDForm.format(term.getMark())));
+	mark.setText(twoDForm.format(term.getMark()));
 	date.setText(Tool.toMonthYear(term.getDateStart()) + " - " + Tool.toMonthYear(term.getDateEnd()));
 	return v;
     }

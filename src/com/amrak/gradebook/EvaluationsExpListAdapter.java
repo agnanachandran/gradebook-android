@@ -66,9 +66,9 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 		tvEvalChildDate.setText("Date:");
 		tvEvalChildCategory.setText("Category:");
 		
-		tvEvalChildWeightValue.setText(String.valueOf((evalChild.getWeight())));
+		tvEvalChildWeightValue.setText(twoDForm.format(evalChild.getWeight()));
 		tvEvalChildDateValue.setText(evalChild.getDate());
-		tvEvalChildCategoryValue.setText(String.valueOf(evalChild.getCategory()));
+		tvEvalChildCategoryValue.setText(evalChild.getCategory());
 	
 		return v;
 	}

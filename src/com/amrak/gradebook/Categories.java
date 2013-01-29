@@ -301,7 +301,7 @@ public class Categories extends Activity {
 																			// each.
 				categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")),
 						c.getString(c.getColumnIndex("catTitle")),
-						c.getInt(c.getColumnIndex("catWeight")),
+						c.getDouble(c.getColumnIndex("catWeight")),
 						c.getInt(c.getColumnIndex("courseRef")),
 						c.getInt(c.getColumnIndex("termRef")),
 						c.getInt(c.getColumnIndex("catColor")),

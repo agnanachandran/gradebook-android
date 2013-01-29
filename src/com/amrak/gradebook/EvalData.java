@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
+import android.widget.Toast;
 
 public class EvalData {
 
@@ -41,13 +43,11 @@ public class EvalData {
 	}
 
 	public double getMark() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return Double.valueOf(twoDForm.format(mark));
+		return mark;
 	}
 	
 	public double getOutOf() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return Double.valueOf(twoDForm.format(outOf));
+		return outOf;
 	}
 	
 	public int getOutOfNoDecimal() {
@@ -55,8 +55,7 @@ public class EvalData {
 	}
 	
 	public double getWeight() {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return Double.valueOf(twoDForm.format(weight));
+		return weight;
 	}
 	
 	public String getDate() {

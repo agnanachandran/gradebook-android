@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class CategoryData {
 	
@@ -17,9 +18,8 @@ public class CategoryData {
 	int term = 0;
 	int color = 0;
 	EvaluationsDBAdapter evalsDB;
-	DecimalFormat twoDForm = new DecimalFormat("0.00");
 	
-	public CategoryData(int inputCategoryID, String inputTitle, int inputWeight, int inputRefCourseID, int inputRefTermID, int inputColor, Context inputContext) {
+	public CategoryData(int inputCategoryID, String inputTitle, double inputWeight, int inputRefCourseID, int inputRefTermID, int inputColor, Context inputContext) {
 		categoryID = inputCategoryID;
 		title = inputTitle;
 		weight = inputWeight;
@@ -84,7 +84,7 @@ public class CategoryData {
 	}
 	
 	public double getMark(){
-		return Double.valueOf(twoDForm.format(mark));
+		return mark;
 	}
 	
 	public int getRefCourseID (){

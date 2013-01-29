@@ -62,7 +62,7 @@ public class CoursesListAdapter extends BaseAdapter {
 	TextView code = (TextView) v.findViewById(R.id.tvCourseCode);
 
 	title.setText(course.getTitle());
-	mark.setText(String.valueOf(twoDForm.format(course.getMark())));
+	mark.setText(twoDForm.format(course.getMark()));
 	code.setText(course.getCode());
 	return v;
 

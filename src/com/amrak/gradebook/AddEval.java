@@ -302,7 +302,7 @@ public class AddEval extends Activity {
 			    evaluationsDB.open();
 				evaluationsDB.createEvaluation(evalName, evalMark, evalOutOf, evalWeight, selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
 				evaluationsDB.close();
-				Toast toast = Toast.makeText(context, "Evaluation " + evalName + " was added successfully.", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(context, "Evaluation " + evalWeight + " was added successfully.", Toast.LENGTH_SHORT);
 				try {
 					//center toast
 					((TextView)((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);

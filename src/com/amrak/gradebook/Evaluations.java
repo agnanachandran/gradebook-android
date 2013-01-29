@@ -510,7 +510,7 @@ public class Evaluations extends Activity {
 				eval_parent.add(new EvalData(c.getString(c
 						.getColumnIndex("evalTitle")), c.getInt(c
 						.getColumnIndex("evalMark")), c.getInt(c
-						.getColumnIndex("evalOutOf")), c.getInt(c
+						.getColumnIndex("evalOutOf")), c.getDouble(c
 						.getColumnIndex("evalWeight")), c.getString(c
 						.getColumnIndex("evalDate")), c.getInt(c
 						.getColumnIndex("termRef")), c.getInt(c
@@ -519,7 +519,7 @@ public class Evaluations extends Activity {
 				eval_child.add(new EvalData(c.getString(c
 						.getColumnIndex("evalTitle")), c.getInt(c
 						.getColumnIndex("evalMark")), c.getInt(c
-						.getColumnIndex("evalOutOf")), c.getInt(c
+						.getColumnIndex("evalOutOf")), c.getDouble(c
 						.getColumnIndex("evalWeight")), c.getString(c
 						.getColumnIndex("evalDate")), c.getInt(c
 						.getColumnIndex("termRef")), c.getInt(c
