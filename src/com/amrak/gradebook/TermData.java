@@ -1,7 +1,5 @@
 package com.amrak.gradebook;
 
-import java.text.DecimalFormat;
-
 import android.content.Context;
 import android.database.Cursor;
 
@@ -36,8 +34,10 @@ public class TermData {
 		Cursor c = coursesDB.getCoursesOfTerm(termID);
 		
 		//default mark is 100.00
-		if (c.getCount() == 0)
+		if (c.getCount() == 0) {
+			coursesDB.close();
 			return 100.00;
+		}
 		
 		if (c.moveToFirst()) {
 			do {
@@ -46,8 +46,10 @@ public class TermData {
 		}
 		
 		// when user has a course that doesn't count for anything
-		if (totalWeight == 0)
-			return 100.00;		
+		if (totalWeight == 0) {
+			coursesDB.close();
+			return 100.00;
+		}
 		else {
 			if (c.moveToFirst()) {
 				do {

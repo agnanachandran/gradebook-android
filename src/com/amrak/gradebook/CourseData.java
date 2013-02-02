@@ -1,7 +1,5 @@
 package com.amrak.gradebook;
 
-import java.text.DecimalFormat;
-
 import android.content.Context;
 import android.database.Cursor;
 
@@ -34,14 +32,16 @@ public class CourseData {
 	public double calcMarkFromDatabase(int courseID) {
 		double mark = 0;
 		int totalWeight = 0;
-		CategoryData categoryData;
+		double categoryMark = 0;
 		
 		categoriesDB.open();
 		Cursor c = categoriesDB.getCategoriesOfCourse(courseID);
 		
 		//default mark is 100.00
-		if (c.getCount() == 0)
+		if (c.getCount() == 0) {
+			categoriesDB.close();
 			return 100.00;
+		}
 		
 		if (c.moveToFirst()) {
 			do {
@@ -50,21 +50,17 @@ public class CourseData {
 		}
 		
 		//When the user has a category that doesn't count for anything
-		if (totalWeight == 0)
+		if (totalWeight == 0) {
+			categoriesDB.close();
 			return 100.00;
+		}
 		
 		else {
 			if (c.moveToFirst()) {
 				do {
 					double weightFraction = (double)c.getInt(c.getColumnIndex("catWeight"))/totalWeight;
-					categoryData = new CategoryData(c.getInt(c.getColumnIndex("_id")),
-							c.getString(c.getColumnIndex("catTitle")),
-							c.getInt(c.getColumnIndex("catWeight")),
-							c.getInt(c.getColumnIndex("courseRef")),
-							c.getInt(c.getColumnIndex("termRef")),
-							c.getInt(c.getColumnIndex("catColor")),
-							this.context);
-					mark += weightFraction*categoryData.getMark();
+					categoryMark = c.getDouble(c.getColumnIndex("catAverage"));
+					mark += weightFraction*categoryMark;
 				} while(c.moveToNext());
 			}			
 		}

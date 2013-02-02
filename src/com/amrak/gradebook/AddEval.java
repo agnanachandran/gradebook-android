@@ -63,7 +63,7 @@ public class AddEval extends Activity {
 	// variables
 	final private String TAG = "AddEval";
 	int[] refID;
-	int selectedRefID;
+	int selectedRefID; //category reference ID
 	String selectedDate;
 	int refIDGet_Term;
 	int refIDGet_Course;
@@ -172,7 +172,7 @@ public class AddEval extends Activity {
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sEvalCat.setAdapter(dataAdapter);
-		sEvalCat.setSelection(refIDGet_Category);
+		//sEvalCat.setSelection(refIDGet_Category);
 		sEvalCat.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
@@ -200,6 +200,7 @@ public class AddEval extends Activity {
 			etEvalMark.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalMark")));
 			etEvalOutOf.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalOutOf")));
 			etWeight.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalWeight")));
+			//sEvalCat.setSelection(selectedRefID);
 			//etEvalNotes.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalNotes")));
 		}
 
@@ -248,6 +249,45 @@ public class AddEval extends Activity {
 		}
 	};
 	
+	public void updateDBCatMark() {		
+		double mark = 0;
+		int totalWeight = 0;
+		
+		evaluationsDB.open();
+		categoriesDB.open();
+		Cursor c = evaluationsDB.getEvaluationsOfCategory(selectedRefID);
+		
+		if (c.moveToFirst()) {
+			do {
+				totalWeight += c.getInt(c.getColumnIndex("evalWeight"));
+			} while(c.moveToNext());
+		}
+		
+		//When the user leaves weight blank
+		if (totalWeight == 0) {
+			int count = c.getCount();
+			if (c.moveToFirst()) {
+				do {
+					mark += 100*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"))/count;
+				} while(c.moveToNext());
+			}
+		}
+		//Normal mark calculation
+		else {			
+			if (c.moveToFirst()) {
+				do {
+					double weightFraction = c.getDouble(c.getColumnIndex("evalWeight"))/totalWeight;
+					mark += 100*weightFraction*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"));
+				} while(c.moveToNext());
+			}			
+		}
+		
+		categoriesDB.updateCategoryAverage(selectedRefID, mark);
+		
+		evaluationsDB.close();
+		categoriesDB.close();
+	}
+	
 	
 	public void addEval(View v) {
 	
@@ -277,6 +317,7 @@ public class AddEval extends Activity {
 			double evalMark = 0.0;
 			double evalOutOf = 0.0;
 			double evalWeight = 0.0;
+			double catAverage = 100.00;
 			String evalNotes = etEvalNotes.getText().toString();
 			
 		    try {
@@ -302,6 +343,7 @@ public class AddEval extends Activity {
 			    evaluationsDB.open();
 				evaluationsDB.createEvaluation(evalName, evalMark, evalOutOf, evalWeight, selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
 				evaluationsDB.close();
+				updateDBCatMark();
 				Toast toast = Toast.makeText(context, "Evaluation " + evalWeight + " was added successfully.", Toast.LENGTH_SHORT);
 				try {
 					//center toast
@@ -317,6 +359,7 @@ public class AddEval extends Activity {
 			    evaluationsDB.open();
 			    evaluationsDB.updateEvaluation(idEditGet_Item, evalName, evalMark, evalOutOf, evalWeight, selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
 				evaluationsDB.close();
+				updateDBCatMark();
 				Toast toast = Toast.makeText(context, "Evaluation" + evalName + " was edited successfully.", Toast.LENGTH_SHORT);
 				try {
 					//center toast

@@ -1,11 +1,7 @@
 package com.amrak.gradebook;
 
-import java.text.DecimalFormat;
-
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
-import android.widget.Toast;
 
 public class EvalData {
 

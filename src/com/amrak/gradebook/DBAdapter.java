@@ -50,7 +50,8 @@ public abstract class DBAdapter {
 			+ CategoriesDBAdapter.CAT_WEIGHT + " DECIMAL(10,4)," //$NON-NLS-1$
 			+ CategoriesDBAdapter.TERM_REFERENCE + " INT," //$NON-NLS-1$
 			+ CategoriesDBAdapter.COURSE_REFERENCE + " INT," //$NON-NLS-1$
-			+ CategoriesDBAdapter.CAT_COLOR + " INT" //$NON-NLS-1$
+			+ CategoriesDBAdapter.CAT_COLOR + " INT," //$NON-NLS-1$
+			+ CategoriesDBAdapter.CAT_AVERAGE + " DECIMAL(10,4)" //$NON-NLS-1$
 			+ ");"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private static final String CREATE_TABLE_EVALUATION = "CREATE TABLE IF NOT EXISTS evaluations (_id INTEGER primary key autoincrement, " //$NON-NLS-1$
