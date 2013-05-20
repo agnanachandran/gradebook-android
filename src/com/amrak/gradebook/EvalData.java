@@ -1,6 +1,5 @@
 package com.amrak.gradebook;
 
-
 import android.content.Context;
 import android.database.Cursor;
 

@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 public class CategoriesDBAdapter extends DBAdapter {
 	
@@ -16,7 +14,7 @@ public class CategoriesDBAdapter extends DBAdapter {
     public static final String TERM_REFERENCE = "termRef";
     public static final String COURSE_REFERENCE = "courseRef"; 
     public static final String CAT_COLOR = "catColor";
-    private static final String TAG = "CategoriesDBAdapter";
+    public static final String CAT_AVERAGE = "catAverage";
     
 	//database name
     private static final String DATABASE_TABLE = "categories";
@@ -38,6 +36,7 @@ public class CategoriesDBAdapter extends DBAdapter {
      * @param catWeight weight of the Category
      * @param courseRef reference to the course
      * @param catColor color of the Category
+     * @param catAverage average of the evaluations
      * @return rowId or -1 if failed
      */
     public long createCategory(String catTitle, double catWeight, int termRef, int courseRef, int catColor){
@@ -48,6 +47,7 @@ public class CategoriesDBAdapter extends DBAdapter {
         initialValues.put(TERM_REFERENCE, termRef);
         initialValues.put(COURSE_REFERENCE, courseRef);
         initialValues.put(CAT_COLOR, catColor);
+        initialValues.put(CAT_AVERAGE, 100.00); /*Default average is 100.00*/
         
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -93,7 +93,7 @@ public class CategoriesDBAdapter extends DBAdapter {
     public Cursor getAllCategories() {
 
         return mDb.query(DATABASE_TABLE, new String[] { ROW_ID,
-        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR }, null, null, null, null, null);
+        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR, CAT_AVERAGE }, null, null, null, null, null);
     }
 
     /**
@@ -108,7 +108,7 @@ public class CategoriesDBAdapter extends DBAdapter {
         Cursor mCursor =
 
         mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR }, ROW_ID + "=" + rowId, null, null, null, null, null);
+        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR, CAT_AVERAGE }, ROW_ID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -127,7 +127,7 @@ public class CategoriesDBAdapter extends DBAdapter {
         Cursor mCursor =
 
         mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, null, null);
+        		CAT_TITLE, CAT_WEIGHT, TERM_REFERENCE, COURSE_REFERENCE, CAT_COLOR, CAT_AVERAGE }, COURSE_REFERENCE + "=" + courseRefID, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -136,12 +136,6 @@ public class CategoriesDBAdapter extends DBAdapter {
 
     /**
      * Update the category.
-     * 
-     * @param rowId
-     * @param catTitle title of the Category
-     * @param catWeight weight of the Category
-     * @param courseRef reference to the course
-     * @param catColor color of the Category
      * @return true if the note was successfully updated, false otherwise
      */
     public boolean updateCategory(long rowId, String catTitle, double catWeight, int termRef, int courseRef, int catColor){
@@ -154,6 +148,13 @@ public class CategoriesDBAdapter extends DBAdapter {
         args.put(CAT_COLOR, catColor);
         
         return mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + rowId, null) >0; 
+    }
+    
+    public boolean updateCategoryAverage(long rowId, double catAverage) {
+    	ContentValues args = new ContentValues();
+    	
+    	args.put(CAT_AVERAGE, catAverage);
+    	return mDb.update(DATABASE_TABLE, args, ROW_ID + "=" + rowId, null) >0; 
     }
 
 }

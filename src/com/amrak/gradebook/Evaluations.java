@@ -48,7 +48,6 @@ public class Evaluations extends Activity {
 	View vEvalDivLine;
 
 	// listAdapters
-	private CoursesListAdapter courseslistAdapter;
 	private EvaluationsExpListAdapter expListAdapter;
 
 	// variables
@@ -233,6 +232,7 @@ public class Evaluations extends Activity {
 			Intent iAddEval = new Intent("com.amrak.gradebook.ADDEVAL");
 			iAddEval.putExtra("refID_Course", refIDGet_Course);
 			iAddEval.putExtra("refID_Term", refIDGet_Term);
+			iAddEval.putExtra("refID_Category", refIDReceive_Cat);
 			iAddEval.putExtra("id_Mode", 0);
 			startActivity(iAddEval);
 			break;
@@ -339,6 +339,7 @@ public class Evaluations extends Activity {
 			Intent iAddEval = new Intent("com.amrak.gradebook.ADDEVAL");
 			iAddEval.putExtra("refID_Course", refIDGet_Course);
 			iAddEval.putExtra("refID_Term", refIDGet_Term);
+			iAddEval.putExtra("refID_Category", refIDReceive_Cat);
 			iAddEval.putExtra("idEdit_Item",
 					refIDPass_Evaluation[contextSelection]);
 			iAddEval.putExtra("id_Mode", 1);

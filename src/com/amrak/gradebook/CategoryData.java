@@ -14,7 +14,8 @@ public class CategoryData {
 	int course = 0;
 	int term = 0;
 	int color = 0;
-	EvaluationsDBAdapter evalsDB;
+	double average = 100.00;
+	CategoriesDBAdapter categoriesDB;
 	
 	public CategoryData(int inputCategoryID, String inputTitle, double inputWeight, int inputRefCourseID, int inputRefTermID, int inputColor, Context inputContext) {
 		categoryID = inputCategoryID;
@@ -24,48 +25,23 @@ public class CategoryData {
 		term = inputRefTermID;
 		color = inputColor;
 		context = inputContext;
-		evalsDB = new EvaluationsDBAdapter(context);
+		categoriesDB = new CategoriesDBAdapter(context);
 		mark = calcMarkFromDatabase(inputRefCourseID, inputCategoryID);
 	}
 	
 	public double calcMarkFromDatabase (int course, int categoryID){
 		double mark = 0;
-		int totalWeight = 0;
-		
-		evalsDB.open();
-		Cursor c = evalsDB.getEvaluationsOfCategory(categoryID);
-		
-		//default mark is 100.00
+
+		categoriesDB.open();
+		Cursor c = categoriesDB.getCategory(categoryID);
 		if (c.getCount() == 0)
-			return 100.00;
-		
-		if (c.moveToFirst()) {
-			do {
-				totalWeight += c.getInt(c.getColumnIndex("evalWeight"));
-			} while(c.moveToNext());
-		}
-		
-		//When the user leaves weight blank
-		if (totalWeight == 0) {
-			int count = c.getCount();
-			if (c.moveToFirst()) {
-				do {
-					mark += 100*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"))/count;
-				} while(c.moveToNext());
-			}
-		}
-		else {			
-			if (c.moveToFirst()) {
-				do {
-					double weightFraction = c.getDouble(c.getColumnIndex("evalWeight"))/totalWeight;
-					mark += 100*weightFraction*c.getDouble(c.getColumnIndex("evalMark"))/c.getDouble(c.getColumnIndex("evalOutOf"));
-				} while(c.moveToNext());
-			}			
-		}
-		
-		evalsDB.close();
-		
+			mark = 100.00;
+		else 
+			mark = c.getDouble(c.getColumnIndex("catAverage"));	
+
+		categoriesDB.close();
 		return mark;
+
 	}
 	
 	public double getID(){

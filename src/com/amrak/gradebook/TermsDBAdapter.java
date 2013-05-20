@@ -12,7 +12,6 @@ public class TermsDBAdapter extends DBAdapter {
     public static final String TERM_TITLE = "termTitle";
     public static final String TERM_DATESTART = "termStartDate";
     public static final String TERM_DATEEND = "termEndDate";
-    private static final String TAG = "TermsDBAdapter";
     
     //database name
     private static final String DATABASE_TABLE = "terms";
