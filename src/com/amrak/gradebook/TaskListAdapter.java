@@ -1,6 +1,5 @@
 package com.amrak.gradebook;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -49,12 +48,10 @@ public class TaskListAdapter extends BaseAdapter {
 
 		TaskData task = (TaskData) getItem(position);
 		TextView title = (TextView) v.findViewById(R.id.tvTaskTitle);
-		TextView dateMade = (TextView) v.findViewById(R.id.tvTaskDateMade);
 		TextView dateDue = (TextView) v.findViewById(R.id.tvTaskDateDue);
 		TextView dateDueTime = (TextView) v.findViewById(R.id.tvTaskDateDueTime);
 		
 		title.setText(task.getTitle());
-		dateMade.setText(task.getDateMade());
 		dateDue.setText(task.getDateDue());
 		dateDueTime.setText(task.getDateDueTime());
 		return v;

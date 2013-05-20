@@ -15,26 +15,37 @@
         android:hint="@string/hint_task_title"
         android:inputType="text"
         android:maxLength="@integer/sixty"
-        android:nextFocusDown="@+id/bTaskPickStartDate" >
+        android:nextFocusDown="@+id/bTaskPickDate" >
 
         <requestFocus />
     </EditText>
-
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/rLayoutDeadline"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
         android:weightSum="7" >
 
         <Button
-            android:id="@+id/bTaskPickStartDate"
+            android:id="@+id/bTaskPickDate"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:onClick="showDatePickerDialog"
-            android:text="Deadline" />
-    </LinearLayout>
+            android:text="@string/deadlineDate" />
+
+        <Button
+            android:id="@+id/bTaskPickTime"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="showDatePickerDialog"
+            android:text="@string/deadlineTime" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/bTaskDone"
@@ -43,5 +54,5 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:text="@string/doneAddTask" />
-    
+
 </LinearLayout>

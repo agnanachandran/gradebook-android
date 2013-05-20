@@ -7,33 +7,28 @@
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
     android:paddingTop="10dp" >
-
+
         <TextView
             android:id="@+id/tvTaskTitle"
-            android:layout_width="fill_parent"
+            android:layout_width="141dp"
             android:layout_height="wrap_content"
             android:text="@string/textTitle"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
+            android:textSize="24sp" />
+
         <TextView
-            android:id="@+id/tvTaskDateMade"
-            android:layout_width="fill_parent"
+            android:id="@+id/tvTaskDateDue"
+            android:layout_width="101dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
             android:text="@string/textDate"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tvTaskDateDue"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/textDate"
-            android:textSize="12sp" />
-
-        <TextView
             android:id="@+id/tvTaskDateDueTime"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:text="@string/textDate"
             android:textSize="12sp" />
 

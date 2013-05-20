@@ -65,6 +65,7 @@ public class AddCourse extends Activity {
 		termsDB.close();
 		
 		if (idGet_Mode == 1) {
+			// editing
 			coursesDB.open();
 			Cursor cCourse = coursesDB.getCourse(idEditGet_Item);
 			cCourse.moveToFirst();

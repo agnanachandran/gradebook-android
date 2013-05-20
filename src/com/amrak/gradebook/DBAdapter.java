@@ -22,9 +22,8 @@ public abstract class DBAdapter {
 
 	private static final String CREATE_TABLE_TASK = "CREATE TABLE IF NOT EXISTS tasks (_id INTEGER primary key autoincrement, " //$NON-NLS-1$
 			+ TaskDBAdapter.TASK_TITLE + " VARCHAR not null," //$NON-NLS-1$
-			+ TaskDBAdapter.TASK_DATEMADE + " DATETIME," //$NON-NLS-1$
 			+ TaskDBAdapter.TASK_DATEDUE + " DATETIME," //$NON-NLS-1$
-			+ TaskDBAdapter.TASK_DATEDUETIME + " DATETIME" //$NON-NLS-1$
+			+ TaskDBAdapter.TASK_DATEDUETIME + " VARCHAR not null" //$NON-NLS-1$
 			+ ");"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private static final String CREATE_TABLE_TERM = "CREATE TABLE IF NOT EXISTS terms (_id INTEGER primary key autoincrement, " //$NON-NLS-1$

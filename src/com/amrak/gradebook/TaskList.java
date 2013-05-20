@@ -1,6 +1,7 @@
 package com.amrak.gradebook;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -36,7 +37,7 @@ public class TaskList extends Activity {
 	TextView title;
 
 	// listAdapters
-	private TaskListAdapter taskslistAdapter;
+	private TaskListAdapter tasklistAdapter;
 
 	// data
 	public static final int CONTEXT_EDIT = 0;
@@ -58,15 +59,15 @@ public class TaskList extends Activity {
 		// initialization of views
 		listView = (ListView) findViewById(R.id.lvTasks);
 
-		
 		// change title back to Tasks since default title is the app's name
 		getActionBar().setTitle("Tasks");
+
 		// read data from database
 		dataReadToList();
 
 		// input listview data
-		taskslistAdapter = new TaskListAdapter(this, tasks);
-		listView.setAdapter(taskslistAdapter);
+		tasklistAdapter = new TaskListAdapter(this, tasks);
+		listView.setAdapter(tasklistAdapter);
 		registerForContextMenu(listView);
 
 	}
@@ -86,31 +87,30 @@ public class TaskList extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.preferences:
-			Intent iSettings = new Intent("com.amrak.gradebook.SETTINGS");
-			startActivity(iSettings);
-			break;
-		case R.id.addtask:
-			Intent iAddTask = new Intent("com.amrak.gradebook.ADDTASK");
-			startActivity(iAddTask);
-			break;
+		switch (item.getItemId())
+		{
+			case R.id.preferences:
+				Intent iSettings = new Intent("com.amrak.gradebook.SETTINGS");
+				startActivity(iSettings);
+				break;
+			case R.id.addtask:
+				Intent iAddTask = new Intent("com.amrak.gradebook.ADDTASK");
+				startActivity(iAddTask);
+				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	// Context menu
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-		TaskData taskSelected = (TaskData) taskslistAdapter
-				.getItem(info.position);
+		TaskData taskSelected = (TaskData) tasklistAdapter.getItem(info.position);
 		String taskTitle = taskSelected.getTitle();
 		menu.setHeaderTitle(taskTitle);
-		menu.add(0, CONTEXT_EDIT, 0, "Edit Task");
-		menu.add(0, CONTEXT_DELETE, 0, "Delete Task");
+		menu.add(Menu.NONE, CONTEXT_EDIT, Menu.NONE, "Edit Task");
+		menu.add(Menu.NONE, CONTEXT_DELETE, Menu.NONE, "Delete Task");
 	}
 
 	public boolean onContextItemSelected(MenuItem menuItem) {
@@ -118,64 +118,56 @@ public class TaskList extends Activity {
 				.getMenuInfo();
 		contextSelection = info.position;
 
-		switch (menuItem.getItemId()) {
-		case CONTEXT_EDIT:
-			Intent iAddTask = new Intent("com.amrak.gradebook.ADDTASK");
-			iAddTask.putExtra("idEdit_Item", refIDPass_Task[contextSelection]);
-			iAddTask.putExtra("id_Mode", 1);
-			startActivity(iAddTask);
-			dataReset();
-			return true;
-		case CONTEXT_DELETE:
+		switch (menuItem.getItemId())
+		{
+			case CONTEXT_EDIT:
+				Intent iAddTask = new Intent("com.amrak.gradebook.ADDTASK");
+				iAddTask.putExtra("idEdit_Item", refIDPass_Task[contextSelection]);
+				iAddTask.putExtra("id_Mode", 1);
+				startActivity(iAddTask);
+				dataReset();
+				return true;
+			case CONTEXT_DELETE:
 
-			tasksDB.open();
-			Cursor cDelete = tasksDB.getTask(refIDPass_Task[contextSelection]);
-			String titleDelete = cDelete.getString(cDelete
-					.getColumnIndex("taskTitle"));
-			tasksDB.close();
+				tasksDB.open();
+				Cursor cDelete = tasksDB.getTask(refIDPass_Task[contextSelection]);
+				String titleDelete = cDelete.getString(cDelete.getColumnIndex("taskTitle"));
+				tasksDB.close();
 
-			new AlertDialog.Builder(this)
-			.setTitle("Delete Task?")
-			.setMessage(
-					"Are you sure you want to delete \"" + titleDelete
-					+ "\"?")
-					.setPositiveButton("Delete",
-							new DialogInterface.OnClickListener() {
+				new AlertDialog.Builder(this).setTitle("Delete Task?")
+						.setMessage("Are you sure you want to delete \"" + titleDelete + "\"?")
+						.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog,
-								int which) {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
 
-							tasksDB.open();
-							Cursor cDelete = tasksDB
-									.getTask(refIDPass_Task[contextSelection]);
-							String titleDelete = cDelete.getString(cDelete
-									.getColumnIndex("taskTitle"));
-							tasksDB.deleteTask(refIDPass_Task[contextSelection]);
-							tasksDB.close();
+								tasksDB.open();
+								Cursor cDelete = tasksDB.getTask(refIDPass_Task[contextSelection]);
+								String titleDelete = cDelete.getString(cDelete
+										.getColumnIndex("taskTitle"));
+								tasksDB.deleteTask(refIDPass_Task[contextSelection]);
+								tasksDB.close();
 
-							Toast toast = Toast
-									.makeText(
-											context,
-											titleDelete
-											+ " was deleted successfully.",
-											Toast.LENGTH_SHORT);
-							try {
-								// center toast
-								((TextView) ((LinearLayout) toast
-										.getView()).getChildAt(0))
-										.setGravity(Gravity.CENTER_HORIZONTAL);
-							} catch (ClassCastException cce) {
-								Log.d(TAG, cce.getMessage());
+								Toast toast = Toast.makeText(context, titleDelete
+										+ " was deleted successfully.", Toast.LENGTH_SHORT);
+								try
+								{
+									// center toast
+									((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
+											.setGravity(Gravity.CENTER_HORIZONTAL);
+								}
+								catch (ClassCastException cce)
+								{
+									Log.d(TAG, cce.getMessage());
+								}
+								toast.show();
+								dataReset();
 							}
-							toast.show();
-							dataReset();
-						}
-					}).setNegativeButton("Cancel", null).show();
+						}).setNegativeButton("Cancel", null).show();
 
-			return true;
-		default:
-			return super.onContextItemSelected(menuItem);
+				return true;
+			default:
+				return super.onContextItemSelected(menuItem);
 		}
 	}
 
@@ -186,7 +178,7 @@ public class TaskList extends Activity {
 		dataReadToList();
 
 		// input listview data
-		taskslistAdapter.notifyDataSetChanged();
+		tasklistAdapter.notifyDataSetChanged();
 	}
 
 	public void dataReadToList() {
@@ -194,21 +186,24 @@ public class TaskList extends Activity {
 		Cursor c = tasksDB.getAllTasks();
 		int i = 0;
 		refIDPass_Task = new int[c.getCount()];
-		if (c.moveToFirst()) {
-			do {
-				// get ids of each
-				refIDPass_Task[i] = c.getInt(c.getColumnIndex("_id")); 
-				tasks.add(new TaskData(c.getInt(c.getColumnIndex("_id")), c
-						.getString(c.getColumnIndex("taskTitle")), c
-						.getString(c.getColumnIndex("taskDateMade")), c
-						.getString(c.getColumnIndex("taskDateDue")), c
-						.getString(c.getColumnIndex("taskDateDueTime")),
-						context));
-				i++;
-			} while (c.moveToNext());
-		}
 
+		if (c.moveToFirst())
+		{
+			do
+			{ // get ids of each
+				refIDPass_Task[i] = c.getInt(c.getColumnIndex("_id"));
+				tasks.add(new TaskData(c.getInt(c.getColumnIndex("_id")), c.getString(c
+						.getColumnIndex("taskTitle")),
+						c.getString(c.getColumnIndex("taskDateDue")), c.getString(c
+								.getColumnIndex("taskDateDueTime")), context));
+				i++;
+			}
+			while (c.moveToNext());
+		}
+		Collections.sort(tasks, new TaskData());
+		// TODO: move aside already completed tasks or duedates that have already passed (display in red font next to task?
 		tasksDB.close();
+
 	}
 
 }

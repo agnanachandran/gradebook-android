@@ -22,7 +22,7 @@
             android:textColor="@color/Black"
             android:textSize="20sp"
             android:textStyle="bold" />
-
+
         <TextView
             android:id="@+id/tvAverage"
             android:layout_width="fill_parent"
@@ -32,7 +32,8 @@
             android:paddingTop="1dp"
             android:text="@string/textAverage"
             android:textColor="@color/Grey"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="invisible" />
 
         <RelativeLayout
             android:id="@+id/rLayoutLabelTerms"

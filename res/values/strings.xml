@@ -80,5 +80,8 @@
 	<string name="textCourseCode">Course Code</string>
 	<string name="termTitle">Term</string>
 	<string name="textAverage">Cumulative Average</string>
+	<string name="taskDeadline">Deadline</string>
+	<string name="deadlineTime">Deadline Time</string>
+	<string name="deadlineDate">Deadline Date</string>
     
 </resources>

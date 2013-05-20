@@ -10,7 +10,6 @@ public class TaskDBAdapter extends DBAdapter {
 	// database fields
 	public static final String ROW_ID = "_id";
 	public static final String TASK_TITLE = "taskTitle";
-	public static final String TASK_DATEMADE = "taskMade";
 	public static final String TASK_DATEDUE = "taskDateDue";
 	public static final String TASK_DATEDUETIME = "taskDateDueTime";
 	private static final String TAG = "TaskDBAdapter";
@@ -35,20 +34,16 @@ public class TaskDBAdapter extends DBAdapter {
 	 * 
 	 * @param taskTitle
 	 *            title of task
-	 * @param taskMade
-	 *            when the task was made
 	 * @param taskDateDue
 	 *            date the task is due
 	 * @param taskDateDueTime
 	 *            time the task is due
 	 * @return rowId or -1 if failed
 	 */
-	public long createTask(String taskTitle, String taskMade,
-			String taskDateDue, String taskDateDueTime) {
+	public long createTask(String taskTitle, String taskDateDue, String taskDateDueTime) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(TASK_TITLE, taskTitle);
-		initialValues.put(TASK_DATEMADE, taskMade);
 		initialValues.put(TASK_DATEDUE, taskDateDue);
 		initialValues.put(TASK_DATEDUETIME, taskDateDueTime);
 
@@ -62,7 +57,6 @@ public class TaskDBAdapter extends DBAdapter {
 	 * @return true if deleted, false otherwise
 	 */
 	public boolean deleteTask(long rowId) {
-
 		return mDb.delete(DATABASE_TABLE, ROW_ID + "=" + rowId, null) > 0; //$NON-NLS-1$
 	}
 
@@ -72,10 +66,8 @@ public class TaskDBAdapter extends DBAdapter {
 	 * @return Cursor over all tasks
 	 */
 	public Cursor getAllTasks() {
-
-		return mDb.query(DATABASE_TABLE, new String[] { ROW_ID, TASK_TITLE,
-				TASK_DATEMADE, TASK_DATEDUE, TASK_DATEDUETIME }, null, null,
-				null, null, null);
+		return mDb.query(DATABASE_TABLE, new String[] { ROW_ID, TASK_TITLE, TASK_DATEDUE,
+				TASK_DATEDUETIME }, null, null, null, null, null);
 	}
 
 	/**
@@ -89,9 +81,10 @@ public class TaskDBAdapter extends DBAdapter {
 	public Cursor getTask(long rowId) throws SQLException {
 
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE, new String[] { ROW_ID,
-				TASK_TITLE, TASK_DATEMADE, TASK_DATEDUE, TASK_DATEDUETIME },
-				ROW_ID + "=" + rowId, null, null, null, null, null);
-		if (mCursor != null) {
+				TASK_TITLE, TASK_DATEDUE, TASK_DATEDUETIME }, ROW_ID + "=" + rowId, null,
+				null, null, null, null);
+		if (mCursor != null)
+		{
 			mCursor.moveToFirst();
 		}
 		return mCursor;
@@ -103,8 +96,6 @@ public class TaskDBAdapter extends DBAdapter {
 	 * @param rowId
 	 * @param taskTitle
 	 *            title of task
-	 * @param taskDateMade
-	 *            when the task was made
 	 * @param taskDateDue
 	 *            date the task is due
 	 * @param taskDateDueTime
@@ -112,11 +103,10 @@ public class TaskDBAdapter extends DBAdapter {
 	 * @return true if the note was successfully updated, false otherwise
 	 */
 	public boolean updateTask(long rowId, String taskTitle,
-			String taskDateMade, String taskDateDue, String taskDateDueTime) {
+			String taskDateDue, String taskDateDueTime) {
 		ContentValues args = new ContentValues();
 
 		args.put(TASK_TITLE, taskTitle);
-		args.put(TASK_DATEMADE, taskDateMade);
 		args.put(TASK_DATEDUE, taskDateDue);
 		args.put(TASK_DATEDUETIME, taskDateDueTime);
 

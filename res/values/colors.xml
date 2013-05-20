@@ -6,11 +6,13 @@
     <color name="DarkGrey">#D5D5D5</color>
     <color name="Green">#0F0</color>
     <color name="TransparentGrey">#7F000000</color>
-    <color name ="LightGrey">#F7F7F7</color>
+    <color name="LightGrey">#F7F7F7</color>
     <color name="MostlyBlack">#90111111</color>
     <color name="DarkGrey2">#2B2B2B</color>
     <color name="Orange">#50FF8247</color>
     <color name="DeepBlue">#A000BFFF</color>
     <color name="DarkTitleBlue">#607B8B</color>
+    <color name="actionbar_background_start">#8B1A1A</color>
+    <color name="actionbar_background_end">#CD2626</color>
     
 </resources>
