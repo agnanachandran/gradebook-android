@@ -46,7 +46,6 @@ public class TaskData implements Comparator<TaskData> {
 
 	@Override
 	public int compare(TaskData lhs, TaskData rhs) {
-		// set date from database
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date leDate = new Date();
 		Date leTime = new Date();
@@ -80,26 +79,43 @@ public class TaskData implements Comparator<TaskData> {
 		int rDay = Integer.parseInt(dayFormat.format(reDate));
 		int rHour = Integer.parseInt(hourFormat.format(reTime));
 		int rMin = Integer.parseInt(minFormat.format(reTime));
-		if (lYear <= rYear)
+		if (lYear < rYear)
 		{
-			if (lMonth <= rMonth)
+			return -1;
+		}
+		else if (lYear == rYear)
+		{
+			if (lMonth < rMonth)
 			{
-				if (lDay <= rDay)
+				return -1;
+			}
+			else if (lMonth == rMonth)
+			{
+				if (lDay < rDay)
 				{
-					if (lHour <= rHour)
+					return -1;
+				}
+				else if (lDay == rDay)
+				{
+					if (lHour < rHour)
 					{
+						return -1;
+					}
+					else if (lHour == rHour)
+					{
+
 						if (lMin < rMin)
 						{
 							return -1;
 						}
+						else if (lMin == rMin)
+						{
+							return 0;
+						}
 					}
 				}
+
 			}
-		}
-		else if (lYear == rYear && lMonth == rMonth && lDay == rDay && lHour == rHour
-				&& lMin == rMin)
-		{
-			return 0;
 		}
 		return 1;
 	}

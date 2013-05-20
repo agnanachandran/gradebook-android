@@ -66,6 +66,7 @@ public class TaskList extends Activity {
 		dataReadToList();
 
 		// input listview data
+		Collections.sort(tasks, new TaskData());
 		tasklistAdapter = new TaskListAdapter(this, tasks);
 		listView.setAdapter(tasklistAdapter);
 		registerForContextMenu(listView);
