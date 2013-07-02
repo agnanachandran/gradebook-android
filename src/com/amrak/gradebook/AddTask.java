@@ -28,310 +28,310 @@ import com.amrak.gradebook.TimePickerDialogFragment.TimePickedListener;
 
 public class AddTask extends FragmentActivity implements TimePickedListener, DatePickedListener {
 
-	// database
-	TaskDBAdapter tasksDB = new TaskDBAdapter(this);
+    // database
+    TaskDBAdapter tasksDB = new TaskDBAdapter(this);
 
-	// context
-	Context context = this;
+    // context
+    Context context = this;
 
-	// views
-	EditText etTaskTitle;
-	Button bTaskPickDate;
-	Button bTaskPickTime;
-	Button bTaskDone;
+    // views
+    EditText etTaskTitle;
+    Button bTaskPickDate;
+    Button bTaskPickTime;
+    Button bTaskDone;
 
-	// date
-	private int mEYear;
-	private int mEMonth;
-	private int mEDay;
-	static final String STATE_EYEAR = "selectedEYear";
-	static final String STATE_EMONTH = "selectedEMonth";
-	static final String STATE_EDAY = "selectedEDay";
-	static final int DATE_END_DIALOG_ID = 1;
+    // date
+    private int mEYear;
+    private int mEMonth;
+    private int mEDay;
+    static final String STATE_EYEAR = "selectedEYear";
+    static final String STATE_EMONTH = "selectedEMonth";
+    static final String STATE_EDAY = "selectedEDay";
+    static final int DATE_END_DIALOG_ID = 1;
 
-	// time
-	private int mEHour;
-	private int mEMin;
-	static final String STATE_EHOUR = "selectedEHour";
-	static final String STATE_EMIN = "selectedEMin";
-	SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
-	SimpleDateFormat parseFormat = new SimpleDateFormat("h:mm a");
+    // time
+    private int mEHour;
+    private int mEMin;
+    static final String STATE_EHOUR = "selectedEHour";
+    static final String STATE_EMIN = "selectedEMin";
+    SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat parseFormat = new SimpleDateFormat("h:mm a");
 
-	NumberFormat twoDigit;
+    NumberFormat twoDigit;
 
-	// variables
-	final private String TAG = "AddTask";
-	int[] refID;
-	int selectedRefID;
-	String selectedEDate;
-	String selectedETime;
-	int idGet_Mode; // mode 0: add, mode 1: edit
-	int idEditGet_Item;
+    // variables
+    final private String TAG = "AddTask";
+    int[] refID;
+    int selectedRefID;
+    String selectedEDate;
+    String selectedETime;
+    int idGet_Mode; // mode 0: add, mode 1: edit
+    int idEditGet_Item;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_task);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_task);
 
-		// initialize time to current time
-		final Calendar c = Calendar.getInstance();
-		mEHour = c.get(Calendar.HOUR_OF_DAY);
-		mEMin = c.get(Calendar.MINUTE);
+        // initialize time to current time
+        final Calendar c = Calendar.getInstance();
+        mEHour = c.get(Calendar.HOUR_OF_DAY);
+        mEMin = c.get(Calendar.MINUTE);
 
-		Intent iAddTask = getIntent();
-		idGet_Mode = iAddTask.getIntExtra("id_Mode", 0); // mode 0: add, mode 1:
-		// edit
-		idEditGet_Item = iAddTask.getIntExtra("idEdit_Item", -1);
+        Intent iAddTask = getIntent();
+        idGet_Mode = iAddTask.getIntExtra("id_Mode", 0); // mode 0: add, mode 1:
+        // edit
+        idEditGet_Item = iAddTask.getIntExtra("idEdit_Item", -1);
 
-		etTaskTitle = (EditText) findViewById(R.id.etTaskTitle);
-		bTaskPickDate = (Button) findViewById(R.id.bTaskPickDate);
-		bTaskPickTime = (Button) findViewById(R.id.bTaskPickTime);
-		bTaskDone = (Button) findViewById(R.id.bTaskDone);
+        etTaskTitle = (EditText) findViewById(R.id.etTaskTitle);
+        bTaskPickDate = (Button) findViewById(R.id.bTaskPickDate);
+        bTaskPickTime = (Button) findViewById(R.id.bTaskPickTime);
+        bTaskDone = (Button) findViewById(R.id.bTaskDone);
 
-		bTaskPickTime.setText(readableTime(mEHour, mEMin));
-		if (idGet_Mode == 0)
-		{
-			setTitle("Add Task");
-		}
-		else if (idGet_Mode == 1)
-		{
-			setTitle("Edit Task");
-			bTaskDone.setText(R.string.doneEditTask);
-		}
+        bTaskPickTime.setText(readableTime(mEHour, mEMin));
+        if (idGet_Mode == 0)
+        {
+            setTitle("Add Task");
+        }
+        else if (idGet_Mode == 1)
+        {
+            setTitle("Edit Task");
+            bTaskDone.setText(R.string.doneEditTask);
+        }
 
-		bTaskPickTime.setOnClickListener(new View.OnClickListener() {
+        bTaskPickTime.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
+            public void onClick(View v) {
 
-				Bundle b = new Bundle();
-				b.putInt("curHour", mEHour);
-				b.putInt("curMin", mEMin);
-				// show the time picker dialog
-				DialogFragment newFragment = new TimePickerDialogFragment();
-				newFragment.setArguments(b);
-				newFragment.show(getSupportFragmentManager(), "timePicker");
-			}
-		});
+                Bundle b = new Bundle();
+                b.putInt("curHour", mEHour);
+                b.putInt("curMin", mEMin);
+                // show the time picker dialog
+                DialogFragment newFragment = new TimePickerDialogFragment();
+                newFragment.setArguments(b);
+                newFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
 
-		bTaskPickDate.setOnClickListener(new View.OnClickListener() {
+        bTaskPickDate.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
+            public void onClick(View v) {
 
-				Bundle b = new Bundle();
-				b.putInt("curYear", mEYear);
-				b.putInt("curMonth", mEMonth);
-				b.putInt("curDay", mEDay);
-				// show the time picker dialog
-				DialogFragment newFragment = new DatePickerDialogFragment();
-				newFragment.setArguments(b);
-				newFragment.show(getSupportFragmentManager(), "datePicker");
-			}
-		});
+                Bundle b = new Bundle();
+                b.putInt("curYear", mEYear);
+                b.putInt("curMonth", mEMonth);
+                b.putInt("curDay", mEDay);
+                // show the time picker dialog
+                DialogFragment newFragment = new DatePickerDialogFragment();
+                newFragment.setArguments(b);
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
 
-		tasksDB.open();
-		Cursor cTask = tasksDB.getTask(idEditGet_Item);
-		cTask.moveToFirst();
-		Log.d(TAG, String.valueOf(cTask.getCount()));
-		// set the date
-		if (savedInstanceState != null)
-		{
-			// recreate date from state
-			mEYear = savedInstanceState.getInt(STATE_EYEAR);
-			mEMonth = savedInstanceState.getInt(STATE_EMONTH);
-			mEDay = savedInstanceState.getInt(STATE_EDAY);
-			mEHour = savedInstanceState.getInt(STATE_EHOUR);
-			mEMin = savedInstanceState.getInt(STATE_EMIN);
-		}
-		else if (idGet_Mode == 0)
-		{
-			// set date to today
-			final Calendar cal = Calendar.getInstance();
-			mEYear = cal.get(Calendar.YEAR);
-			mEMonth = cal.get(Calendar.MONTH);
-			mEDay = cal.get(Calendar.DAY_OF_MONTH);
-			mEHour = cal.get(Calendar.HOUR_OF_DAY);
-			mEMin = cal.get(Calendar.MINUTE);
-		}
-		else if (idGet_Mode == 1)
-		{
-			// set date from database
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date eDate = new Date();
-			Date eTime = new Date();
-			try
-			{
-				eDate = format.parse(cTask.getString(cTask.getColumnIndex("taskDateDue")));
-				eTime = parseFormat.parse(cTask.getString(cTask.getColumnIndex("taskDateDueTime")));
-			}
-			catch (ParseException e)
-			{
-				e.printStackTrace();
-			}
+        tasksDB.open();
+        Cursor cTask = tasksDB.getTask(idEditGet_Item);
+        cTask.moveToFirst();
+        Log.d(TAG, String.valueOf(cTask.getCount()));
+        // set the date
+        if (savedInstanceState != null)
+        {
+            // recreate date from state
+            mEYear = savedInstanceState.getInt(STATE_EYEAR);
+            mEMonth = savedInstanceState.getInt(STATE_EMONTH);
+            mEDay = savedInstanceState.getInt(STATE_EDAY);
+            mEHour = savedInstanceState.getInt(STATE_EHOUR);
+            mEMin = savedInstanceState.getInt(STATE_EMIN);
+        }
+        else if (idGet_Mode == 0)
+        {
+            // set date to today
+            final Calendar cal = Calendar.getInstance();
+            mEYear = cal.get(Calendar.YEAR);
+            mEMonth = cal.get(Calendar.MONTH);
+            mEDay = cal.get(Calendar.DAY_OF_MONTH);
+            mEHour = cal.get(Calendar.HOUR_OF_DAY);
+            mEMin = cal.get(Calendar.MINUTE);
+        }
+        else if (idGet_Mode == 1)
+        {
+            // set date from database
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date eDate = new Date();
+            Date eTime = new Date();
+            try
+            {
+                eDate = format.parse(cTask.getString(cTask.getColumnIndex("taskDateDue")));
+                eTime = parseFormat.parse(cTask.getString(cTask.getColumnIndex("taskDateDueTime")));
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
 
-			SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-			SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-			SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-			SimpleDateFormat hourFormat = new SimpleDateFormat("h");
-			SimpleDateFormat minFormat = new SimpleDateFormat("mm");
-			SimpleDateFormat ampmFormat = new SimpleDateFormat("a");
+            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+            SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+            SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+            SimpleDateFormat hourFormat = new SimpleDateFormat("h");
+            SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+            SimpleDateFormat ampmFormat = new SimpleDateFormat("a");
 
-			mEYear = Integer.parseInt(yearFormat.format(eDate));
-			mEMonth = Integer.parseInt(monthFormat.format(eDate)) - 1;
-			mEDay = Integer.parseInt(dayFormat.format(eDate));
-			mEHour = Integer.parseInt(hourFormat.format(eTime));
-			mEMin = Integer.parseInt(minFormat.format(eTime));
-			String x = ampmFormat.format(eTime);
-			Log.d(TAG, x);
-		}
-		tasksDB.close();
+            mEYear = Integer.parseInt(yearFormat.format(eDate));
+            mEMonth = Integer.parseInt(monthFormat.format(eDate)) - 1;
+            mEDay = Integer.parseInt(dayFormat.format(eDate));
+            mEHour = Integer.parseInt(hourFormat.format(eTime));
+            mEMin = Integer.parseInt(minFormat.format(eTime));
+            String x = ampmFormat.format(eTime);
+            Log.d(TAG, x);
+        }
+        tasksDB.close();
 
-		// set format
-		twoDigit = NumberFormat.getInstance();
-		twoDigit.setMinimumIntegerDigits(2);
-		twoDigit.setMaximumIntegerDigits(2);
-		twoDigit.setMinimumFractionDigits(0);
-		twoDigit.setMaximumFractionDigits(0);
+        // set format
+        twoDigit = NumberFormat.getInstance();
+        twoDigit.setMinimumIntegerDigits(2);
+        twoDigit.setMaximumIntegerDigits(2);
+        twoDigit.setMinimumFractionDigits(0);
+        twoDigit.setMaximumFractionDigits(0);
 
-		selectedETime = readableTime(mEHour, mEMin);
-		selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-" + twoDigit.format(mEDay);
-		
-		bTaskPickDate.setText(selectedEDate);
-		bTaskPickTime.setText(selectedETime);
-		bTaskDone.setOnClickListener(new View.OnClickListener() {
+        selectedETime = readableTime(mEHour, mEMin);
+        selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-" + twoDigit.format(mEDay);
 
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				addTask(v);
-			}
-		});
+        bTaskPickDate.setText(selectedEDate);
+        bTaskPickTime.setText(selectedETime);
+        bTaskDone.setOnClickListener(new View.OnClickListener() {
 
-		if (idGet_Mode == 1)
-		{
-			etTaskTitle.setText(cTask.getString(cTask.getColumnIndex("taskTitle")));
-		}
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                addTask(v);
+            }
+        });
 
-	}
+        if (idGet_Mode == 1)
+        {
+            etTaskTitle.setText(cTask.getString(cTask.getColumnIndex("taskTitle")));
+        }
 
-	@Override
-	protected void onSaveInstanceState(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+    }
 
-		// Save the user's current state
-		savedInstanceState.putInt(STATE_EYEAR, mEYear);
-		savedInstanceState.putInt(STATE_EMONTH, mEMonth);
-		savedInstanceState.putInt(STATE_EDAY, mEDay);
-		savedInstanceState.putInt(STATE_EHOUR, mEHour);
-		savedInstanceState.putInt(STATE_EMIN, mEMin);
-		super.onSaveInstanceState(savedInstanceState);
-	}
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_add_task, menu);
-		return true;
-	}
+        // Save the user's current state
+        savedInstanceState.putInt(STATE_EYEAR, mEYear);
+        savedInstanceState.putInt(STATE_EMONTH, mEMonth);
+        savedInstanceState.putInt(STATE_EDAY, mEDay);
+        savedInstanceState.putInt(STATE_EHOUR, mEHour);
+        savedInstanceState.putInt(STATE_EMIN, mEMin);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
-	public void addTask(View v) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_add_task, menu);
+        return true;
+    }
 
-		Log.d(TAG, "Adding or Editing Task.");
+    public void addTask(View v) {
 
-		if (etTaskTitle.getText().toString().trim().equals(""))
-		{
+        Log.d(TAG, "Adding or Editing Task.");
 
-			new AlertDialog.Builder(this).setMessage("Make sure all fields are entered.")
-					.setPositiveButton("OK", null).show();
+        if (etTaskTitle.getText().toString().trim().equals(""))
+        {
 
-		}
-		else
-		{
+            new AlertDialog.Builder(this).setMessage("Make sure all fields are entered.")
+                    .setPositiveButton("OK", null).show();
 
-			{
+        }
+        else
+        {
 
-				String taskTitle = etTaskTitle.getText().toString();
+            {
 
-				if (idGet_Mode == 0)
-				{
-					// adding data to database
-					// get data from form and input to database
-					tasksDB.open();
-					tasksDB.createTask(taskTitle, selectedEDate, selectedETime);
-					tasksDB.close();
+                String taskTitle = etTaskTitle.getText().toString();
 
-					Toast toast = Toast.makeText(context, "Task " + taskTitle
-							+ " was added successfully.", Toast.LENGTH_SHORT);
-					try
-					{
-						// center toast
-						((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
-								.setGravity(Gravity.CENTER_HORIZONTAL);
-					}
-					catch (ClassCastException cce)
-					{
-						Log.d(TAG, cce.getMessage());
-					}
-					toast.show();
-					Log.d(TAG, "Added Task Successfully.");
-					finish();
-				}
-				else if (idGet_Mode == 1)
-				{
-					// editing data in database
-					tasksDB.open();
-					tasksDB.updateTask(idEditGet_Item, taskTitle, selectedEDate, selectedETime);
-					tasksDB.close();
+                if (idGet_Mode == 0)
+                {
+                    // adding data to database
+                    // get data from form and input to database
+                    tasksDB.open();
+                    tasksDB.createTask(taskTitle, selectedEDate, selectedETime);
+                    tasksDB.close();
 
-					Toast toast = Toast.makeText(context, "Task " + taskTitle
-							+ " was edited successfully.", Toast.LENGTH_SHORT);
-					try
-					{
-						// center toast
-						((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
-								.setGravity(Gravity.CENTER_HORIZONTAL);
-					}
-					catch (ClassCastException cce)
-					{
-						Log.d(TAG, cce.getMessage());
-					}
-					toast.show();
-					Log.d(TAG, "Edited Task Successfully.");
-					finish();
-				}
-			}
-		}
+                    Toast toast = Toast.makeText(context, "Task " + taskTitle
+                            + " was added successfully.", Toast.LENGTH_SHORT);
+                    try
+                    {
+                        // center toast
+                        ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
+                                .setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    catch (ClassCastException cce)
+                    {
+                        Log.d(TAG, cce.getMessage());
+                    }
+                    toast.show();
+                    Log.d(TAG, "Added Task Successfully.");
+                    finish();
+                }
+                else if (idGet_Mode == 1)
+                {
+                    // editing data in database
+                    tasksDB.open();
+                    tasksDB.updateTask(idEditGet_Item, taskTitle, selectedEDate, selectedETime);
+                    tasksDB.close();
 
-	}
+                    Toast toast = Toast.makeText(context, "Task " + taskTitle
+                            + " was edited successfully.", Toast.LENGTH_SHORT);
+                    try
+                    {
+                        // center toast
+                        ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
+                                .setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    catch (ClassCastException cce)
+                    {
+                        Log.d(TAG, cce.getMessage());
+                    }
+                    toast.show();
+                    Log.d(TAG, "Edited Task Successfully.");
+                    finish();
+                }
+            }
+        }
 
-	@Override
-	public void onTimePicked(Calendar time) {
-		mEHour = time.get(Calendar.HOUR_OF_DAY);
-		mEMin = time.get(Calendar.MINUTE);
-		selectedETime = readableTime(mEHour, mEMin);
-		bTaskPickTime.setText(selectedETime);
-	}
+    }
 
-	public String readableTime(int hour, int min) {
+    @Override
+    public void onTimePicked(Calendar time) {
+        mEHour = time.get(Calendar.HOUR_OF_DAY);
+        mEMin = time.get(Calendar.MINUTE);
+        selectedETime = readableTime(mEHour, mEMin);
+        bTaskPickTime.setText(selectedETime);
+    }
 
-		Date date = null;
-		try
-		{
-			date = displayFormat.parse(hour + ":" + min);
-		}
-		catch (ParseException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return parseFormat.format(date);
-	}
+    public String readableTime(int hour, int min) {
 
-	@Override
-	public void onDatePicked(Calendar date) {
-		mEYear = date.get(Calendar.YEAR);
-		mEMonth = date.get(Calendar.MONTH);
-		mEDay = date.get(Calendar.DAY_OF_MONTH);
-		selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-" + twoDigit.format(mEDay);
-		bTaskPickDate.setText(selectedEDate);
-	}
+        Date date = null;
+        try
+        {
+            date = displayFormat.parse(hour + ":" + min);
+        }
+        catch (ParseException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        return parseFormat.format(date);
+    }
+
+    @Override
+    public void onDatePicked(Calendar date) {
+        mEYear = date.get(Calendar.YEAR);
+        mEMonth = date.get(Calendar.MONTH);
+        mEDay = date.get(Calendar.DAY_OF_MONTH);
+        selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-" + twoDigit.format(mEDay);
+        bTaskPickDate.setText(selectedEDate);
+    }
 
 }

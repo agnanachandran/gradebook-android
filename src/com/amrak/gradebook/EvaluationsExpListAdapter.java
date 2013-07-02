@@ -12,113 +12,119 @@ import android.widget.TextView;
 
 public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 
-	// context
-	private Context context;
+    // context
+    private Context context;
 
-	// views
-	private LayoutInflater inflater;
+    // views
+    private LayoutInflater inflater;
 
-	// data
-	private ArrayList<EvalData> eval_parent;
-	private ArrayList<ArrayList<EvalData>> eval_child;
-	
-	DecimalFormat twoDForm = new DecimalFormat("0.00");
+    // data
+    private ArrayList<EvalData> eval_parent;
+    private ArrayList<ArrayList<EvalData>> eval_child;
 
-	public EvaluationsExpListAdapter(Context context,
-			ArrayList<EvalData> eval_parent,
-			ArrayList<ArrayList<EvalData>> eval_child) {
-		this.context = context;
-		this.eval_parent = eval_parent;
-		this.eval_child = eval_child;
-		inflater = LayoutInflater.from(context);
-	}
+    DecimalFormat twoDForm = new DecimalFormat("0.00");
 
-	public Object getChild(int groupPosition, int childPosition) {
-		return eval_child.get(groupPosition).get(childPosition);
-	}
+    public EvaluationsExpListAdapter(Context context, ArrayList<EvalData> eval_parent,
+            ArrayList<ArrayList<EvalData>> eval_child) {
+        this.context = context;
+        this.eval_parent = eval_parent;
+        this.eval_child = eval_child;
+        inflater = LayoutInflater.from(context);
+    }
 
-	public long getChildId(int groupPosition, int childPosition) {
-		return (long) (groupPosition * 1024 + childPosition); // Max 1024
-																// children per
-																// group
-	}
+    public Object getChild(int groupPosition, int childPosition) {
+        return eval_child.get(groupPosition).get(childPosition);
+    }
 
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
-		View v = null;
-		if (convertView != null) {
-			v = convertView;
-		} else {
-			v = inflater.inflate(R.layout.layout_eval_child, parent, false);
-		}
-		
-		EvalData evalChild = (EvalData) getChild(groupPosition, childPosition);
-		TextView tvEvalChildWeight = (TextView) v.findViewById(R.id.tvEvalChildWeight);
-		TextView tvEvalChildDate = (TextView) v.findViewById(R.id.tvEvalChildDate);
-		TextView tvEvalChildCategory = (TextView) v.findViewById(R.id.tvEvalChildCategory);
-		
-		TextView tvEvalChildWeightValue = (TextView) v.findViewById(R.id.tvEvalChildWeightValue);
-		TextView tvEvalChildDateValue = (TextView) v.findViewById(R.id.tvEvalChildDateValue);
-		TextView tvEvalChildCategoryValue = (TextView) v.findViewById(R.id.tvEvalChildCategoryValue);
-		
-		tvEvalChildWeight.setText("Weight:");
-		tvEvalChildDate.setText("Date:");
-		tvEvalChildCategory.setText("Category:");
-		
-		tvEvalChildWeightValue.setText(twoDForm.format(evalChild.getWeight()));
-		tvEvalChildDateValue.setText(evalChild.getDate());
-		tvEvalChildCategoryValue.setText(evalChild.getCategory());
-	
-		return v;
-	}
+    public long getChildId(int groupPosition, int childPosition) {
+        return (long) (groupPosition * 1024 + childPosition); // Max 1024
+                                                              // children per
+                                                              // group
+    }
 
-	public int getChildrenCount(int groupPosition) {
-		return eval_child.get(groupPosition).size();
-	}
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+            View convertView, ViewGroup parent) {
+        View v = null;
+        if (convertView != null)
+        {
+            v = convertView;
+        }
+        else
+        {
+            v = inflater.inflate(R.layout.layout_eval_child, parent, false);
+        }
 
-	public Object getGroup(int groupPosition) {
-		return eval_parent.get(groupPosition);
-	}
+        EvalData evalChild = (EvalData) getChild(groupPosition, childPosition);
+        TextView tvEvalChildWeight = (TextView) v.findViewById(R.id.tvEvalChildWeight);
+        TextView tvEvalChildDate = (TextView) v.findViewById(R.id.tvEvalChildDate);
+        TextView tvEvalChildCategory = (TextView) v.findViewById(R.id.tvEvalChildCategory);
 
-	public int getGroupCount() {
-		return eval_parent.size();
-	}
+        TextView tvEvalChildWeightValue = (TextView) v.findViewById(R.id.tvEvalChildWeightValue);
+        TextView tvEvalChildDateValue = (TextView) v.findViewById(R.id.tvEvalChildDateValue);
+        TextView tvEvalChildCategoryValue = (TextView) v
+                .findViewById(R.id.tvEvalChildCategoryValue);
 
-	public long getGroupId(int groupPosition) {
-		return (long) (groupPosition * 1024); // To be consistent with
-												// getChildId
-	}
+        tvEvalChildWeight.setText("Weight:");
+        tvEvalChildDate.setText("Date:");
+        tvEvalChildCategory.setText("Category:");
 
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
-		
-		View v = null;
-		if (convertView != null) {
-			v = convertView;
-		} else {
-			v = inflater.inflate(R.layout.layout_eval_parent, parent, false);
-		}
-		
-		EvalData evalParent = (EvalData) getGroup(groupPosition);
-		TextView title = (TextView) v.findViewById(R.id.tvEvalParentTitle);
-		TextView mark = (TextView) v.findViewById(R.id.tvEvalParentMark);
+        tvEvalChildWeightValue.setText(twoDForm.format(evalChild.getWeight()));
+        tvEvalChildDateValue.setText(evalChild.getDate());
+        tvEvalChildCategoryValue.setText(evalChild.getCategory());
 
-		title.setText(evalParent.getTitle());
-		
-		//Display mark in percentage
-		double percent = 100*evalParent.getMark()/evalParent.getOutOf();
-		mark.setText(twoDForm.format(percent));
+        return v;
+    }
 
-		return v;
-		
-	}
+    public int getChildrenCount(int groupPosition) {
+        return eval_child.get(groupPosition).size();
+    }
 
-	public boolean hasStableIds() {
-		return true;
-	}
+    public Object getGroup(int groupPosition) {
+        return eval_parent.get(groupPosition);
+    }
 
-	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		return false;
-	}
-	
+    public int getGroupCount() {
+        return eval_parent.size();
+    }
+
+    public long getGroupId(int groupPosition) {
+        return (long) (groupPosition * 1024); // To be consistent with
+                                              // getChildId
+    }
+
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+            ViewGroup parent) {
+
+        View v = null;
+        if (convertView != null)
+        {
+            v = convertView;
+        }
+        else
+        {
+            v = inflater.inflate(R.layout.layout_eval_parent, parent, false);
+        }
+
+        EvalData evalParent = (EvalData) getGroup(groupPosition);
+        TextView title = (TextView) v.findViewById(R.id.tvEvalParentTitle);
+        TextView mark = (TextView) v.findViewById(R.id.tvEvalParentMark);
+
+        title.setText(evalParent.getTitle());
+
+        // Display mark in percentage
+        double percent = 100 * evalParent.getMark() / evalParent.getOutOf();
+        mark.setText(twoDForm.format(percent));
+
+        return v;
+
+    }
+
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
+    }
+
 }

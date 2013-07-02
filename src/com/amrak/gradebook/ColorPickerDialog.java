@@ -27,76 +27,75 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public class ColorPickerDialog extends AlertDialog implements
-		ColorPickerView.OnColorChangedListener {
+        ColorPickerView.OnColorChangedListener {
 
-	private ColorPickerView mColorPicker;
+    private ColorPickerView mColorPicker;
 
-	private ColorPanelView mOldColor;
-	private ColorPanelView mNewColor;
+    private ColorPanelView mOldColor;
+    private ColorPanelView mNewColor;
 
-	private OnColorChangedListener mListener;
+    private OnColorChangedListener mListener;
 
-	protected ColorPickerDialog(Context context, int initialColor) {
-		super(context);
+    protected ColorPickerDialog(Context context, int initialColor) {
+        super(context);
 
-		init(initialColor);
-	}
+        init(initialColor);
+    }
 
-	private void init(int color) {
-		// To fight color branding.
-		getWindow().setFormat(PixelFormat.RGBA_8888);
+    private void init(int color) {
+        // To fight color branding.
+        getWindow().setFormat(PixelFormat.RGBA_8888);
 
-		setUp(color);
-		
-		//4.0.3 later
-		//mColorPicker.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setUp(color);
 
-	}
+        // 4.0.3 later
+        // mColorPicker.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-	private void setUp(int color) {
-		LayoutInflater inflater = (LayoutInflater) getContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_color_picker, null);
+    }
 
-		setView(layout);
+    private void setUp(int color) {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_color_picker, null);
 
-		setTitle("Pick a Color");
-		// setIcon(android.R.drawable.ic_dialog_info);
+        setView(layout);
 
-		mColorPicker = (ColorPickerView) layout
-				.findViewById(R.id.color_picker_view);
-		mOldColor = (ColorPanelView) layout.findViewById(R.id.old_color_panel);
-		mNewColor = (ColorPanelView) layout.findViewById(R.id.new_color_panel);
+        setTitle("Pick a Color");
+        // setIcon(android.R.drawable.ic_dialog_info);
 
-		((LinearLayout) mOldColor.getParent()).setPadding(Math
-				.round(mColorPicker.getDrawingOffset()), 0, Math
-				.round(mColorPicker.getDrawingOffset()), 0);
+        mColorPicker = (ColorPickerView) layout.findViewById(R.id.color_picker_view);
+        mOldColor = (ColorPanelView) layout.findViewById(R.id.old_color_panel);
+        mNewColor = (ColorPanelView) layout.findViewById(R.id.new_color_panel);
 
-		mColorPicker.setOnColorChangedListener(this);
+        ((LinearLayout) mOldColor.getParent()).setPadding(
+                Math.round(mColorPicker.getDrawingOffset()), 0,
+                Math.round(mColorPicker.getDrawingOffset()), 0);
 
-		mOldColor.setColor(color);
-		mColorPicker.setColor(color, true);
+        mColorPicker.setOnColorChangedListener(this);
 
-	}
+        mOldColor.setColor(color);
+        mColorPicker.setColor(color, true);
 
-	@Override
-	public void onColorChanged(int color) {
+    }
 
-		mNewColor.setColor(color);
+    @Override
+    public void onColorChanged(int color) {
 
-		if (mListener != null) {
-			mListener.onColorChanged(color);
-		}
+        mNewColor.setColor(color);
 
-	}
+        if (mListener != null)
+        {
+            mListener.onColorChanged(color);
+        }
 
-	public void setAlphaSliderVisible(boolean visible) {
-		mColorPicker.setAlphaSliderVisible(visible);
-	}
+    }
 
-	public int getColor() {
-		return mColorPicker.getColor();
-	}
+    public void setAlphaSliderVisible(boolean visible) {
+        mColorPicker.setAlphaSliderVisible(visible);
+    }
+
+    public int getColor() {
+        return mColorPicker.getColor();
+    }
 
 }
-

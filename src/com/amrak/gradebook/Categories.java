@@ -28,299 +28,293 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class Categories extends Activity {
 
-	// database
-	TermsDBAdapter termsDB = new TermsDBAdapter(this);
-	CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
-	CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
-	EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
-	RelativeLayout rLayoutLabels;
+    // database
+    TermsDBAdapter termsDB = new TermsDBAdapter(this);
+    CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
+    CategoriesDBAdapter categoriesDB = new CategoriesDBAdapter(this);
+    EvaluationsDBAdapter evalsDB = new EvaluationsDBAdapter(this);
+    RelativeLayout rLayoutLabels;
 
-	// context
-	Context context = this;
+    // context
+    Context context = this;
 
-	// view(s)
-	ListView listView;
-	TextView courseTitle;
-	//TextView courseMark;
-	TextView courseCode;
-	View vCatDivLine;
+    // view(s)
+    ListView listView;
+    TextView courseTitle;
+    // TextView courseMark;
+    TextView courseCode;
+    View vCatDivLine;
 
-	// list adapter
-	private CategoriesListAdapter categoriesListAdapter;
+    // list adapter
+    private CategoriesListAdapter categoriesListAdapter;
 
-	// categories vector
-	ArrayList<CategoryData> categories = new ArrayList<CategoryData>();
+    // categories vector
+    ArrayList<CategoryData> categories = new ArrayList<CategoryData>();
 
-	// variables
-	final private String TAG = "Categories";
-	int[] refIDPass_Category;
-	int refIDGet_Term;
-	int refIDGet_Course;
-	int contextSelection;
+    // variables
+    final private String TAG = "Categories";
+    int[] refIDPass_Category;
+    int refIDGet_Term;
+    int refIDGet_Course;
+    int contextSelection;
 
-	// context menu option variables; context menu managed by a switch statement
-	final static int CONTEXT_EDIT = 0;
-	final static int CONTEXT_DELETE = 1;
+    // context menu option variables; context menu managed by a switch statement
+    final static int CONTEXT_EDIT = 0;
+    final static int CONTEXT_DELETE = 1;
 
-	CourseData courseData;
+    CourseData courseData;
 
-	DecimalFormat twoDForm = new DecimalFormat("0.00");
-	// onCreate
-	@TargetApi(11)
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_categories);
+    DecimalFormat twoDForm = new DecimalFormat("0.00");
 
-		// up button in action bar
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+    // onCreate
+    @TargetApi(11)
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_categories);
 
-		Intent iCategory = getIntent();
-		refIDGet_Term = iCategory.getIntExtra("refID_Term", -1);
-		refIDGet_Course = iCategory.getIntExtra("refID_Course", -1);
+        // up button in action bar
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		// initialization of views
-		listView = (ListView) findViewById(R.id.lvCategories);
-		courseTitle = (TextView) findViewById(R.id.tvCategoriesCourseTitle);
-		//courseMark = (TextView) findViewById(R.id.tvCategoriesCourseMark);
-		courseCode = (TextView) findViewById(R.id.tvCategoriesCourseCode);
-		rLayoutLabels = (RelativeLayout) findViewById(R.id.rCatLayoutLabelCategories);
-		vCatDivLine = (View) findViewById(R.id.vCatDivLine);
-		// read from data base
-		coursesDB.open();
-		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+        Intent iCategory = getIntent();
+        refIDGet_Term = iCategory.getIntExtra("refID_Term", -1);
+        refIDGet_Course = iCategory.getIntExtra("refID_Course", -1);
 
-		courseData = new CourseData(cCourse.getInt(cCourse
-				.getColumnIndex("_id")), cCourse.getString(cCourse
-				.getColumnIndex("courseTitle")), cCourse.getString(cCourse
-				.getColumnIndex("courseCode")), cCourse.getInt(cCourse
-				.getColumnIndex("courseUnits")), cCourse.getString(cCourse
-				.getColumnIndex("notes")), cCourse.getInt(cCourse
-				.getColumnIndex("termRef")), context);
+        // initialization of views
+        listView = (ListView) findViewById(R.id.lvCategories);
+        courseTitle = (TextView) findViewById(R.id.tvCategoriesCourseTitle);
+        // courseMark = (TextView) findViewById(R.id.tvCategoriesCourseMark);
+        courseCode = (TextView) findViewById(R.id.tvCategoriesCourseCode);
+        rLayoutLabels = (RelativeLayout) findViewById(R.id.rCatLayoutLabelCategories);
+        vCatDivLine = (View) findViewById(R.id.vCatDivLine);
+        // read from data base
+        coursesDB.open();
+        Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
 
-		courseTitle.setText(courseData.getTitle() + " (" + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
-		courseCode.setText(courseData.getCode());
-		//courseMark
-		//.setText(String.valueOf(twoDForm.format(courseData.getMark())));
-		coursesDB.close();
+        courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")),
+                cCourse.getString(cCourse.getColumnIndex("courseTitle")), cCourse.getString(cCourse
+                        .getColumnIndex("courseCode")), cCourse.getInt(cCourse
+                        .getColumnIndex("courseUnits")), cCourse.getString(cCourse
+                        .getColumnIndex("notes")),
+                cCourse.getInt(cCourse.getColumnIndex("termRef")), context);
 
-		dataReadToList();
+        courseTitle.setText(courseData.getTitle() + " ("
+                + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
+        courseCode.setText(courseData.getCode());
+        // courseMark
+        // .setText(String.valueOf(twoDForm.format(courseData.getMark())));
+        coursesDB.close();
 
-		categoriesListAdapter = new CategoriesListAdapter(this, categories);
-		listView.setAdapter(categoriesListAdapter);
+        dataReadToList();
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> a, View v, int position,
-					long id) {
-				try {
-					@SuppressWarnings("rawtypes")
-					Class cEvaluations;
-					cEvaluations = Class
-							.forName("com.amrak.gradebook.Evaluations");
-					Intent iEvaluations = new Intent(Categories.this,
-							cEvaluations);
-					iEvaluations.putExtra("refID_Term", refIDGet_Term);
-					iEvaluations.putExtra("refID_Course", refIDGet_Course);
-					iEvaluations.putExtra("refID_Category",
-							refIDPass_Category[position]);
-					startActivity(iEvaluations);
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+        categoriesListAdapter = new CategoriesListAdapter(this, categories);
+        listView.setAdapter(categoriesListAdapter);
 
-			}
-		});
-		registerForContextMenu(listView);
-	}
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                try
+                {
+                    @SuppressWarnings("rawtypes")
+                    Class cEvaluations;
+                    cEvaluations = Class.forName("com.amrak.gradebook.Evaluations");
+                    Intent iEvaluations = new Intent(Categories.this, cEvaluations);
+                    iEvaluations.putExtra("refID_Term", refIDGet_Term);
+                    iEvaluations.putExtra("refID_Course", refIDGet_Course);
+                    iEvaluations.putExtra("refID_Category", refIDPass_Category[position]);
+                    startActivity(iEvaluations);
+                }
+                catch (ClassNotFoundException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		dataReset();
-	}
+            }
+        });
+        registerForContextMenu(listView);
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_categories, menu);
-		return true;
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dataReset();
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.preferences:
-			Intent i = new Intent("com.amrak.gradebook.SETTINGS");
-			startActivity(i);
-			break;
-		case R.id.addcategory:
-			Intent iAddCat = new Intent("com.amrak.gradebook.ADDCAT");
-			iAddCat.putExtra("refID_Course", refIDGet_Course);
-			iAddCat.putExtra("refID_Term", refIDGet_Term);
-			iAddCat.putExtra("id_Mode", 0);
-			startActivity(iAddCat);
-			break;
-		case android.R.id.home:
-			finish();
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_categories, menu);
+        return true;
+    }
 
-	// Context menu
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		CategoryData catSelected = (CategoryData) categoriesListAdapter
-				.getItem(info.position);
-		String evalTitle = catSelected.getTitle();
-		if (evalTitle != "All"){
-			menu.setHeaderTitle(evalTitle);
-			menu.add(0, CONTEXT_EDIT, 0, "Edit Category");
-			menu.add(0, CONTEXT_DELETE, 0, "Delete Category");
-		}
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.preferences:
+                Intent i = new Intent("com.amrak.gradebook.SETTINGS");
+                startActivity(i);
+                break;
+            case R.id.addcategory:
+                Intent iAddCat = new Intent("com.amrak.gradebook.ADDCAT");
+                iAddCat.putExtra("refID_Course", refIDGet_Course);
+                iAddCat.putExtra("refID_Term", refIDGet_Term);
+                iAddCat.putExtra("id_Mode", 0);
+                startActivity(iAddCat);
+                break;
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-	public boolean onContextItemSelected(MenuItem menuItem) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem
-				.getMenuInfo();
-		contextSelection = info.position;
+    // Context menu
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        CategoryData catSelected = (CategoryData) categoriesListAdapter.getItem(info.position);
+        String evalTitle = catSelected.getTitle();
+        if (evalTitle != "All")
+        {
+            menu.setHeaderTitle(evalTitle);
+            menu.add(0, CONTEXT_EDIT, 0, "Edit Category");
+            menu.add(0, CONTEXT_DELETE, 0, "Delete Category");
+        }
+    }
 
-		switch (menuItem.getItemId()) {
-		case CONTEXT_EDIT:
-			Intent iAddCategory = new Intent("com.amrak.gradebook.ADDCAT");
-			iAddCategory.putExtra("refID_Term", refIDGet_Term);
-			iAddCategory.putExtra("refID_Course", refIDGet_Course);
-			iAddCategory.putExtra("idEdit_Item",
-					refIDPass_Category[contextSelection]);
-			iAddCategory.putExtra("id_Mode", 1);
-			startActivity(iAddCategory);
-			dataReset();
-			return true;
-		case CONTEXT_DELETE:
-			categoriesDB.open();
-			Cursor cDelete = categoriesDB
-					.getCategory(refIDPass_Category[contextSelection]);
-			String titleDelete = cDelete.getString(cDelete
-					.getColumnIndex("catTitle"));
-			categoriesDB.close();
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem
+                .getMenuInfo();
+        contextSelection = info.position;
 
-			new AlertDialog.Builder(this)
-					.setTitle("Delete Category and Evaluations?")
-					.setMessage(
-							"Are you sure you want to delete \"" + titleDelete
-									+ "\" and ALL Evaluations within it?")
-					.setPositiveButton("Delete",
-							new DialogInterface.OnClickListener() {
+        switch (menuItem.getItemId())
+        {
+            case CONTEXT_EDIT:
+                Intent iAddCategory = new Intent("com.amrak.gradebook.ADDCAT");
+                iAddCategory.putExtra("refID_Term", refIDGet_Term);
+                iAddCategory.putExtra("refID_Course", refIDGet_Course);
+                iAddCategory.putExtra("idEdit_Item", refIDPass_Category[contextSelection]);
+                iAddCategory.putExtra("id_Mode", 1);
+                startActivity(iAddCategory);
+                dataReset();
+                return true;
+            case CONTEXT_DELETE:
+                categoriesDB.open();
+                Cursor cDelete = categoriesDB.getCategory(refIDPass_Category[contextSelection]);
+                String titleDelete = cDelete.getString(cDelete.getColumnIndex("catTitle"));
+                categoriesDB.close();
 
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete Category and Evaluations?")
+                        .setMessage(
+                                "Are you sure you want to delete \"" + titleDelete
+                                        + "\" and ALL Evaluations within it?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-									evalsDB.open();
-									evalsDB.deleteEvaluationsOfCategory(refIDPass_Category[contextSelection]);
-									evalsDB.close();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-									categoriesDB.open();
-									Cursor cDelete = categoriesDB
-											.getCategory(refIDPass_Category[contextSelection]);
-									String titleDelete = cDelete.getString(cDelete
-											.getColumnIndex("catTitle"));
-									categoriesDB
-											.deleteCategory(refIDPass_Category[contextSelection]);
-									categoriesDB.close();
+                                evalsDB.open();
+                                evalsDB.deleteEvaluationsOfCategory(refIDPass_Category[contextSelection]);
+                                evalsDB.close();
 
-									Toast toast = Toast
-											.makeText(
-													context,
-													titleDelete
-															+ " and all Evaluations within it was deleted successfully.",
-													Toast.LENGTH_SHORT);
-									try {
-										// center toast
-										((TextView) ((LinearLayout) toast
-												.getView()).getChildAt(0))
-												.setGravity(Gravity.CENTER_HORIZONTAL);
-									} catch (ClassCastException cce) {
-										Log.d(TAG, cce.getMessage());
-									}
-									toast.show();
-									dataReset();
-								}
-							}).setNegativeButton("Cancel", null).show();
+                                categoriesDB.open();
+                                Cursor cDelete = categoriesDB
+                                        .getCategory(refIDPass_Category[contextSelection]);
+                                String titleDelete = cDelete.getString(cDelete
+                                        .getColumnIndex("catTitle"));
+                                categoriesDB.deleteCategory(refIDPass_Category[contextSelection]);
+                                categoriesDB.close();
 
-			return true;
-		default:
-			return super.onContextItemSelected(menuItem);
-		}
-	}
+                                Toast toast = Toast
+                                        .makeText(
+                                                context,
+                                                titleDelete
+                                                        + " and all Evaluations within it was deleted successfully.",
+                                                Toast.LENGTH_SHORT);
+                                try
+                                {
+                                    // center toast
+                                    ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
+                                            .setGravity(Gravity.CENTER_HORIZONTAL);
+                                }
+                                catch (ClassCastException cce)
+                                {
+                                    Log.d(TAG, cce.getMessage());
+                                }
+                                toast.show();
+                                dataReset();
+                            }
+                        }).setNegativeButton("Cancel", null).show();
 
-	public void dataReset() {
-		// clear data
-		categories.clear();
-		// read database
-		dataReadToList();
+                return true;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+    }
 
-		// input listview data
-		categoriesListAdapter.notifyDataSetChanged();
+    public void dataReset() {
+        // clear data
+        categories.clear();
+        // read database
+        dataReadToList();
 
-		// refreshes mark after editing sublevels
-		coursesDB.open();
-		Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
-		courseData = new CourseData(cCourse.getInt(cCourse
-				.getColumnIndex("_id")), cCourse.getString(cCourse
-				.getColumnIndex("courseTitle")), cCourse.getString(cCourse
-				.getColumnIndex("courseCode")), cCourse.getInt(cCourse
-				.getColumnIndex("courseUnits")), cCourse.getString(cCourse
-				.getColumnIndex("notes")), cCourse.getInt(cCourse
-				.getColumnIndex("termRef")), context);
-		courseTitle.setText(courseData.getTitle() + " (" + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
+        // input listview data
+        categoriesListAdapter.notifyDataSetChanged();
 
-		coursesDB.close();
+        // refreshes mark after editing sublevels
+        coursesDB.open();
+        Cursor cCourse = coursesDB.getCourse(refIDGet_Course);
+        courseData = new CourseData(cCourse.getInt(cCourse.getColumnIndex("_id")),
+                cCourse.getString(cCourse.getColumnIndex("courseTitle")), cCourse.getString(cCourse
+                        .getColumnIndex("courseCode")), cCourse.getInt(cCourse
+                        .getColumnIndex("courseUnits")), cCourse.getString(cCourse
+                        .getColumnIndex("notes")),
+                cCourse.getInt(cCourse.getColumnIndex("termRef")), context);
+        courseTitle.setText(courseData.getTitle() + " ("
+                + (String.valueOf(twoDForm.format(courseData.getMark()))) + ")");
 
-	}
+        coursesDB.close();
 
-	public void dataReadToList() {
-		categoriesDB.open();
+    }
 
-		Cursor c = categoriesDB.getCategoriesOfCourse(refIDGet_Course);
-		refIDPass_Category = new int[c.getCount() + 1];
-		int i = 0;
-		if (c.moveToFirst()) {
-			categories.add(new CategoryData(0, "All", 100,
-					c.getInt(c.getColumnIndex("courseRef")),
-					c.getInt(c.getColumnIndex("termRef")),
-					c.getInt(c.getColumnIndex("catColor")),
-					context));
-			refIDPass_Category[i] = 0;
-			i++;
-			do {
-				refIDPass_Category[i] = c.getInt(c.getColumnIndex("_id")); // get
-																			// ids
-																			// of
-																			// each.
-				categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")),
-						c.getString(c.getColumnIndex("catTitle")),
-						c.getDouble(c.getColumnIndex("catWeight")),
-						c.getInt(c.getColumnIndex("courseRef")),
-						c.getInt(c.getColumnIndex("termRef")),
-						c.getInt(c.getColumnIndex("catColor")),
-						context));
-				i++;
-			} while (c.moveToNext());
-		}
+    public void dataReadToList() {
+        categoriesDB.open();
 
-		// set label and divider to visible/invisible if there is at least 1
-		// category
-		/*if (c.getCount() > 0) {
-			rLayoutLabels.setVisibility(View.VISIBLE);
-			vCatDivLine.setVisibility(View.VISIBLE);
-		} else {
-			rLayoutLabels.setVisibility(View.INVISIBLE);
-			vCatDivLine.setVisibility(View.INVISIBLE);
+        Cursor c = categoriesDB.getCategoriesOfCourse(refIDGet_Course);
+        refIDPass_Category = new int[c.getCount() + 1];
+        int i = 0;
+        if (c.moveToFirst())
+        {
+            categories.add(new CategoryData(0, "All", 100, c.getInt(c.getColumnIndex("courseRef")),
+                    c.getInt(c.getColumnIndex("termRef")), c.getInt(c.getColumnIndex("catColor")),
+                    context));
+            refIDPass_Category[i] = 0;
+            i++;
+            do
+            {
+                // get ids of each
+                refIDPass_Category[i] = c.getInt(c.getColumnIndex("_id"));
+                categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")), c.getString(c
+                        .getColumnIndex("catTitle")), c.getDouble(c.getColumnIndex("catWeight")), c
+                        .getInt(c.getColumnIndex("courseRef")), c.getInt(c
+                        .getColumnIndex("termRef")), c.getInt(c.getColumnIndex("catColor")),
+                        context));
+                i++;
+            }
+            while (c.moveToNext());
+        }
 
-		}*/
-		categoriesDB.close();
-	}
+        // set label and divider to visible/invisible if there is at least 1
+        // category
+        /*
+         * if (c.getCount() > 0) { rLayoutLabels.setVisibility(View.VISIBLE);
+         * vCatDivLine.setVisibility(View.VISIBLE); } else {
+         * rLayoutLabels.setVisibility(View.INVISIBLE);
+         * vCatDivLine.setVisibility(View.INVISIBLE);
+         * 
+         * }
+         */
+        categoriesDB.close();
+    }
 
 }
