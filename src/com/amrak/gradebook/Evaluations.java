@@ -370,7 +370,6 @@ public class Evaluations extends Activity {
                                         + " was deleted successfully.", Toast.LENGTH_SHORT);
                                 try
                                 {
-                                    // center toast
                                     ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
                                             .setGravity(Gravity.CENTER_HORIZONTAL);
                                 }
@@ -402,7 +401,7 @@ public class Evaluations extends Activity {
         }
     }
 
-    // clears the vectors and then reads new information before repopulating
+    // clears the arraylists and then reads new information before repopulating
     // useful when an evaluation is deleted or added or a way to sort data is
     // chosen
     public void dataReset() {

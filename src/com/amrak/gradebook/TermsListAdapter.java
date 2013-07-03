@@ -63,8 +63,8 @@ public class TermsListAdapter extends BaseAdapter {
 
         title.setText(term.getTitle());
         mark.setText(twoDForm.format(term.getMark()));
-        date.setText(Tool.toMonthYear(term.getDateStart()) + " - "
-                + Tool.toMonthYear(term.getDateEnd()));
+        date.setText(Utils.toMonthYear(term.getDateStart()) + " - "
+                + Utils.toMonthYear(term.getDateEnd()));
         return v;
     }
 

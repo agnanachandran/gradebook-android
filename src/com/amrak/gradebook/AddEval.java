@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -137,7 +138,7 @@ public class AddEval extends Activity {
         else if (idGet_Mode == 1)
         {
             // set date from database
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             Date date = new Date();
             try
             {
@@ -148,9 +149,9 @@ public class AddEval extends Activity {
                 e.printStackTrace();
             }
 
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-            SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.US);
+            SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.US);
+            SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.US);
             mYear = Integer.parseInt(yearFormat.format(date));
             mMonth = Integer.parseInt(monthFormat.format(date)) - 1;
             mDay = Integer.parseInt(dayFormat.format(date));
@@ -353,13 +354,12 @@ public class AddEval extends Activity {
 
         else
         {
-
             String evalName = etEvalName.getText().toString();
             double evalMark = 0.0;
             double evalOutOf = 0.0;
             double evalWeight = 0.0;
-            double catAverage = 100.00;
-            String evalNotes = etEvalNotes.getText().toString();
+//            double catAverage = 100.00;
+//            String evalNotes = etEvalNotes.getText().toString();
 
             try
             {
@@ -396,11 +396,10 @@ public class AddEval extends Activity {
                         selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
                 evaluationsDB.close();
                 updateDBCatMark();
-                Toast toast = Toast.makeText(context, "Evaluation " + evalWeight
+                Toast toast = Toast.makeText(context, "Evaluation " + evalName
                         + " was added successfully.", Toast.LENGTH_SHORT);
                 try
                 {
-                    // center toast
                     ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
                             .setGravity(Gravity.CENTER_HORIZONTAL);
                 }
@@ -420,11 +419,10 @@ public class AddEval extends Activity {
                         evalWeight, selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
                 evaluationsDB.close();
                 updateDBCatMark();
-                Toast toast = Toast.makeText(context, "Evaluation" + evalName
+                Toast toast = Toast.makeText(context, "Evaluation " + evalName
                         + " was edited successfully.", Toast.LENGTH_SHORT);
                 try
                 {
-                    // center toast
                     ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
                             .setGravity(Gravity.CENTER_HORIZONTAL);
                 }

@@ -15,28 +15,27 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingTop="10dp" >
-
+
         <TextView
             android:id="@+id/tvEvalChildWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textWeight"
             android:textSize="16sp" />
-
+
         <TextView
             android:id="@+id/tvEvalChildDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textDate"
             android:textSize="16sp" />
-
+
         <TextView
             android:id="@+id/tvEvalChildCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textCategory"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -48,28 +47,27 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingTop="10dp" >
-
+
         <TextView
             android:id="@+id/tvEvalChildWeightValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textWeight"
             android:textSize="16sp" />
-
+
         <TextView
             android:id="@+id/tvEvalChildDateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textDate"
             android:textSize="16sp" />
-
+
         <TextView
             android:id="@+id/tvEvalChildCategoryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textCategory"
             android:textSize="16sp" />
-
     </LinearLayout>
 
 </LinearLayout>
