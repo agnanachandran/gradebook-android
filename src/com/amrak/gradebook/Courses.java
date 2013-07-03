@@ -321,7 +321,6 @@ public class Courses extends Activity {
         {
             rLayoutLabels.setVisibility(View.INVISIBLE);
             vCourseDivLine.setVisibility(View.INVISIBLE);
-
             tvNoCourses.setVisibility(View.VISIBLE);
         }
 

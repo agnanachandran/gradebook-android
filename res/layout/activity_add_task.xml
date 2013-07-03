@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="@string/hint_task_title"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:maxLength="@integer/sixty"
         android:nextFocusDown="@+id/bTaskPickDate" >
 
         <requestFocus />
     </EditText>
-
+
     <RelativeLayout
         android:id="@+id/rLayoutDeadline"
         android:layout_width="match_parent"
@@ -44,7 +44,6 @@
             android:layout_alignParentTop="true"
             android:onClick="showDatePickerDialog"
             android:text="@string/deadlineTime" />
-
     </RelativeLayout>
 
     <Button

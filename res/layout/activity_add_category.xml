@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="@string/hint_category_title"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:maxLength="@integer/sixty"
         android:nextFocusDown="@+id/etCatWeight" >
 

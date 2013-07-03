@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="@string/hint_course_title"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:maxLength="@integer/sixty"
         android:nextFocusDown="@+id/etCourseCode" >
 
@@ -31,7 +31,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:hint="@string/hint_course_code"
-            android:inputType="text"
+            android:inputType="textCapCharacters"
             android:maxLength="@integer/twenty"
             android:nextFocusDown="@+id/etCourseUnits" />
 
@@ -53,7 +53,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:hint="@string/hint_notes"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences|textMultiLine"
         android:minLines="3" />
 
     <Button

@@ -83,5 +83,6 @@
 	<string name="taskDeadline">Deadline</string>
 	<string name="deadlineTime">Deadline Time</string>
 	<string name="deadlineDate">Deadline Date</string>
+	<string name="textTasks">Tasks</string>
     
 </resources>
