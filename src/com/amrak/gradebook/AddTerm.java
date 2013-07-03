@@ -91,14 +91,12 @@ public class AddTerm extends Activity {
         }
 
         bTermPickStartDate.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("deprecation")
             public void onClick(View v) {
                 showDialog(DATE_START_DIALOG_ID);
             }
         });
 
         bTermPickEndDate.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("deprecation")
             public void onClick(View v) {
                 showDialog(DATE_END_DIALOG_ID);
             }

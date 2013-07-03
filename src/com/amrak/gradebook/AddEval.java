@@ -9,14 +9,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import android.app.Activity;
+import com.amrak.gradebook.DatePickerDialogFragment.DatePickedListener;
+
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,14 +25,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddEval extends Activity {
+public class AddEval extends FragmentActivity implements DatePickedListener {
 
     // database
     CoursesDBAdapter coursesDB = new CoursesDBAdapter(this);
@@ -112,7 +112,14 @@ public class AddEval extends Activity {
 
         bEvalPickDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showDialog(DATE_DIALOG_ID);
+                Bundle b = new Bundle();
+                b.putInt("curYear", mYear);
+                b.putInt("curMonth", mMonth);
+                b.putInt("curDay", mDay);
+                // show the time picker dialog
+                DialogFragment newFragment = new DatePickerDialogFragment();
+                newFragment.setArguments(b);
+                newFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });
 
@@ -166,8 +173,7 @@ public class AddEval extends Activity {
         twoDigit.setMaximumFractionDigits(0);
 
         selectedDate = mYear + "-" + twoDigit.format(mMonth + 1) + "-" + twoDigit.format(mDay);
-        bEvalPickDate.setText(mYear + "-" + twoDigit.format(mMonth + 1) + "-"
-                + twoDigit.format(mDay));
+        bEvalPickDate.setText(selectedDate);
 
         List<String> categories = new ArrayList<String>();
 
@@ -195,7 +201,7 @@ public class AddEval extends Activity {
         // sEvalCat.setSelection(refIDGet_Category);
         sEvalCat.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
+            public void onItemSelected(AdapterView<?> adapter, View v, int i, long lng) {
                 // String selecteditem =
                 // adapter.getItemAtPosition(i).toString();
                 // Toast.makeText(context, "Selected item: " + selecteditem +
@@ -243,38 +249,6 @@ public class AddEval extends Activity {
 
         super.onSaveInstanceState(savedInstanceState);
     }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id)
-        {
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch (id)
-        {
-            case DATE_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-                break;
-        }
-    }
-
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
-            selectedDate = mYear + "-" + twoDigit.format(mMonth + 1) + "-" + twoDigit.format(mDay);
-            bEvalPickDate.setText(mYear + "-" + twoDigit.format(mMonth + 1) + "-"
-                    + twoDigit.format(mDay));
-        }
-    };
 
     public void updateDBCatMark() {
         double mark = 0;
@@ -436,4 +410,13 @@ public class AddEval extends Activity {
             }
         }
     }
+
+	@Override
+	public void onDatePicked(Calendar date) {
+		mYear = date.get(Calendar.YEAR);
+		mMonth = date.get(Calendar.MONTH);
+		mDay = date.get(Calendar.DAY_OF_MONTH);
+        selectedDate = mYear + "-" + twoDigit.format(mMonth + 1) + "-" + twoDigit.format(mDay);
+        bEvalPickDate.setText(selectedDate);
+	}
 }
