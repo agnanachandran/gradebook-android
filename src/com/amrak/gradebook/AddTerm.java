@@ -5,27 +5,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-import android.app.Activity;
+import com.amrak.gradebook.DatePickerDialogFragment.DatePickedListener;
+
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddTerm extends Activity {
+public class AddTerm extends FragmentActivity implements DatePickedListener {
 
     // database
     TermsDBAdapter termsDB = new TermsDBAdapter(this);
@@ -64,6 +65,9 @@ public class AddTerm extends Activity {
     String selectedEDate;
     int idGet_Mode; // mode 0: add, mode 1: edit
     int idEditGet_Item;
+    
+    enum DatePickers {START, END};
+    DatePickers datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,13 +96,31 @@ public class AddTerm extends Activity {
 
         bTermPickStartDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showDialog(DATE_START_DIALOG_ID);
+                //showDialog(DATE_START_DIALOG_ID);
+                datePicker = DatePickers.START;
+                Bundle b = new Bundle();
+                b.putInt("curYear", mSYear);
+                b.putInt("curMonth", mSMonth);
+                b.putInt("curDay", mSDay);
+                // show the time picker dialog
+                DialogFragment newFragment = new DatePickerDialogFragment();
+                newFragment.setArguments(b);
+                newFragment.show(getSupportFragmentManager(), "datePickerS");
             }
         });
 
         bTermPickEndDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showDialog(DATE_END_DIALOG_ID);
+                //showDialog(DATE_END_DIALOG_ID);
+                datePicker = DatePickers.END;
+                Bundle b = new Bundle();
+                b.putInt("curYear", mEYear);
+                b.putInt("curMonth", mEMonth);
+                b.putInt("curDay", mEDay);
+                // show the time picker dialog
+                DialogFragment newFragment = new DatePickerDialogFragment();
+                newFragment.setArguments(b);
+                newFragment.show(getSupportFragmentManager(), "datePickerE");
             }
         });
 
@@ -130,7 +152,7 @@ public class AddTerm extends Activity {
         else if (idGet_Mode == 1)
         {
             // set date from database
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             Date sDate = new Date();
             Date eDate = new Date();
             try
@@ -151,13 +173,13 @@ public class AddTerm extends Activity {
                 e.printStackTrace();
             }
 
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-            SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.US);
+            SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.US);
+            SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.US);
 
             mSYear = Integer.parseInt(yearFormat.format(sDate));
             mSMonth = Integer.parseInt(monthFormat.format(sDate)) - 1;
-            mSDay = Integer.parseInt(dayFormat.format(eDate));
+            mSDay = Integer.parseInt(dayFormat.format(sDate));
             mEYear = Integer.parseInt(yearFormat.format(eDate));
             mEMonth = Integer.parseInt(monthFormat.format(eDate)) - 1;
             mEDay = Integer.parseInt(dayFormat.format(eDate));
@@ -172,16 +194,12 @@ public class AddTerm extends Activity {
         twoDigit.setMaximumFractionDigits(0);
 
         selectedSDate = mSYear + "-" + twoDigit.format(mSMonth + 1) + "-" + twoDigit.format(mSDay);
-        bTermPickStartDate.setText(mSYear + "-" + twoDigit.format(mSMonth + 1) + "-"
-                + twoDigit.format(mSDay));
+        bTermPickStartDate.setText(selectedSDate);
         selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-" + twoDigit.format(mEDay);
-        bTermPickEndDate.setText(mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
-                + twoDigit.format(mEDay));
+        bTermPickEndDate.setText(selectedEDate);
 
         bTermDone.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 addTerm(v);
             }
         });
@@ -201,63 +219,12 @@ public class AddTerm extends Activity {
         savedInstanceState.putInt(STATE_SYEAR, mSYear);
         savedInstanceState.putInt(STATE_SMONTH, mSMonth);
         savedInstanceState.putInt(STATE_SDAY, mSDay);
-        savedInstanceState.putInt(STATE_SYEAR, mEYear);
-        savedInstanceState.putInt(STATE_SMONTH, mEMonth);
-        savedInstanceState.putInt(STATE_SDAY, mEDay);
+        savedInstanceState.putInt(STATE_EYEAR, mEYear);
+        savedInstanceState.putInt(STATE_EMONTH, mEMonth);
+        savedInstanceState.putInt(STATE_EDAY, mEDay);
 
         super.onSaveInstanceState(savedInstanceState);
     }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id)
-        {
-            case DATE_START_DIALOG_ID:
-                return new DatePickerDialog(this, mSDateSetListener, mSYear, mSMonth, mSDay);
-            case DATE_END_DIALOG_ID:
-                return new DatePickerDialog(this, mEDateSetListener, mEYear, mEMonth, mEDay);
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch (id)
-        {
-            case DATE_START_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mSYear, mSMonth, mSDay);
-                break;
-            case DATE_END_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mEYear, mEMonth, mEDay);
-                break;
-        }
-    }
-
-    private DatePickerDialog.OnDateSetListener mSDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mSYear = year;
-            mSMonth = monthOfYear;
-            mSDay = dayOfMonth;
-            selectedSDate = mSYear + "-" + twoDigit.format(mSMonth + 1) + "-"
-                    + twoDigit.format(mSDay);
-            bTermPickStartDate.setText(mSYear + "-" + twoDigit.format(mSMonth + 1) + "-"
-                    + twoDigit.format(mSDay));
-        }
-    };
-
-    private DatePickerDialog.OnDateSetListener mEDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mEYear = year;
-            mEMonth = monthOfYear;
-            mEDay = dayOfMonth;
-            selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
-                    + twoDigit.format(mEDay);
-            bTermPickEndDate.setText(mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
-                    + twoDigit.format(mEDay));
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -344,5 +311,25 @@ public class AddTerm extends Activity {
         }
 
     }
+
+	@Override
+	public void onDatePicked(Calendar date) {
+		if (datePicker == DatePickers.START) {
+			mSYear = date.get(Calendar.YEAR);
+			mSMonth = date.get(Calendar.MONTH);
+			mSDay = date.get(Calendar.DAY_OF_MONTH);
+            selectedSDate = mSYear + "-" + twoDigit.format(mSMonth + 1) + "-"
+                    + twoDigit.format(mSDay);
+            bTermPickStartDate.setText(selectedSDate);
+		} else if (datePicker == DatePickers.END) {
+			mEYear = date.get(Calendar.YEAR);
+			mEMonth = date.get(Calendar.MONTH);
+			mEDay = date.get(Calendar.DAY_OF_MONTH);
+            selectedEDate = mEYear + "-" + twoDigit.format(mEMonth + 1) + "-"
+                    + twoDigit.format(mEDay);
+            bTermPickEndDate.setText(selectedEDate);
+		}
+		
+	}
 
 }
