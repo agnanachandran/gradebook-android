@@ -1,9 +1,14 @@
 package com.amrak.gradebook;
 
+import java.util.HashMap;
+
+import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 public class EvaluationsDBAdapter extends DBAdapter {
 
@@ -23,6 +28,19 @@ public class EvaluationsDBAdapter extends DBAdapter {
 
     // database name
     private static final String DATABASE_TABLE = "evaluations";
+    
+    // Projection map for search suggestions
+    private static HashMap<String, String> mColumnMapEvaluations = buildColumnMapForEvaluations();
+    
+    // Projection map factory method
+	private static HashMap<String, String> buildColumnMapForEvaluations() {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put(ROW_ID, ROW_ID + " AS " + ROW_ID);
+		map.put(SearchManager.SUGGEST_COLUMN_INTENT_DATA, ROW_ID + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA);
+		map.put(SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA, EVAL_TITLE + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA);
+		map.put(EVAL_TITLE, EVAL_TITLE + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1);
+		return map;
+	}
 
     /**
      * Constructor - takes the context to allow the database to be
@@ -228,6 +246,28 @@ public class EvaluationsDBAdapter extends DBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    // Used by CustomSuggestionProvider to query search suggestions based on partial matches
+    // in the evaluation name
+    public Cursor getEvaluationSortByName(String query) throws SQLException {
+    	Log.i(TAG, "Suggestions query received");
+    	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+    	String[] columns = new String[] { ROW_ID, EVAL_TITLE};
+    	String selection = EVAL_TITLE + " LIKE ? ";
+    	String[] selectionArgs = new String[] {query + "%"};
+    	String orderBy = EVAL_TITLE;
+    	
+		builder.setTables(DATABASE_TABLE);
+		builder.setProjectionMap(mColumnMapEvaluations);
+		Cursor c = builder.query(mDb, columns, selection, selectionArgs, null, null, orderBy);
+		if (c == null) {
+			Log.i(TAG, "null cursor");
+		} else {
+			Log.i(TAG, c.getCount() + " results");			
+		}
+
+		return c;
     }
 
     // (ALL CATEGORIES) cursor that gets evaluations by weight in desc order,

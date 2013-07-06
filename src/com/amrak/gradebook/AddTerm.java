@@ -96,7 +96,6 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
 
         bTermPickStartDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //showDialog(DATE_START_DIALOG_ID);
                 datePicker = DatePickers.START;
                 Bundle b = new Bundle();
                 b.putInt("curYear", mSYear);
@@ -111,7 +110,6 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
 
         bTermPickEndDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //showDialog(DATE_END_DIALOG_ID);
                 datePicker = DatePickers.END;
                 Bundle b = new Bundle();
                 b.putInt("curYear", mEYear);
@@ -213,8 +211,6 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-
         // Save the user's current state
         savedInstanceState.putInt(STATE_SYEAR, mSYear);
         savedInstanceState.putInt(STATE_SMONTH, mSMonth);
