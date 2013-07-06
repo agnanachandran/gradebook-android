@@ -5,31 +5,28 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="15" />
-
-    <uses-permission android:name="android.permission.READ_CALENDAR" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" >
-    </uses-permission>
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/CustomTheme" >
         <activity
-            android:name="com.amrak.gradebook.Settings"
+            android:name="com.amrak.gradebook.activity.Settings"
             android:label="@string/title_activity_settings" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.SETTINGS" />
+                <action android:name="com.amrak.gradebook.activity.SETTINGS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.Terms"
+            android:name="com.amrak.gradebook.activity.Terms"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,83 +41,87 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.amrak.gradebook.Courses"
+            android:name="com.amrak.gradebook.activity.Courses"
             android:label="@string/titleCourses" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.COURSES" />
+                <action android:name="com.amrak.gradebook.activity.COURSES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.amrak.gradebook.Categories"
+        <activityandroid:name="com.amrak.gradebook.activity.Categories"
             android:label="Categories" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.CATEGORIES" />
+                <action android:name="com.amrak.gradebook.activity.CATEGORIES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.Evaluations"
+            android:name="com.amrak.gradebook.activity.Evaluations"
             android:label="@string/titleEvaluations" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.EVALUATIONS" />
+                <action android:name="com.amrak.gradebook.activity.EVALUATIONS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.AddTerm"
-            android:label="@string/title_activity_add_term" >
+            android:name="com.amrak.gradebook.activity.AddTerm"
+            android:label="@string/title_activity_add_term" 
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.ADDTERM" />
+                <action android:name="com.amrak.gradebook.activity.ADDTERM" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.AddCourse"
+            android:name="com.amrak.gradebook.activity.AddCourse"
             android:label="@string/title_activity_add_course"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.ADDCOURSE" />
+                <action android:name="com.amrak.gradebook.activity.ADDCOURSE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.AddCategory"
-            android:label="@string/title_activity_add_category" >
+            android:name="com.amrak.gradebook.activity.AddCategory"
+            android:label="@string/title_activity_add_category"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.ADDCAT" />
+                <action android:name="com.amrak.gradebook.activity.ADDCAT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.AddEval"
-            android:label="@string/title_activity_add_evaluation" >
+            android:name="com.amrak.gradebook.activity.AddEval"
+            android:label="@string/title_activity_add_evaluation"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.ADDEVAL" />
+                <action android:name="com.amrak.gradebook.activity.ADDEVAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.TaskList"
+        android:name="com.amrak.gradebook.activity.TaskList"
             android:label="@string/title_activity_task_list" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.TASKLIST" />
+                <action android:name="com.amrak.gradebook.activity.TASKLIST" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.AddTask"
-            android:label="@string/title_activity_add_task" >
+            android:name="com.amrak.gradebook.activity.AddTask"
+            android:label="@string/title_activity_add_task"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.ADDTASK" />
+                <action android:name="com.amrak.gradebook.activity.ADDTASK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

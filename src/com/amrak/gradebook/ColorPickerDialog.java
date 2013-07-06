@@ -36,7 +36,7 @@ public class ColorPickerDialog extends AlertDialog implements
 
     private OnColorChangedListener mListener;
 
-    protected ColorPickerDialog(Context context, int initialColor) {
+    public ColorPickerDialog(Context context, int initialColor) {
         super(context);
 
         init(initialColor);

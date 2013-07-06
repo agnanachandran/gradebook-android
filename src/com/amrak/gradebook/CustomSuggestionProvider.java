@@ -6,9 +6,13 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
+
+import com.amrak.gradebook.db.adapter.EvaluationsDBAdapter;
 
 public class CustomSuggestionProvider extends ContentProvider {
 	
+	public static final String TAG = "CustomSuggestionProvider";
 	public static String AUTHORITY = "com.amrak.gradebook.CustomSuggestionProvider";
 	
 	EvaluationsDBAdapter evalsDBAdapter;
@@ -54,17 +58,24 @@ public class CustomSuggestionProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
+		
+		Log.i(TAG, "Content provider received query. Uri is " + uri.toString());
 
 		switch(uriMatcher.match(uri)) {
 		case SEARCH_SUGGEST:
+			Log.i(TAG, "URI Matcher matched SEARCH_SUGGEST");
 			return getSuggestions(uri.getLastPathSegment());
 		default:
+			Log.i(TAG, "URI Matcher did not match anything");
 			return null;
 		}
 	}
 	
 	private Cursor getSuggestions(String query) {
-		return evalsDBAdapter.getEvaluationSortByName(query);
+		evalsDBAdapter.open();
+		Cursor c = evalsDBAdapter.getEvaluationSortByName(query);
+		evalsDBAdapter.close();
+		return c;
 	}
 
 	@Override
