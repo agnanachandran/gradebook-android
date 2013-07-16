@@ -117,19 +117,6 @@ public class Terms extends Activity {
         registerForContextMenu(listView);
 
     }
-    
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-    	Log.i(TAG, "Search intent is received");
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-          String query = intent.getStringExtra(SearchManager.QUERY);
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -141,13 +128,6 @@ public class Terms extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_term, menu);
-        
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
         return true;
     }
 
@@ -168,6 +148,10 @@ public class Terms extends Activity {
                 Intent iTask = new Intent("com.amrak.gradebook.activity.TASKLIST");
                 startActivity(iTask);
                 break;
+            case R.id.search:
+            	Intent iSearch = new Intent(this, Search.class);
+            	startActivity(iSearch);
+            	break;
         }
         return super.onOptionsItemSelected(item);
     }

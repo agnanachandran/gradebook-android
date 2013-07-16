@@ -170,6 +170,10 @@ public class Categories extends Activity {
                 iAddCat.putExtra("id_Mode", EditMode.ADD_MODE);
                 startActivity(iAddCat);
                 break;
+            case R.id.search:
+            	Intent iSearch = new Intent(this, Search.class);
+            	startActivity(iSearch);
+            	break;
             case android.R.id.home:
                 finish();
                 break;

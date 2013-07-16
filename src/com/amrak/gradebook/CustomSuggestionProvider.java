@@ -8,14 +8,22 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.amrak.gradebook.db.adapter.CategoriesDBAdapter;
+import com.amrak.gradebook.db.adapter.CoursesDBAdapter;
 import com.amrak.gradebook.db.adapter.EvaluationsDBAdapter;
+import com.amrak.gradebook.db.adapter.TaskDBAdapter;
+import com.amrak.gradebook.db.adapter.TermsDBAdapter;
 
 public class CustomSuggestionProvider extends ContentProvider {
 	
 	public static final String TAG = "CustomSuggestionProvider";
 	public static String AUTHORITY = "com.amrak.gradebook.CustomSuggestionProvider";
 	
+	TermsDBAdapter termsDBAdapter;
+	CoursesDBAdapter coursesDBAdapter;
+	CategoriesDBAdapter catsDBAdapter;
 	EvaluationsDBAdapter evalsDBAdapter;
+	TaskDBAdapter taskDBAdapter;
 	
 	private static final int SEARCH_SUGGEST = 0;
 	private static final UriMatcher uriMatcher = buildUriMatcher();
@@ -51,7 +59,20 @@ public class CustomSuggestionProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		termsDBAdapter = new TermsDBAdapter(getContext());
+		coursesDBAdapter = new CoursesDBAdapter(getContext());
+		catsDBAdapter = new CategoriesDBAdapter(getContext());
 		evalsDBAdapter = new EvaluationsDBAdapter(getContext());
+		taskDBAdapter = new TaskDBAdapter(getContext());
+		
+		termsDBAdapter.open();
+		coursesDBAdapter.open();
+		catsDBAdapter.open();
+		evalsDBAdapter.open();
+		taskDBAdapter.open();
+		
+		//Note, in Content Provider, DB Adapters do not need to be closed, please refer to
+		//http://stackoverflow.com/questions/4547461/closing-the-database-in-a-contentprovider
 		return false;
 	}
 
@@ -72,9 +93,7 @@ public class CustomSuggestionProvider extends ContentProvider {
 	}
 	
 	private Cursor getSuggestions(String query) {
-		evalsDBAdapter.open();
 		Cursor c = evalsDBAdapter.getEvaluationSortByName(query);
-		evalsDBAdapter.close();
 		return c;
 	}
 

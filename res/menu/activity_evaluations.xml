@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item 
+        android:id="@+id/search"
+        android:alphabeticShortcut="s"
+        android:title="@string/menu_search"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_search_holo_light" />
 
     <item
         android:id="@+id/addeval"

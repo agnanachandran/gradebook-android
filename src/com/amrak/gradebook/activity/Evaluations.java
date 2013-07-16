@@ -239,6 +239,10 @@ public class Evaluations extends Activity {
                 Intent i = new Intent("com.amrak.gradebook.activity.SETTINGS");
                 startActivity(i);
                 break;
+            case R.id.search:
+            	Intent iSearch = new Intent(this, Search.class);
+            	startActivity(iSearch);
+            	break;
             case R.id.addeval:
                 Intent iAddEval = new Intent("com.amrak.gradebook.activity.ADDEVAL");
                 iAddEval.putExtra("refID_Course", refIDGet_Course);

@@ -165,6 +165,10 @@ public class Courses extends Activity {
                 Intent i = new Intent("com.amrak.gradebook.activity.SETTINGS");
                 startActivity(i);
                 break;
+            case R.id.search:
+            	Intent iSearch = new Intent(this, Search.class);
+            	startActivity(iSearch);
+            	break;
             case R.id.addcourse:
                 Intent iAddCourse = new Intent("com.amrak.gradebook.activity.ADDCOURSE");
                 iAddCourse.putExtra("refID_Term", refIDGet_Term);

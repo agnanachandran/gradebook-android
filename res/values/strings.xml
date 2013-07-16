@@ -15,7 +15,7 @@
     <string name="menu_add_course">Add Course</string>
     <string name="menu_add_evaluation">Add Evaluation</string>
     <string name="menu_add_category">Add Category</string>
-    <string name="menu_search">Search Evaluations</string>
+    <string name="menu_search">Search</string>
     <string name="menu_sort_date">Sort by Date</string>
     <string name="menu_sort_name">Sort by Name</string>
     <string name="menu_sort_weight">Sort by Weight</string>
@@ -77,14 +77,16 @@
     <string name="doneAddTask">Add Task</string>
     <string name="doneEditTask">Done</string>
     <string name="menu_tasks">Tasks</string>
-	<string name="chooseColor">Pick Colour</string>
-	<string name="textCourseCode">Course Code</string>
-	<string name="termTitle">Term</string>
-	<string name="textAverage">Cumulative Average</string>
-	<string name="taskDeadline">Deadline</string>
-	<string name="deadlineTime">Deadline Time</string>
-	<string name="deadlineDate">Deadline Date</string>
-	<string name="textTasks">Tasks</string>
-	<string name="search_hint">Search Evaluations</string>
-    
+    <string name="chooseColor">Pick Colour</string>
+    <string name="textCourseCode">Course Code</string>
+    <string name="termTitle">Term</string>
+    <string name="textAverage">Cumulative Average</string>
+    <string name="taskDeadline">Deadline</string>
+    <string name="deadlineTime">Deadline Time</string>
+    <string name="deadlineDate">Deadline Date</string>
+    <string name="textTasks">Tasks</string>
+    <string name="search_hint">Search Evaluations</string>
+    <string name="title_activity_search">Search</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

@@ -1,11 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
-    <item android:id="@+id/menu_search"
-      android:title="@string/menu_search"
-      android:icon="@drawable/ic_action_search_holo_light"
-      android:showAsAction="ifRoom|collapseActionView"
-      android:actionViewClass="android.widget.SearchView" />
-
+    <item 
+        android:id="@+id/search"
+        android:alphabeticShortcut="s"
+        android:title="@string/menu_search"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_search_holo_light" />
+    
     <item
         android:id="@+id/addterm"
         android:alphabeticShortcut="a"
@@ -13,6 +14,7 @@
         android:title="@string/menu_add_term"
         android:showAsAction="ifRoom|withText"
         android:icon="@android:drawable/ic_menu_add" />
+    
     <item
         android:id="@+id/preferences"
         android:alphabeticShortcut="b"

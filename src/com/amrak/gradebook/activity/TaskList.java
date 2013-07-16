@@ -104,6 +104,10 @@ public class TaskList extends Activity {
                 Intent iAddTask = new Intent("com.amrak.gradebook.activity.ADDTASK");
                 startActivity(iAddTask);
                 break;
+            case R.id.search:
+            	Intent iSearch = new Intent(this, Search.class);
+            	startActivity(iSearch);
+            	break;
         }
         return super.onOptionsItemSelected(item);
     }
