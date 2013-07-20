@@ -16,7 +16,7 @@ import com.amrak.gradebook.db.adapter.TermsDBAdapter;
 
 public class CustomSuggestionProvider extends ContentProvider {
 	
-	public static final String TAG = "CustomSuggestionProvider";
+	private static final String TAG = "CustomSuggestionProvider";
 	public static String AUTHORITY = "com.amrak.gradebook.CustomSuggestionProvider";
 	
 	TermsDBAdapter termsDBAdapter;
