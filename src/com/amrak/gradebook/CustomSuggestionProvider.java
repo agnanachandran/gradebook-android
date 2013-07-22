@@ -12,20 +12,21 @@ import com.amrak.gradebook.db.adapter.CategoriesDBAdapter;
 import com.amrak.gradebook.db.adapter.CoursesDBAdapter;
 import com.amrak.gradebook.db.adapter.EvaluationsDBAdapter;
 import com.amrak.gradebook.db.adapter.TaskDBAdapter;
-import com.amrak.gradebook.db.adapter.TermsDBAdapter;
 
 public class CustomSuggestionProvider extends ContentProvider {
 	
 	private static final String TAG = "CustomSuggestionProvider";
 	public static String AUTHORITY = "com.amrak.gradebook.CustomSuggestionProvider";
 	
-	TermsDBAdapter termsDBAdapter;
 	CoursesDBAdapter coursesDBAdapter;
 	CategoriesDBAdapter catsDBAdapter;
 	EvaluationsDBAdapter evalsDBAdapter;
 	TaskDBAdapter taskDBAdapter;
 	
-	private static final int SEARCH_SUGGEST = 0;
+	private static final int SEARCH_COURSES = 0;
+	private static final int SEARCH_CATEGORIES = 1;
+	private static final int SEARCH_EVALUATIONS = 2;
+	private static final int SEARCH_TASKS = 3;
 	private static final UriMatcher uriMatcher = buildUriMatcher();
 	
 	public CustomSuggestionProvider() {
@@ -34,7 +35,10 @@ public class CustomSuggestionProvider extends ContentProvider {
 	private static UriMatcher buildUriMatcher() {
 		UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 		//to get suggestions...
-		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
+		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/" + CoursesDBAdapter.DATABASE_TABLE + "/*", SEARCH_COURSES);
+		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/" + CategoriesDBAdapter.DATABASE_TABLE + "/*", SEARCH_CATEGORIES);
+		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/" + EvaluationsDBAdapter.DATABASE_TABLE + "/*", SEARCH_EVALUATIONS);
+		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/" + TaskDBAdapter.DATABASE_TABLE + "/*", SEARCH_TASKS);
 		return matcher;
 	}
 
@@ -59,13 +63,11 @@ public class CustomSuggestionProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		termsDBAdapter = new TermsDBAdapter(getContext());
 		coursesDBAdapter = new CoursesDBAdapter(getContext());
 		catsDBAdapter = new CategoriesDBAdapter(getContext());
 		evalsDBAdapter = new EvaluationsDBAdapter(getContext());
 		taskDBAdapter = new TaskDBAdapter(getContext());
 		
-		termsDBAdapter.open();
 		coursesDBAdapter.open();
 		catsDBAdapter.open();
 		evalsDBAdapter.open();
@@ -83,18 +85,22 @@ public class CustomSuggestionProvider extends ContentProvider {
 		Log.i(TAG, "Content provider received query. Uri is " + uri.toString());
 
 		switch(uriMatcher.match(uri)) {
-		case SEARCH_SUGGEST:
-			Log.i(TAG, "URI Matcher matched SEARCH_SUGGEST");
-			return getSuggestions(uri.getLastPathSegment());
+		case SEARCH_COURSES:
+			Log.i(TAG, "URI Matcher matched SEARCH_EVALUATIONS");
+			return coursesDBAdapter.getCoursesSortByName(uri.getLastPathSegment());
+		case SEARCH_CATEGORIES:
+			Log.i(TAG, "URI Matcher matched SEARCH_CATEGORIES");
+			return catsDBAdapter.getCategoriesSortByName(uri.getLastPathSegment());
+		case SEARCH_EVALUATIONS:
+			Log.i(TAG, "URI Matcher matched SEARCH_EVALUATIONS");
+			return evalsDBAdapter.getEvaluationSortByName(uri.getLastPathSegment());
+		case SEARCH_TASKS:
+			Log.i(TAG, "URI Matcher matched SEARCH_TASKS");
+			return taskDBAdapter.getTasksSortByName(uri.getLastPathSegment());
 		default:
 			Log.i(TAG, "URI Matcher did not match anything");
 			return null;
 		}
-	}
-	
-	private Cursor getSuggestions(String query) {
-		Cursor c = evalsDBAdapter.getEvaluationSortByName(query);
-		return c;
 	}
 
 	@Override

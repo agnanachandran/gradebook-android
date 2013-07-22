@@ -1,28 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Search" >
-    
-    <ListView 
-        android:id="@android:id/android:list"
+
+    <TextView
+        android:id="@+id/activity_search_courses_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titleCourses"
+        style="@style/search_heading"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/activity_search_courses_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    
-<!--     <ListView 
+
+    <TextView
+        android:id="@+id/activity_search_categories_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titleCategories"
+        style="@style/search_heading"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone" />
+
+    <ListView
         android:id="@+id/activity_search_categories_listview"
-        android:layout_below="@id/activity_search_courses_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" /> 
+        android:layout_height="wrap_content" />
 
-    <ListView 
+    <TextView
+        android:id="@+id/activity_search_evaluations_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titleEvaluations"
+        style="@style/search_heading"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone" />
+
+    <ListView
         android:id="@+id/activity_search_evaluations_listview"
-        android:layout_below="@id/activity_search_categories_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />  -->
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/activity_search_task_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titleTasks"
+        style="@style/search_heading"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/activity_search_task_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

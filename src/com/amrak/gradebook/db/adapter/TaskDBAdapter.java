@@ -1,9 +1,15 @@
 package com.amrak.gradebook.db.adapter;
 
+import com.amrak.gradebook.CustomSuggestionProvider;
+
+import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+import android.util.Log;
 
 public class TaskDBAdapter extends DBAdapter {
 
@@ -15,7 +21,10 @@ public class TaskDBAdapter extends DBAdapter {
     private static final String TAG = "TaskDBAdapter";
 
     // database name
-    private static final String DATABASE_TABLE = "tasks";
+    public static final String DATABASE_TABLE = "tasks";
+    
+    //Uri for Search Suggest
+  	public static final Uri SUGGEST_URI = Uri.parse("content://" + CustomSuggestionProvider.AUTHORITY + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/" + DATABASE_TABLE);
 
     /**
      * Constructor - takes the context to allow the database to be
@@ -88,6 +97,25 @@ public class TaskDBAdapter extends DBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    /**
+     * Return a cursor that has tasks from the entire database whose title
+     * partially matches the query.
+     * @param query
+     * @return cursor of tasks sorted by TASK_TITLE in ascending order
+     * */
+    public Cursor getTasksSortByName(String query) {
+    	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+    	String[] columns = new String[] { ROW_ID, TASK_TITLE};
+    	String selection = TASK_TITLE + " LIKE ?";
+    	String[] selectionArgs = new String[] {"%" + query + "%"};
+    	String orderBy = TASK_TITLE;
+    	
+		builder.setTables(DATABASE_TABLE);
+		Cursor c = builder.query(mDb, columns, selection, selectionArgs, null, null, orderBy);
+
+		return c;
     }
 
     /**

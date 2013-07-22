@@ -1,9 +1,15 @@
 package com.amrak.gradebook.db.adapter;
 
+import com.amrak.gradebook.CustomSuggestionProvider;
+
+import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+import android.util.Log;
 
 public class CategoriesDBAdapter extends DBAdapter {
 
@@ -17,7 +23,10 @@ public class CategoriesDBAdapter extends DBAdapter {
     public static final String CAT_AVERAGE = "catAverage";
 
     // database name
-    private static final String DATABASE_TABLE = "categories";
+    public static final String DATABASE_TABLE = "categories";
+    
+    //Uri for Search Suggest
+  	public static final Uri SUGGEST_URI = Uri.parse("content://" + CustomSuggestionProvider.AUTHORITY + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/" + DATABASE_TABLE);
 
     /**
      * Constructor - takes the context to allow the database to be
@@ -148,6 +157,25 @@ public class CategoriesDBAdapter extends DBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    /**
+     * Return a cursor that has categories from the entire database whose title
+     * partially matches the query.
+     * @param query
+     * @return cursor of categories sorted by CAT_TITLE in ascending order
+     * */
+    public Cursor getCategoriesSortByName(String query) {
+    	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+    	String[] columns = new String[] { ROW_ID, CAT_TITLE};
+    	String selection = CAT_TITLE + " LIKE ?";
+    	String[] selectionArgs = new String[] {"%" + query + "%"};
+    	String orderBy = CAT_TITLE;
+    	
+		builder.setTables(DATABASE_TABLE);
+		Cursor c = builder.query(mDb, columns, selection, selectionArgs, null, null, orderBy);
+		
+		return c;
     }
 
     /**

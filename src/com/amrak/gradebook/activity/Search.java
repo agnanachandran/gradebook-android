@@ -13,24 +13,48 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
-import com.amrak.gradebook.CustomSuggestionProvider;
 import com.amrak.gradebook.R;
 import com.amrak.gradebook.adapter.SearchCursorAdapter;
+import com.amrak.gradebook.db.adapter.CategoriesDBAdapter;
+import com.amrak.gradebook.db.adapter.CoursesDBAdapter;
 import com.amrak.gradebook.db.adapter.EvaluationsDBAdapter;
+import com.amrak.gradebook.db.adapter.TaskDBAdapter;
 
 public class Search extends Activity implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
 	
 	private static final String TAG = "Search";
 	
-	private SearchCursorAdapter searchCursorAdapter;
-	private Cursor cursor;
-	private SearchView searchView;
-	private ListView evalsListView;
+	private SearchCursorAdapter coursesSearchCursorAdapter;
+	private SearchCursorAdapter catsSearchCursorAdapter;
+	private SearchCursorAdapter evalsSearchCursorAdapter;
+	private SearchCursorAdapter taskSearchCursorAdapter;
 	
-	String[] from = new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1 };
+	private SearchView searchView;
+	
+	private ListView coursesListView;
+	private ListView catsListView;
+	private ListView evalsListView;
+	private ListView taskListView;
+	
+	private TextView coursesTextView;
+	private TextView catsTextView;
+	private TextView evalsTextView;
+	private TextView taskTextView;
+	
+	private static final int COURSES_LOADER_ID = 0;
+	private static final int CATS_LOADER_ID = 1;
+	private static final int EVALS_LOADER_ID = 2;
+	private static final int TASK_LOADER_ID = 3;
+	
+	String[] coursesFrom = new String[] { CoursesDBAdapter.COURSE_TITLE };
+	String[] catsFrom = new String[] { CategoriesDBAdapter.CAT_TITLE };
+	String[] evalsFrom = new String[] { EvaluationsDBAdapter.EVAL_TITLE };
+	String[] taskFrom = new String[] { TaskDBAdapter.TASK_TITLE };
 	int[] to = new int[] { R.id.activity_search_listitem_text };
 
 	@Override
@@ -41,9 +65,25 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
         // up button in action bar
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
-        searchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, from, to, 0);
-        evalsListView = (ListView) findViewById(android.R.id.list);
-        evalsListView.setAdapter(searchCursorAdapter);
+        coursesSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, coursesFrom, to, 0);
+        catsSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, catsFrom, to, 0);
+        evalsSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, evalsFrom, to, 0);
+        taskSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, taskFrom, to, 0);
+        
+        coursesListView = (ListView) findViewById(R.id.activity_search_courses_listview);
+        catsListView = (ListView) findViewById(R.id.activity_search_categories_listview);
+        evalsListView = (ListView) findViewById(R.id.activity_search_evaluations_listview);
+        taskListView = (ListView) findViewById(R.id.activity_search_task_listview);
+        
+        coursesTextView = (TextView) findViewById(R.id.activity_search_courses_textview);
+        catsTextView = (TextView) findViewById(R.id.activity_search_categories_textview);
+        evalsTextView = (TextView) findViewById(R.id.activity_search_evaluations_textview);
+        taskTextView = (TextView) findViewById(R.id.activity_search_task_textview);
+        
+        coursesListView.setAdapter(coursesSearchCursorAdapter);
+        catsListView.setAdapter(catsSearchCursorAdapter);
+        evalsListView.setAdapter(evalsSearchCursorAdapter);
+        taskListView.setAdapter(taskSearchCursorAdapter);
 
 	}
 	
@@ -60,10 +100,6 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
           System.out.println("Query is " + query);
         }
     }
-    
-    private void updateDisplay() {
-    	
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,12 +112,12 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-        
-        getLoaderManager().initLoader(0, null, this);
-        
-        if (searchCursorAdapter == null) Log.i(TAG, "searchCursorAdapter is null");
-        else Log.i(TAG, "searchCursorAdapter is not null");
-        searchView.setSuggestionsAdapter(searchCursorAdapter);
+
+        getLoaderManager().initLoader(COURSES_LOADER_ID, null, this);
+        getLoaderManager().initLoader(CATS_LOADER_ID, null, this);
+        getLoaderManager().initLoader(EVALS_LOADER_ID, null, this);
+        getLoaderManager().initLoader(TASK_LOADER_ID, null, this);
+
         searchView.setOnQueryTextListener(this);
 		
 		return true;
@@ -99,31 +135,81 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		Log.i(TAG, "onCreateLoader()");
-		Uri uri = Uri.parse("content://" + CustomSuggestionProvider.AUTHORITY + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/" + searchView.getQuery());
-		String[] projection = new String[] {EvaluationsDBAdapter.EVAL_TITLE};
-		String selection = EvaluationsDBAdapter.EVAL_TITLE + " LIKE \'?\'";
-		String[] selectionArgs = new String[] {"%" + searchView.getQuery() + "%"};
-		
-		return new CursorLoader(this, uri, projection, selection, selectionArgs, null);
+		if (id == COURSES_LOADER_ID) {
+			
+			Uri uri = Uri.withAppendedPath(CoursesDBAdapter.SUGGEST_URI, searchView.getQuery().toString());
+			return new CursorLoader(this, uri, null, null, null, null);
+			
+		} else if (id == CATS_LOADER_ID) {
+			
+			Uri uri = Uri.withAppendedPath(CategoriesDBAdapter.SUGGEST_URI, searchView.getQuery().toString());			
+			return new CursorLoader(this, uri, null, null, null, null);
+			
+		} else if (id == EVALS_LOADER_ID) {
+			
+			Uri uri = Uri.withAppendedPath(EvaluationsDBAdapter.SUGGEST_URI, searchView.getQuery().toString());			
+			return new CursorLoader(this, uri, null, null, null, null);
+			
+		} else if (id == TASK_LOADER_ID) {
+			
+			Uri uri = Uri.withAppendedPath(TaskDBAdapter.SUGGEST_URI, searchView.getQuery().toString());			
+			return new CursorLoader(this, uri, null, null, null, null);
+			
+		}
+		return null;
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
-		Log.i(TAG, "onLoadFinish()");
-		searchCursorAdapter.swapCursor(cursor);
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		if (loader.getId() == COURSES_LOADER_ID) {
+			coursesSearchCursorAdapter.swapCursor(cursor);
+			if (cursor != null && cursor.getCount() > 0)
+				coursesTextView.setVisibility(View.VISIBLE);
+		}
+		else if (loader.getId() == CATS_LOADER_ID) {
+			catsSearchCursorAdapter.swapCursor(cursor);
+			if (cursor != null && cursor.getCount() > 0)
+				catsTextView.setVisibility(View.VISIBLE);
+		}
+		else if (loader.getId() == EVALS_LOADER_ID) {
+			evalsSearchCursorAdapter.swapCursor(cursor);
+			if (cursor != null && cursor.getCount() > 0)
+				evalsTextView.setVisibility(View.VISIBLE);
+		}
+		else if (loader.getId() == TASK_LOADER_ID) {
+			taskSearchCursorAdapter.swapCursor(cursor);
+			if (cursor != null && cursor.getCount() > 0)
+				taskTextView.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
-	public void onLoaderReset(Loader<Cursor> arg0) {
-		Log.i(TAG, "onLoadReset()");
-		searchCursorAdapter.swapCursor(null);		
+	public void onLoaderReset(Loader<Cursor> loader) {
+		if (loader.getId() == COURSES_LOADER_ID) {
+			coursesSearchCursorAdapter.swapCursor(null);
+		}
+		else if (loader.getId() == CATS_LOADER_ID) {
+			catsSearchCursorAdapter.swapCursor(null);
+		}
+		else if (loader.getId() == EVALS_LOADER_ID) {
+			evalsSearchCursorAdapter.swapCursor(null);
+		}
+		else if (loader.getId() == TASK_LOADER_ID) {
+			taskSearchCursorAdapter.swapCursor(null);
+		}
 	}
 
 	@Override
 	public boolean onQueryTextChange(String newText) {
-		getLoaderManager().restartLoader(0, null, this);
-		//System.out.println("Cursor count is " + searchCursorAdapter.getCursor().getColumnCount());
+		getLoaderManager().restartLoader(COURSES_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(CATS_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(EVALS_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+		
+		coursesTextView.setVisibility(View.GONE);
+		catsTextView.setVisibility(View.GONE);
+		evalsTextView.setVisibility(View.GONE);
+		taskTextView.setVisibility(View.GONE);
 		return true;
 	}
 

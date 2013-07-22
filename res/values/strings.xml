@@ -43,6 +43,7 @@
     <string name="hint_evaluation_weight">Weight</string>
     <string name="doneAddEval">Add Evaluation</string>
     <string name="doneEditEval">Done</string>
+    <string name="titleTasks">Tasks</string>
     <string name="titleEvaluations">Evaluations</string>
     <string name="titleCourses">Courses</string>
     <string name="titleCategories">Categories</string>
@@ -85,7 +86,7 @@
     <string name="deadlineTime">Deadline Time</string>
     <string name="deadlineDate">Deadline Date</string>
     <string name="textTasks">Tasks</string>
-    <string name="search_hint">Search Evaluations</string>
+    <string name="search_hint">Evaluations, courses, etc.</string>
     <string name="title_activity_search">Search</string>
     <string name="action_settings">Settings</string>
 

@@ -1,9 +1,15 @@
 package com.amrak.gradebook.db.adapter;
 
+import com.amrak.gradebook.CustomSuggestionProvider;
+
+import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+import android.util.Log;
 
 public class CoursesDBAdapter extends DBAdapter {
 
@@ -17,7 +23,10 @@ public class CoursesDBAdapter extends DBAdapter {
     private static final String TAG = "CoursesDBAdapter";
 
     // database name
-    private static final String DATABASE_TABLE = "courses";
+    public static final String DATABASE_TABLE = "courses";
+    
+    //Uri for Search Suggest
+  	public static final Uri SUGGEST_URI = Uri.parse("content://" + CustomSuggestionProvider.AUTHORITY + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/" + DATABASE_TABLE);
 
     /**
      * Constructor - takes the context to allow the database to be
@@ -104,6 +113,25 @@ public class CoursesDBAdapter extends DBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    /**
+     * Return a cursor that has courses from the entire database whose title
+     * partially matches the query.
+     * @param query
+     * @return cursor of courses sorted by COURSE_TITLE in ascending order
+     * */
+    public Cursor getCoursesSortByName(String query) {
+    	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+    	String[] columns = new String[] { ROW_ID, COURSE_TITLE};
+    	String selection = COURSE_TITLE + " LIKE ?";
+    	String[] selectionArgs = new String[] {"%" + query + "%"};
+    	String orderBy = COURSE_TITLE;
+    	
+		builder.setTables(DATABASE_TABLE);
+		Cursor c = builder.query(mDb, columns, selection, selectionArgs, null, null, orderBy);
+
+		return c;
     }
 
     /**
