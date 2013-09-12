@@ -3,24 +3,19 @@ package com.amrak.gradebook.activity;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import com.amrak.gradebook.EditMode;
-import com.amrak.gradebook.R;
-import com.amrak.gradebook.adapter.TermsListAdapter;
-import com.amrak.gradebook.db.adapter.*;
-import com.amrak.gradebook.model.TermData;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +26,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.amrak.gradebook.EditMode;
+import com.amrak.gradebook.R;
+import com.amrak.gradebook.adapter.TermsListAdapter;
+import com.amrak.gradebook.db.adapter.CategoriesDBAdapter;
+import com.amrak.gradebook.db.adapter.CoursesDBAdapter;
+import com.amrak.gradebook.db.adapter.EvaluationsDBAdapter;
+import com.amrak.gradebook.db.adapter.TermsDBAdapter;
+import com.amrak.gradebook.model.TermData;
 
 public class Terms extends Activity {
 
@@ -87,6 +90,9 @@ public class Terms extends Activity {
         tvNoTerms = (TextView) findViewById(R.id.tvNoTerms);
         rLayoutLabels = (RelativeLayout) findViewById(R.id.rLayoutLabelTerms);
         vTermDivLine = (View) findViewById(R.id.vTermDivLine);
+        
+        setArrowMargins();
+        
         // change title back to Terms since default title is the app's name
         getActionBar().setTitle("Terms");
         // read data from database
@@ -296,4 +302,15 @@ public class Terms extends Activity {
         termsDB.close();
     }
 	
+    public void setArrowMargins() {
+    	Display display = getWindowManager().getDefaultDisplay(); 
+    	int width = display.getWidth();  // deprecated
+    	int height = display.getHeight();  // deprecated
+    	
+        LinearLayout.LayoutParams par = (LinearLayout.LayoutParams)ivNoTerms.getLayoutParams();
+        par.setMargins(0, (int) (height * 0.05), (int) (width * 0.22), 0);
+        par.width = (int) (height * 0.22);
+        par.height = par.width;
+        ivNoTerms.setLayoutParams(par);
+    }
 }
