@@ -260,7 +260,7 @@ public class EvaluationsDBAdapter extends DBAdapter {
      * */
     public Cursor getEvaluationSortByName(String query) {
     	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-    	String[] columns = new String[] { ROW_ID, EVAL_TITLE};
+    	String[] columns = new String[] { ROW_ID, TERM_REFERENCE, COURSE_REFERENCE, CATEGORY_REFERENCE, EVAL_TITLE};
     	String selection = EVAL_TITLE + " LIKE ?";
     	String[] selectionArgs = new String[] {"%" + query + "%"};
     	String orderBy = EVAL_TITLE;

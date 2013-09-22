@@ -14,10 +14,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.amrak.gradebook.EditMode;
 import com.amrak.gradebook.R;
 import com.amrak.gradebook.adapter.SearchCursorAdapter;
 import com.amrak.gradebook.db.adapter.CategoriesDBAdapter;
@@ -51,11 +54,11 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
 	private static final int EVALS_LOADER_ID = 2;
 	private static final int TASK_LOADER_ID = 3;
 	
-	String[] coursesFrom = new String[] { CoursesDBAdapter.COURSE_TITLE };
-	String[] catsFrom = new String[] { CategoriesDBAdapter.CAT_TITLE };
-	String[] evalsFrom = new String[] { EvaluationsDBAdapter.EVAL_TITLE };
-	String[] taskFrom = new String[] { TaskDBAdapter.TASK_TITLE };
-	int[] to = new int[] { R.id.activity_search_listitem_text };
+	private String[] coursesFrom = new String[] { CoursesDBAdapter.COURSE_TITLE };
+	private String[] catsFrom = new String[] { CategoriesDBAdapter.CAT_TITLE };
+	private String[] evalsFrom = new String[] { EvaluationsDBAdapter.EVAL_TITLE };
+	private String[] taskFrom = new String[] { TaskDBAdapter.TASK_TITLE };
+	private int[] to = new int[] { R.id.activity_search_listitem_text };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -160,26 +163,90 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+	public void onLoadFinished(Loader<Cursor> loader, final Cursor cursor) {
 		if (loader.getId() == COURSES_LOADER_ID) {
 			coursesSearchCursorAdapter.swapCursor(cursor);
-			if (cursor != null && cursor.getCount() > 0)
+			if (cursor != null && cursor.getCount() > 0) {
 				coursesTextView.setVisibility(View.VISIBLE);
+				coursesListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (cursor.moveToPosition(position)) {
+							Intent intent = new Intent(Search.this, Categories.class);
+							intent.putExtra("refID_Term", cursor.getInt(cursor.getColumnIndex(CoursesDBAdapter.TERM_REFERENCE)));
+							intent.putExtra("refID_Course", cursor.getInt(cursor.getColumnIndex(CoursesDBAdapter.ROW_ID)));
+							startActivity(intent);	
+						}
+					}
+					
+				});
+			}
 		}
 		else if (loader.getId() == CATS_LOADER_ID) {
 			catsSearchCursorAdapter.swapCursor(cursor);
-			if (cursor != null && cursor.getCount() > 0)
+			if (cursor != null && cursor.getCount() > 0) {
 				catsTextView.setVisibility(View.VISIBLE);
+				catsListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (cursor.moveToPosition(position)) {
+							Intent intent = new Intent(Search.this, Evaluations.class);
+							intent.putExtra("refID_Term", cursor.getInt(cursor.getColumnIndex(CategoriesDBAdapter.TERM_REFERENCE)));
+							intent.putExtra("refID_Course", cursor.getInt(cursor.getColumnIndex(CategoriesDBAdapter.COURSE_REFERENCE)));
+							intent.putExtra("refID_Category", cursor.getInt(cursor.getColumnIndex(CategoriesDBAdapter.ROW_ID)));
+							startActivity(intent);	
+						}
+					}
+					
+				});
+			}
 		}
 		else if (loader.getId() == EVALS_LOADER_ID) {
 			evalsSearchCursorAdapter.swapCursor(cursor);
-			if (cursor != null && cursor.getCount() > 0)
+			if (cursor != null && cursor.getCount() > 0) {
 				evalsTextView.setVisibility(View.VISIBLE);
+				evalsListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (cursor.moveToPosition(position)) {
+							Intent intent = new Intent(Search.this, AddEval.class);
+							intent.putExtra("refID_Term", cursor.getInt(cursor.getColumnIndex(EvaluationsDBAdapter.TERM_REFERENCE)));
+							intent.putExtra("refID_Course", cursor.getInt(cursor.getColumnIndex(EvaluationsDBAdapter.COURSE_REFERENCE)));
+							intent.putExtra("refID_Category", cursor.getInt(cursor.getColumnIndex(EvaluationsDBAdapter.CATEGORY_REFERENCE)));
+							intent.putExtra("idEdit_Item", cursor.getInt(cursor.getColumnIndex(EvaluationsDBAdapter.ROW_ID)));
+							intent.putExtra("id_Mode", EditMode.EDIT_MODE);
+							startActivity(intent);	
+						}
+					}
+					
+				});
+			}
 		}
 		else if (loader.getId() == TASK_LOADER_ID) {
 			taskSearchCursorAdapter.swapCursor(cursor);
-			if (cursor != null && cursor.getCount() > 0)
+			if (cursor != null && cursor.getCount() > 0) {
 				taskTextView.setVisibility(View.VISIBLE);
+				taskListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						if (cursor.moveToPosition(position)) {
+							Intent intent = new Intent(Search.this, AddTask.class);
+							intent.putExtra("idEdit_Item", cursor.getInt(cursor.getColumnIndex(CoursesDBAdapter.ROW_ID)));
+							intent.putExtra("id_Mode", EditMode.EDIT_MODE);
+							startActivity(intent);	
+						}
+					}
+					
+				});
+			}
 		}
 	}
 
@@ -187,15 +254,19 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
 	public void onLoaderReset(Loader<Cursor> loader) {
 		if (loader.getId() == COURSES_LOADER_ID) {
 			coursesSearchCursorAdapter.swapCursor(null);
+			coursesListView.setOnItemClickListener(null);
 		}
 		else if (loader.getId() == CATS_LOADER_ID) {
 			catsSearchCursorAdapter.swapCursor(null);
+			catsListView.setOnItemClickListener(null);
 		}
 		else if (loader.getId() == EVALS_LOADER_ID) {
 			evalsSearchCursorAdapter.swapCursor(null);
+			evalsListView.setOnItemClickListener(null);
 		}
 		else if (loader.getId() == TASK_LOADER_ID) {
 			taskSearchCursorAdapter.swapCursor(null);
+			taskListView.setOnItemClickListener(null);
 		}
 	}
 

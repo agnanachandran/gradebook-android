@@ -167,7 +167,7 @@ public class CategoriesDBAdapter extends DBAdapter {
      * */
     public Cursor getCategoriesSortByName(String query) {
     	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-    	String[] columns = new String[] { ROW_ID, CAT_TITLE};
+    	String[] columns = new String[] { ROW_ID, TERM_REFERENCE, COURSE_REFERENCE, CAT_TITLE};
     	String selection = CAT_TITLE + " LIKE ?";
     	String[] selectionArgs = new String[] {"%" + query + "%"};
     	String orderBy = CAT_TITLE;

@@ -123,7 +123,7 @@ public class CoursesDBAdapter extends DBAdapter {
      * */
     public Cursor getCoursesSortByName(String query) {
     	SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-    	String[] columns = new String[] { ROW_ID, COURSE_TITLE};
+    	String[] columns = new String[] { ROW_ID, TERM_REFERENCE, COURSE_TITLE};
     	String selection = COURSE_TITLE + " LIKE ?";
     	String[] selectionArgs = new String[] {"%" + query + "%"};
     	String orderBy = COURSE_TITLE;
