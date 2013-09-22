@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.amrak.gradebook"
+    package="ca.projectkarma.gradetrackr"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,16 +14,16 @@
         android:label="@string/app_name"
         android:theme="@style/CustomTheme" >
         <activity
-            android:name="com.amrak.gradebook.activity.Settings"
+            android:name="ca.projectkarma.gradetrackr.activity.Settings"
             android:label="@string/title_activity_settings" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.SETTINGS" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.SETTINGS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.Terms"
+            android:name="ca.projectkarma.gradetrackr.activity.Terms"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,101 +32,101 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.Courses"
+            android:name="ca.projectkarma.gradetrackr.activity.Courses"
             android:label="@string/titleCourses" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.COURSES" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.COURSES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.Categories"
+            android:name="ca.projectkarma.gradetrackr.activity.Categories"
             android:label="Categories" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.CATEGORIES" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.CATEGORIES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.Evaluations"
+            android:name="ca.projectkarma.gradetrackr.activity.Evaluations"
             android:label="@string/titleEvaluations" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.EVALUATIONS" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.EVALUATIONS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.AddTerm"
+            android:name="ca.projectkarma.gradetrackr.activity.AddTerm"
             android:label="@string/title_activity_add_term"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.ADDTERM" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.ADDTERM" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.AddCourse"
+            android:name="ca.projectkarma.gradetrackr.activity.AddCourse"
             android:label="@string/title_activity_add_course"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.ADDCOURSE" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.ADDCOURSE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.AddCategory"
+            android:name="ca.projectkarma.gradetrackr.activity.AddCategory"
             android:label="@string/title_activity_add_category"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.ADDCAT" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.ADDCAT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.AddEval"
+            android:name="ca.projectkarma.gradetrackr.activity.AddEval"
             android:label="@string/title_activity_add_evaluation"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.ADDEVAL" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.ADDEVAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.TaskList"
+            android:name="ca.projectkarma.gradetrackr.activity.TaskList"
             android:label="@string/title_activity_task_list" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.TASKLIST" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.TASKLIST" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amrak.gradebook.activity.AddTask"
+            android:name="ca.projectkarma.gradetrackr.activity.AddTask"
             android:label="@string/title_activity_add_task"
             android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
-                <action android:name="com.amrak.gradebook.activity.ADDTASK" />
+                <action android:name="ca.projectkarma.gradetrackr.activity.ADDTASK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <provider
-            android:name="com.amrak.gradebook.CustomSuggestionProvider"
-            android:authorities="com.amrak.gradebook.CustomSuggestionProvider"
+            android:name="ca.projectkarma.gradetrackr.CustomSuggestionProvider"
+            android:authorities="ca.projectkarma.gradetrackr.CustomSuggestionProvider"
             android:enabled="true"
             android:exported="false" >
         </provider>
 
         <activity
-            android:name="com.amrak.gradebook.activity.Search"
+            android:name="ca.projectkarma.gradetrackr.activity.Search"
             android:label="@string/title_activity_search"
             android:launchMode="singleTop" >
             <intent-filter>

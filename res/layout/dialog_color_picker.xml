@@ -18,7 +18,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 		
-	<com.amrak.gradebook.ColorPickerView
+	<ca.projectkarma.gradetrackr.ColorPickerView
 		android:id="@+id/color_picker_view"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 	android:layout_marginTop="10dp">
 
 	
-		<com.amrak.gradebook.ColorPanelView
+		<ca.projectkarma.gradetrackr.ColorPanelView
 			android:id="@+id/old_color_panel"
 			android:layout_width="0px"
 			android:layout_height="fill_parent"
@@ -53,7 +53,7 @@
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp" />
 		
-		<com.amrak.gradebook.ColorPanelView
+		<ca.projectkarma.gradetrackr.ColorPanelView
 			android:id="@+id/new_color_panel"
 			android:layout_width="0px"
 			android:layout_height="fill_parent"
