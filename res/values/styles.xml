@@ -17,8 +17,6 @@
     
     <style name="CustomTheme.ActionBar.TitleTextStyle">
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">26sp</item>
-        
     </style>
     
     <style name="search_heading">
