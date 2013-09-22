@@ -11,7 +11,7 @@
     <!-- style for the action bar background -->
 
     <style name="CustomTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-         <item name="android:textColor">@color/Grey</item>
+         <item name="android:textColor">@color/White</item>
          <item name="android:background">#159CEB</item>
     </style>
     
