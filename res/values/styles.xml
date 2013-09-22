@@ -11,15 +11,21 @@
     <!-- style for the action bar background -->
 
     <style name="CustomTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-         <item name="android:textColor">@color/White</item>
-         <item name="android:background">#159CEB</item>
+        <item name="android:titleTextStyle">@style/CustomTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:background">#159CEB</item>
+    </style>
+    
+    <style name="CustomTheme.ActionBar.TitleTextStyle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">26sp</item>
+        
     </style>
     
     <style name="search_heading">
         <item name="android:textSize">22sp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:textColor">#0099CC</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
     
     <style name="search_listitem">
