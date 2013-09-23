@@ -17,7 +17,7 @@ public abstract class DBAdapter {
     public static final String DATABASE_NAME = "GradeTrackrDB"; //$NON-NLS-1$
     public static final int DATABASE_VERSION = 1;
 
-    // Sql query for creating tables
+    // Sql queries for creating tables
 
     private static final String CREATE_TABLE_TASK = "CREATE TABLE IF NOT EXISTS tasks (_id INTEGER primary key autoincrement, " //$NON-NLS-1$
             + TaskDBAdapter.TASK_TITLE + " VARCHAR not null," //$NON-NLS-1$
