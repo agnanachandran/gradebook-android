@@ -66,6 +66,7 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
         // up button in action bar
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.linen));
+        getActionBar().setTitle("");
         
         coursesSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, coursesFrom, to, 0);
         catsSearchCursorAdapter = new SearchCursorAdapter(this, R.layout.activity_search_listitem, null, catsFrom, to, 0);

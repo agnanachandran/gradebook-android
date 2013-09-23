@@ -13,19 +13,17 @@
         <LinearLayout
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/tvCourseTitle"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/textTitle"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tvCourseCode"
@@ -40,7 +38,7 @@
             android:id="@+id/tvCourseMark"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:gravity="right|center_vertical"
             android:text="@string/textMark"
             android:textColor="@color/Black"
