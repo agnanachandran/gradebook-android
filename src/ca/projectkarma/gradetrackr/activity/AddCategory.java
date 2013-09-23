@@ -49,7 +49,7 @@ public class AddCategory extends Activity {
     int idEdit_Item;
     // Default colour for the category and therefore the colour picker.
     // If changing this, change the color of the previewView in the add category xml
-    int catColor = 0xA000BFFF; // default is gray
+    int catColor = 0xA000BFFF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

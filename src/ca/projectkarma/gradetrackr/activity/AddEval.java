@@ -204,7 +204,13 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sEvalCat.setAdapter(dataAdapter);
-        // sEvalCat.setSelection(refIDGet_Category);
+        for (int j = 0; j < c.getCount(); j++)
+        {
+            if (refIDGet_Category == refID[j])
+            {
+                sEvalCat.setSelection(j);
+            }
+        }
         sEvalCat.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> adapter, View v, int i, long lng) {
@@ -238,7 +244,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             etEvalMark.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalMark")));
             etEvalOutOf.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalOutOf")));
             etWeight.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalWeight")));
-            // sEvalCat.setSelection(selectedRefID);
             // etEvalNotes.setText(cEvaluation.getString(cEvaluation.getColumnIndex("evalNotes")));
         }
 
@@ -273,8 +278,9 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             while (c.moveToNext());
         }
 
+        final int numberOfEvals = c.getCount();
+
         // When the user leaves weight blank
-        final int COUNT = c.getCount();
         if (totalWeight == 0)
         {
             if (c.moveToFirst())
@@ -282,7 +288,7 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 do
                 {
                     mark += 100 * c.getDouble(c.getColumnIndex("evalMark"))
-                            / c.getDouble(c.getColumnIndex("evalOutOf")) / COUNT;
+                            / c.getDouble(c.getColumnIndex("evalOutOf")) / numberOfEvals;
                 }
                 while (c.moveToNext());
             }
@@ -303,7 +309,7 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             }
         }
         
-        if (COUNT == 0) {
+        if (numberOfEvals == 0) {
         	mark = 100.0; // If there are no evaluations in the category, mark defaults to 100%
         }
         categoriesDB.updateCategoryAverage(selectedCatId, mark);
