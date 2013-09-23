@@ -111,6 +111,11 @@ public class TaskList extends Activity {
             	Intent iSearch = new Intent(this, Search.class);
             	startActivity(iSearch);
             	break;
+            case android.R.id.home:
+                // This is called when the Home (Up) button is pressed
+                // in the Action Bar.
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

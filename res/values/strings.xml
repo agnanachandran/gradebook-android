@@ -86,7 +86,7 @@
     <string name="deadlineTime">Deadline Time</string>
     <string name="deadlineDate">Deadline Date</string>
     <string name="textTasks">Tasks</string>
-    <string name="search_hint">Evaluations, courses, etc.</string>
+    <string name="search_hint">Math, Chemistry, etc.</string>
     <string name="title_activity_search">Search</string>
     <string name="action_settings">Settings</string>
 

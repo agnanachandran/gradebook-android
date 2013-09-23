@@ -89,7 +89,7 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
         sEvalCat = (Spinner) findViewById(R.id.sEvalCat);
         bEvalPickDate = (Button) findViewById(R.id.bPickEvalDate);
         etWeight = (EditText) findViewById(R.id.etEvalWeight);
-        etEvalNotes = (EditText) findViewById(R.id.etEvalNotes);
+//        etEvalNotes = (EditText) findViewById(R.id.etEvalNotes);
         bEvalDone = (Button) findViewById(R.id.bEvalDone);
 
         Intent iAddEval = getIntent();
