@@ -105,6 +105,15 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
           System.out.println("Query is " + query);
         }
     }
+    
+    @Override
+    public void onRestart() {
+    	super.onRestart();
+		getLoaderManager().restartLoader(COURSES_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(CATS_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(EVALS_LOADER_ID, null, this);
+		getLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
