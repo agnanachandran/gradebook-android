@@ -75,8 +75,9 @@ public class CategoriesListAdapter extends BaseAdapter {
         View lineColor = (View) v.findViewById(R.id.line_Color);
 
         title.setText(categories.getTitle());
-        lineColor.setBackgroundColor(0xff888888);
+        lineColor.setBackgroundColor(0xff159ceb);
 
+        // TODO: refactor All to strings.xml
         if (!categories.getTitle().equals("All"))
             changeColor(title, mark, weight, lineColor, categories.getColor());
 
@@ -87,7 +88,10 @@ public class CategoriesListAdapter extends BaseAdapter {
             {
                 allWeight += this.categories.get(i).getWeight();
             }
-            if (allWeight > -0.001 && allWeight < 0.001) mark.setText(String.valueOf(100.00));
+            final double EPSILON = 0.001;
+            if (Math.abs(allWeight) < EPSILON) {
+            	mark.setText(String.valueOf(100.00));
+            }
             else
             {
                 for (int i = 1; i < this.categories.size(); i++)
