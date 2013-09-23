@@ -287,6 +287,10 @@ public class Evaluations extends Activity {
                     expListView.collapseGroup(h);
                 }
                 break;
+            case R.id.tasks:
+                Intent iTask = new Intent("ca.projectkarma.gradetrackr.activity.TASKLIST");
+                startActivity(iTask);
+                break;
             case android.R.id.home:
                 Intent iCategories = new Intent(this, Categories.class);
                 iCategories.putExtra("refID_Course", refIDGet_Course);

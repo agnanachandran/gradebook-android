@@ -102,14 +102,11 @@ public class AddCategory extends Activity {
         if (etCatName.getText().toString().trim().equals("")
                 || etCatWeight.getText().toString().trim().equals(""))
         {
-
             new AlertDialog.Builder(this).setMessage("Please enter data for all the fields.")
                     .setPositiveButton("OK", null).show();
-
         }
         else
         {
-
             String catName = etCatName.getText().toString();
             double catWeight = 0.0;
 

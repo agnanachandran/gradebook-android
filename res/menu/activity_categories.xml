@@ -22,4 +22,9 @@
 <!--         android:numericShortcut="1" -->
 <!--         android:title="@string/preferences"/> -->
 
+    <item
+        android:id="@+id/tasks"
+        android:alphabeticShortcut="c"
+        android:numericShortcut="3"
+        android:title="@string/menu_tasks" />
 </menu>

@@ -172,6 +172,10 @@ public class Courses extends Activity {
                 iAddCourse.putExtra("refID_Term", refIDGet_Term);
                 startActivity(iAddCourse);
                 break;
+            case R.id.tasks:
+                Intent iTask = new Intent("ca.projectkarma.gradetrackr.activity.TASKLIST");
+                startActivity(iTask);
+                break;
             case android.R.id.home:
                 // This is called when the Home (Up) button is pressed
                 // in the Action Bar.

@@ -52,7 +52,7 @@ public class CategoriesListAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        int[] colors = new int[] { 0x30ffffff, 0x30808080 };
+        int[] colors = new int[] { 0x30ffffff, 0x30e0e0e0 };
 
         View v = null;
         if (convertView != null)
