@@ -2,13 +2,7 @@ package ca.projectkarma.gradetrackr.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import ca.projectkarma.gradetrackr.EditMode;
-import ca.projectkarma.gradetrackr.adapter.TaskListAdapter;
-import ca.projectkarma.gradetrackr.db.adapter.TaskDBAdapter;
-import ca.projectkarma.gradetrackr.model.TaskData;
-
-import ca.projectkarma.gradetrackr.R;
+import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -30,6 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import ca.projectkarma.gradetrackr.EditMode;
+import ca.projectkarma.gradetrackr.R;
+import ca.projectkarma.gradetrackr.adapter.TaskListAdapter;
+import ca.projectkarma.gradetrackr.db.adapter.TaskDBAdapter;
+import ca.projectkarma.gradetrackr.model.TaskData;
 
 public class TaskList extends Activity {
 
@@ -50,11 +49,10 @@ public class TaskList extends Activity {
     public static final int CONTEXT_EDIT = 0;
     public static final int CONTEXT_DELETE = 1;
     // tasks
-    ArrayList<TaskData> tasks = new ArrayList<TaskData>();
+    List<TaskData> tasks = new ArrayList<TaskData>();
 
     // variables
     final private String TAG = "Tasks";
-    int[] refIDPass_Task;
     int contextSelection;
 
     @TargetApi(11)
@@ -136,12 +134,14 @@ public class TaskList extends Activity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem
                 .getMenuInfo();
         contextSelection = info.position;
+        
+        Log.d("task list", "AAAAAAA " + contextSelection);
 
         switch (menuItem.getItemId())
         {
             case CONTEXT_EDIT:
                 Intent iAddTask = new Intent("ca.projectkarma.gradetrackr.activity.ADDTASK");
-                iAddTask.putExtra("idEdit_Item", refIDPass_Task[contextSelection]);
+                iAddTask.putExtra("idEdit_Item", tasks.get(contextSelection).getID());
                 iAddTask.putExtra("id_Mode", EditMode.EDIT_MODE);
                 startActivity(iAddTask);
                 dataReset();
@@ -149,7 +149,7 @@ public class TaskList extends Activity {
             case CONTEXT_DELETE:
 
                 tasksDB.open();
-                Cursor cDelete = tasksDB.getTask(refIDPass_Task[contextSelection]);
+                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getID());
                 String titleDelete = cDelete.getString(cDelete.getColumnIndex("taskTitle"));
                 tasksDB.close();
 
@@ -161,10 +161,10 @@ public class TaskList extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 tasksDB.open();
-                                Cursor cDelete = tasksDB.getTask(refIDPass_Task[contextSelection]);
+                                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getID());
                                 String titleDelete = cDelete.getString(cDelete
                                         .getColumnIndex("taskTitle"));
-                                tasksDB.deleteTask(refIDPass_Task[contextSelection]);
+                                tasksDB.deleteTask(tasks.get(contextSelection).getID());
                                 tasksDB.close();
 
                                 Toast toast = Toast.makeText(context, titleDelete
@@ -204,13 +204,11 @@ public class TaskList extends Activity {
         tasksDB.open();
         Cursor c = tasksDB.getAllTasks();
         int i = 0;
-        refIDPass_Task = new int[c.getCount()];
 
         if (c.moveToFirst())
         {
             do
             { // get ids of each
-                refIDPass_Task[i] = c.getInt(c.getColumnIndex("_id"));
                 tasks.add(new TaskData(c.getInt(c.getColumnIndex("_id")), c.getString(c
                         .getColumnIndex("taskTitle")),
                         c.getString(c.getColumnIndex("taskDateDue")), c.getString(c

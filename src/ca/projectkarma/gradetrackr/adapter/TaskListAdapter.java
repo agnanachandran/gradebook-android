@@ -1,10 +1,6 @@
 package ca.projectkarma.gradetrackr.adapter;
 
-import java.util.ArrayList;
-
-import ca.projectkarma.gradetrackr.model.TaskData;
-
-import ca.projectkarma.gradetrackr.R;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import ca.projectkarma.gradetrackr.R;
+import ca.projectkarma.gradetrackr.model.TaskData;
 
 public class TaskListAdapter extends BaseAdapter {
 
@@ -22,9 +20,9 @@ public class TaskListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     // data
-    private ArrayList<TaskData> tasks;
+    private List<TaskData> tasks;
 
-    public TaskListAdapter(Context context, ArrayList<TaskData> tasks) {
+    public TaskListAdapter(Context context, List<TaskData> tasks) {
         this.context = context;
         this.tasks = tasks;
         inflater = LayoutInflater.from(context);

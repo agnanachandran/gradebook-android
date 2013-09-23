@@ -28,7 +28,7 @@ public class TaskData implements Comparator<TaskData> {
         context = inputContext;
     }
 
-    public double getID() {
+    public int getID() {
         return taskID;
     }
 
