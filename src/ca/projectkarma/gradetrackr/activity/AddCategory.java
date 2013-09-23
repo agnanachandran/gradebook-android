@@ -47,7 +47,9 @@ public class AddCategory extends Activity {
     int refIDGet_Course;
     int idGet_Mode; // use with EditMode constants
     int idEdit_Item;
-    int catColor = 0xff888888; // default is gray
+    // Default colour for the category and therefore the colour picker.
+    // If changing this, change the color of the previewView in the add category xml
+    int catColor = 0xA000BFFF; // default is gray
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

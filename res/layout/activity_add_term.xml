@@ -27,6 +27,8 @@
         android:weightSum="7" >
 
         <Button
+            android:background="@color/ActionBarBlue"
+            android:textColor="@color/White"
             android:id="@+id/bTermPickStartDate"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -46,6 +48,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
+            android:background="@color/ActionBarBlue"
+            android:textColor="@color/White"
             android:id="@+id/bTermPickEndDate"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -57,6 +61,8 @@
     </LinearLayout>
 
     <Button
+        android:background="@color/ActionBarBlue"
+        android:textColor="@color/White"
         android:id="@+id/bTermDone"
         android:layout_width="match_parent"
         android:layout_height="48dp"

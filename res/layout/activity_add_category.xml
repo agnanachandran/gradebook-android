@@ -35,6 +35,8 @@
         android:orientation="horizontal">
         
         <Button
+        android:background="@color/ActionBarBlue"
+        android:textColor="@color/White"
         android:id="@+id/bCatChooseColor"
         android:layout_height="48dp"
         android:layout_width="0dp"
@@ -51,13 +53,15 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="8.6dp"
-            android:background="@color/Grey"
+            android:background="@color/DeepBlue"
             android:clickable="true"
             android:onClick="openColorPickerDiag" />
 
     </LinearLayout>
 
     <Button
+        android:background="@color/ActionBarBlue"
+        android:textColor="@color/White"
         android:id="@+id/bCatDone"
         android:layout_width="match_parent"
         android:layout_height="48dp"

@@ -28,6 +28,8 @@
         android:weightSum="7" >
 
         <Button
+            android:background="@color/ActionBarBlue"
+            android:textColor="@color/White"
             android:id="@+id/bTaskPickDate"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -37,6 +39,8 @@
             android:text="@string/deadlineDate" />
 
         <Button
+            android:background="@color/ActionBarBlue"
+            android:textColor="@color/White"
             android:id="@+id/bTaskPickTime"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -47,6 +51,8 @@
     </RelativeLayout>
 
     <Button
+        android:background="@color/ActionBarBlue"
+        android:textColor="@color/White"
         android:id="@+id/bTaskDone"
         android:layout_width="match_parent"
         android:layout_height="48dp"
