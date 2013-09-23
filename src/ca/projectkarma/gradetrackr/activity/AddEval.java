@@ -256,13 +256,13 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void updateDBCatMark() {
+    public void updateDBCatMark(int selectedCatId) {
         double mark = 0;
         int totalWeight = 0;
 
         evaluationsDB.open();
         categoriesDB.open();
-        Cursor c = evaluationsDB.getEvaluationsOfCategory(selectedRefID);
+        Cursor c = evaluationsDB.getEvaluationsOfCategory(selectedCatId);
 
         if (c.moveToFirst())
         {
@@ -303,7 +303,7 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             }
         }
 
-        categoriesDB.updateCategoryAverage(selectedRefID, mark);
+        categoriesDB.updateCategoryAverage(selectedCatId, mark);
 
         evaluationsDB.close();
         categoriesDB.close();
@@ -375,7 +375,7 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 evaluationsDB.createEvaluation(evalName, evalMark, evalOutOf, evalWeight,
                         selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
                 evaluationsDB.close();
-                updateDBCatMark();
+                updateDBCatMark(selectedRefID);
                 Toast toast = Toast.makeText(context, "Evaluation " + evalName
                         + " was added successfully.", Toast.LENGTH_SHORT);
                 try
@@ -398,7 +398,8 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 evaluationsDB.updateEvaluation(idEditGet_Item, evalName, evalMark, evalOutOf,
                         evalWeight, selectedDate, refIDGet_Term, refIDGet_Course, selectedRefID);
                 evaluationsDB.close();
-                updateDBCatMark();
+                updateDBCatMark(refIDGet_Category);
+                updateDBCatMark(selectedRefID);
                 Toast toast = Toast.makeText(context, "Evaluation " + evalName
                         + " was edited successfully.", Toast.LENGTH_SHORT);
                 try
