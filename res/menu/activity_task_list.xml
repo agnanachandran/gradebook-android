@@ -10,7 +10,7 @@
     <item
         android:id="@+id/addtask"
         android:alphabeticShortcut="a"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_menu_add"
         android:numericShortcut="1"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_add_task"/>

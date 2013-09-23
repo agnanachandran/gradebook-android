@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -143,10 +142,10 @@ public class Terms extends Activity {
         
         switch (item.getItemId())
         {
-            case R.id.preferences:
-                Intent iSettings = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
-                startActivity(iSettings);
-                break;
+//            case R.id.preferences:
+//                Intent iSettings = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
+//                startActivity(iSettings);
+//                break;
             case R.id.addterm:
                 Intent iAddTerm = new Intent("ca.projectkarma.gradetrackr.activity.ADDTERM");
                 startActivity(iAddTerm);
@@ -303,9 +302,10 @@ public class Terms extends Activity {
         termsDB.close();
     }
 	
-    public void setArrowMargins() {
+    @SuppressWarnings("deprecation")
+	public void setArrowMargins() {
     	Display display = getWindowManager().getDefaultDisplay(); 
-    	int width = display.getWidth();  // deprecated
+		int width = display.getWidth();  // deprecated
     	int height = display.getHeight();  // deprecated
     	
         LinearLayout.LayoutParams par = (LinearLayout.LayoutParams)ivNoTerms.getLayoutParams();

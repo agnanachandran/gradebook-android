@@ -12,7 +12,5 @@
     <color name="Orange">#50FF8247</color>
     <color name="DeepBlue">#A000BFFF</color>
     <color name="DarkTitleBlue">#607B8B</color>
-    <color name="actionbar_background_start">#8B1A1A</color>
-    <color name="actionbar_background_end">#CD2626</color>
-    
+   	<color name="ActionBarBlue">#159CEB</color> 
 </resources>

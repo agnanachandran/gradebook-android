@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="15dp"
-            android:background="@color/Grey" >
+            android:background="@color/ActionBarBlue" >
         </View>
 
         <LinearLayout

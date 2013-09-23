@@ -159,10 +159,10 @@ public class Courses extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.preferences:
-                Intent i = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
-                startActivity(i);
-                break;
+//            case R.id.preferences:
+//                Intent i = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
+//                startActivity(i);
+//                break;
             case R.id.search:
             	Intent iSearch = new Intent(this, Search.class);
             	startActivity(iSearch);

@@ -66,6 +66,8 @@ public class TaskList extends Activity {
         // initialization of views
         listView = (ListView) findViewById(R.id.lvTasks);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         // change title back to Tasks since default title is the app's name
         getActionBar().setTitle("Tasks");
 
@@ -97,10 +99,10 @@ public class TaskList extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.preferences:
-                Intent iSettings = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
-                startActivity(iSettings);
-                break;
+//            case R.id.preferences:
+//                Intent iSettings = new Intent("ca.projectkarma.gradetrackr.activity.SETTINGS");
+//                startActivity(iSettings);
+//                break;
             case R.id.addtask:
                 Intent iAddTask = new Intent("ca.projectkarma.gradetrackr.activity.ADDTASK");
                 startActivity(iAddTask);
