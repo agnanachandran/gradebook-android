@@ -1,7 +1,5 @@
 package ca.projectkarma.gradetrackr.db.adapter;
 
-import java.util.HashMap;
-
 import ca.projectkarma.gradetrackr.CustomSuggestionProvider;
 
 import android.app.SearchManager;
@@ -11,7 +9,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 public class EvaluationsDBAdapter extends DBAdapter {
 
@@ -27,7 +24,6 @@ public class EvaluationsDBAdapter extends DBAdapter {
     public static final String TERM_REFERENCE = "termRef";
     public static final String COURSE_REFERENCE = "courseRef";
     public static final String CATEGORY_REFERENCE = "catRef";
-    private static final String TAG = "EvaluationsDBAdapter";
 
     // database name
     public static final String DATABASE_TABLE = "evaluations";

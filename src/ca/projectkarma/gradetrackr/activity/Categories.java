@@ -21,7 +21,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -62,7 +61,6 @@ public class Categories extends Activity {
     ArrayList<CategoryData> categories = new ArrayList<CategoryData>();
 
     // variables
-    final private String TAG = "Categories";
 //    int[] refIDPass_Category;
     int refIDGet_Term;
     int refIDGet_Course;

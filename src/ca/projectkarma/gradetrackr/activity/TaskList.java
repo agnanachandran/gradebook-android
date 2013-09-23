@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -52,7 +51,6 @@ public class TaskList extends Activity {
     List<TaskData> tasks = new ArrayList<TaskData>();
 
     // variables
-    final private String TAG = "Tasks";
     int contextSelection;
 
     @TargetApi(11)
@@ -203,8 +201,7 @@ public class TaskList extends Activity {
     public void dataReadToList() {
         tasksDB.open();
         Cursor c = tasksDB.getAllTasks();
-        int i = 0;
-
+        
         if (c.moveToFirst())
         {
             do
@@ -213,7 +210,6 @@ public class TaskList extends Activity {
                         .getColumnIndex("taskTitle")),
                         c.getString(c.getColumnIndex("taskDateDue")), c.getString(c
                                 .getColumnIndex("taskDateDueTime")), context));
-                i++;
             }
             while (c.moveToNext());
         }

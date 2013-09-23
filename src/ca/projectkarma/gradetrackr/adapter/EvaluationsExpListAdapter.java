@@ -1,7 +1,6 @@
 package ca.projectkarma.gradetrackr.adapter;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -15,9 +14,6 @@ import ca.projectkarma.gradetrackr.model.EvalData;
 
 public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 
-    // context
-    private Context context;
-
     // views
     private LayoutInflater inflater;
 
@@ -29,7 +25,6 @@ public class EvaluationsExpListAdapter extends BaseExpandableListAdapter {
 
     public EvaluationsExpListAdapter(Context context, List<EvalData> eval_parent,
             List<List<EvalData>> eval_child) {
-        this.context = context;
         this.eval_parent = eval_parent;
         this.eval_child = eval_child;
         inflater = LayoutInflater.from(context);

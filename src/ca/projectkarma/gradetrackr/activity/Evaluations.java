@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -60,7 +59,6 @@ public class Evaluations extends Activity {
     private EvaluationsExpListAdapter expListAdapter;
 
     // variables
-    final private String TAG = "Evaluations";
     int[] refIDPass_Evaluation;
     int refIDGet_Term;
     int refIDGet_Course;

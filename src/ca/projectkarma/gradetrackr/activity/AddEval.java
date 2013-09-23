@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,7 +67,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
     NumberFormat twoDigit;
 
     // variables
-    final private String TAG = "AddEval";
     int[] refID;
     int selectedRefID; // category reference ID
     String selectedDate;

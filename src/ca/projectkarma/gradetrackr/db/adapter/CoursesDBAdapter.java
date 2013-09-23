@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 public class CoursesDBAdapter extends DBAdapter {
 
@@ -20,7 +19,6 @@ public class CoursesDBAdapter extends DBAdapter {
     public static final String COURSE_UNITS = "courseUnits";
     public static final String COURSE_NOTES = "notes";
     public static final String TERM_REFERENCE = "termRef";
-    private static final String TAG = "CoursesDBAdapter";
 
     // database name
     public static final String DATABASE_TABLE = "courses";

@@ -20,7 +20,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -62,7 +61,6 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
     NumberFormat twoDigit;
 
     // variables
-    final private String TAG = "AddTerm";
     int[] refID;
     int selectedRefID;
     String selectedSDate;

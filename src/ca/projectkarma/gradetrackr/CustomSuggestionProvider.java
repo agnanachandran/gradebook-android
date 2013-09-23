@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import ca.projectkarma.gradetrackr.db.adapter.CategoriesDBAdapter;
 import ca.projectkarma.gradetrackr.db.adapter.CoursesDBAdapter;
@@ -15,7 +14,6 @@ import ca.projectkarma.gradetrackr.db.adapter.TaskDBAdapter;
 
 public class CustomSuggestionProvider extends ContentProvider {
 	
-	private static final String TAG = "CustomSuggestionProvider";
 	public static String AUTHORITY = "ca.projectkarma.gradetrackr.CustomSuggestionProvider";
 	
 	CoursesDBAdapter coursesDBAdapter;
@@ -82,23 +80,17 @@ public class CustomSuggestionProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		
-		Log.i(TAG, "Content provider received query. Uri is " + uri.toString());
 
 		switch(uriMatcher.match(uri)) {
 		case SEARCH_COURSES:
-			Log.i(TAG, "URI Matcher matched SEARCH_EVALUATIONS");
 			return coursesDBAdapter.getCoursesSortByName(uri.getLastPathSegment());
 		case SEARCH_CATEGORIES:
-			Log.i(TAG, "URI Matcher matched SEARCH_CATEGORIES");
 			return catsDBAdapter.getCategoriesSortByName(uri.getLastPathSegment());
 		case SEARCH_EVALUATIONS:
-			Log.i(TAG, "URI Matcher matched SEARCH_EVALUATIONS");
 			return evalsDBAdapter.getEvaluationSortByName(uri.getLastPathSegment());
 		case SEARCH_TASKS:
-			Log.i(TAG, "URI Matcher matched SEARCH_TASKS");
 			return taskDBAdapter.getTasksSortByName(uri.getLastPathSegment());
 		default:
-			Log.i(TAG, "URI Matcher did not match anything");
 			return null;
 		}
 	}

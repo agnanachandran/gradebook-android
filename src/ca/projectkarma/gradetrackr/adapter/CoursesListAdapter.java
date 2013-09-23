@@ -16,9 +16,6 @@ import android.widget.TextView;
 
 public class CoursesListAdapter extends BaseAdapter {
 
-    // context
-    private Context context;
-
     // views
     private LayoutInflater inflater;
 
@@ -28,7 +25,6 @@ public class CoursesListAdapter extends BaseAdapter {
     DecimalFormat twoDForm = new DecimalFormat("0.00");
 
     public CoursesListAdapter(Context context, ArrayList<CourseData> courses) {
-        this.context = context;
         this.courses = courses;
         inflater = LayoutInflater.from(context);
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public abstract class DBAdapter {
 
@@ -80,16 +79,11 @@ public abstract class DBAdapter {
             db.execSQL(CREATE_TABLE_COURSE);
             db.execSQL(CREATE_TABLE_CATEGORY);
             db.execSQL(CREATE_TABLE_EVALUATION);
-
-            Log.w(TAG, "Created new databases.");
         }
 
         // Upgrading version, transfer data before dropping
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
-                    + ", which will destroy all old data");
-            // db.execSQL("DROP TABLE IF EXISTS courses");
             onCreate(db);
         }
     }

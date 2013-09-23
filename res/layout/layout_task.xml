@@ -1,55 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:alpha="100"
     android:paddingBottom="10dp"
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
+    android:weightSum="5"
     android:paddingTop="10dp" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:alpha="100"
-        android:orientation="horizontal"
-        android:weightSum="5" >
-
-        <LinearLayout
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tvTaskTitle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="@string/textTitle"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvTaskDateDueTime"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/textDate"
-                android:textColor="@color/Grey"
-                android:textSize="12sp" />
-        </LinearLayout>
+        android:layout_weight="2"
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/tvTaskDateDue"
+            android:id="@+id/tvTaskTitle"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:gravity="right|center_vertical"
-            android:text="@string/textDate"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:text="@string/textTitle"
             android:textColor="@color/Black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvTaskDateDueTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textDate"
+            android:textColor="@color/Grey"
+            android:textSize="12sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvTaskDateDue"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:gravity="right|center_vertical"
+        android:text="@string/textDate"
+        android:textColor="@color/Black"
+        android:textSize="16sp" />
 </LinearLayout>

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +14,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -30,6 +30,7 @@ import ca.projectkarma.gradetrackr.db.adapter.TaskDBAdapter;
 
 import ca.projectkarma.gradetrackr.R;
 
+@SuppressLint("SimpleDateFormat")
 public class AddTask extends FragmentActivity implements TimePickedListener, DatePickedListener {
 
     // database
@@ -64,7 +65,6 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
     NumberFormat twoDigit;
 
     // variables
-    final private String TAG = "AddTask";
     int[] refID;
     int selectedRefID;
     String selectedEDate;
@@ -176,14 +176,12 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
             SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
             SimpleDateFormat hourFormat = new SimpleDateFormat("h");
             SimpleDateFormat minFormat = new SimpleDateFormat("mm");
-            SimpleDateFormat ampmFormat = new SimpleDateFormat("a");
 
             mEYear = Integer.parseInt(yearFormat.format(eDate));
             mEMonth = Integer.parseInt(monthFormat.format(eDate)) - 1;
             mEDay = Integer.parseInt(dayFormat.format(eDate));
             mEHour = Integer.parseInt(hourFormat.format(eTime));
             mEMin = Integer.parseInt(minFormat.format(eTime));
-            String x = ampmFormat.format(eTime);
             
         }
         tasksDB.close();
@@ -244,7 +242,6 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
 
             new AlertDialog.Builder(this).setMessage("Make sure all fields are entered.")
                     .setPositiveButton("OK", null).show();
-
         }
         else
         {

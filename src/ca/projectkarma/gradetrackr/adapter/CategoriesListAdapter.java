@@ -16,9 +16,6 @@ import android.widget.TextView;
 
 public class CategoriesListAdapter extends BaseAdapter {
 
-    // context
-    private Context context;
-
     // views
     private LayoutInflater inflater;
 
@@ -28,7 +25,6 @@ public class CategoriesListAdapter extends BaseAdapter {
     DecimalFormat twoDForm = new DecimalFormat("0.00");
 
     public CategoriesListAdapter(Context context, ArrayList<CategoryData> categories) {
-        this.context = context;
         this.categories = categories;
         inflater = LayoutInflater.from(context);
     }

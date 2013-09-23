@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 public class TaskDBAdapter extends DBAdapter {
 
@@ -18,7 +17,6 @@ public class TaskDBAdapter extends DBAdapter {
     public static final String TASK_TITLE = "taskTitle";
     public static final String TASK_DATEDUE = "taskDateDue";
     public static final String TASK_DATEDUETIME = "taskDateDueTime";
-    private static final String TAG = "TaskDBAdapter";
 
     // database name
     public static final String DATABASE_TABLE = "tasks";

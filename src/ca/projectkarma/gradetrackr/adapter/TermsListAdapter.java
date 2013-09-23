@@ -17,9 +17,6 @@ import android.widget.TextView;
 
 public class TermsListAdapter extends BaseAdapter {
 
-    // context
-    private Context context;
-
     // views
     private LayoutInflater inflater;
 
@@ -29,7 +26,6 @@ public class TermsListAdapter extends BaseAdapter {
     DecimalFormat twoDForm = new DecimalFormat("0.00");
 
     public TermsListAdapter(Context context, ArrayList<TermData> terms) {
-        this.context = context;
         this.terms = terms;
         inflater = LayoutInflater.from(context);
     }

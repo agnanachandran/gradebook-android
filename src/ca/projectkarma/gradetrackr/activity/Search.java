@@ -10,7 +10,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,6 @@ import ca.projectkarma.gradetrackr.db.adapter.TaskDBAdapter;
 import ca.projectkarma.gradetrackr.R;
 
 public class Search extends Activity implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
-	
-	private static final String TAG = "Search";
 	
 	private SearchCursorAdapter coursesSearchCursorAdapter;
 	private SearchCursorAdapter catsSearchCursorAdapter;
@@ -99,7 +96,6 @@ public class Search extends Activity implements SearchView.OnQueryTextListener, 
     }
 
     private void handleIntent(Intent intent) {
-    	Log.i(TAG, "Search intent is received");
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
           String query = intent.getStringExtra(SearchManager.QUERY);
           System.out.println("Query is " + query);

@@ -13,9 +13,6 @@ import ca.projectkarma.gradetrackr.model.TaskData;
 
 public class TaskListAdapter extends BaseAdapter {
 
-    // context
-    private Context context;
-
     // views
     private LayoutInflater inflater;
 
@@ -23,7 +20,6 @@ public class TaskListAdapter extends BaseAdapter {
     private List<TaskData> tasks;
 
     public TaskListAdapter(Context context, List<TaskData> tasks) {
-        this.context = context;
         this.tasks = tasks;
         inflater = LayoutInflater.from(context);
     }

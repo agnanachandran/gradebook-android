@@ -22,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -67,7 +66,6 @@ public class Courses extends Activity {
     ArrayList<CourseData> courses = new ArrayList<CourseData>();
 
     // variables
-    final private String TAG = "Courses";
     int refIDGet_Term;
     int contextSelection;
 
