@@ -320,8 +320,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
 
     public void addEval(View v) {
 
-        Log.d(TAG, "Adding or Editing Evaluation.");
-
         if (etEvalName.getText().toString().trim().equals("")
                 || etEvalMark.getText().toString().trim().equals("")
                 || etEvalOutOf.getText().toString().trim().equals(""))
@@ -356,7 +354,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             }
             catch (NumberFormatException nfe)
             {
-                Log.d(TAG, nfe.getMessage());
             }
 
             try
@@ -365,7 +362,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             }
             catch (NumberFormatException nfe)
             {
-                Log.d(TAG, nfe.getMessage());
             }
 
             try
@@ -374,7 +370,6 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
             }
             catch (NumberFormatException nfe)
             {
-                Log.d(TAG, nfe.getMessage());
             }
 
             if (idGet_Mode == EditMode.ADD_MODE)
@@ -394,10 +389,8 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
-                Log.d(TAG, "Edited Evaluation Successfully.");
                 finish();
             }
             else if (idGet_Mode == EditMode.EDIT_MODE)
@@ -418,10 +411,8 @@ public class AddEval extends FragmentActivity implements DatePickedListener {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
-                Log.d(TAG, "Added Evaluation Successfully.");
                 finish();
             }
         }

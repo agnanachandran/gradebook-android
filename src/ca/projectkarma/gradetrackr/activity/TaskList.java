@@ -135,7 +135,7 @@ public class TaskList extends Activity {
                 .getMenuInfo();
         contextSelection = info.position;
         
-        Log.d("task list", "AAAAAAA " + contextSelection);
+        
 
         switch (menuItem.getItemId())
         {
@@ -177,7 +177,7 @@ public class TaskList extends Activity {
                                 }
                                 catch (ClassCastException cce)
                                 {
-                                    Log.d(TAG, cce.getMessage());
+                                    
                                 }
                                 toast.show();
                                 dataReset();

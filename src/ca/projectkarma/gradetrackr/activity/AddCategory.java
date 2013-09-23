@@ -99,8 +99,6 @@ public class AddCategory extends Activity {
 
     public void addCat(View v) {
 
-        Log.d(TAG, "Adding or Editing Category.");
-
         if (etCatName.getText().toString().trim().equals("")
                 || etCatWeight.getText().toString().trim().equals(""))
         {
@@ -118,7 +116,6 @@ public class AddCategory extends Activity {
             }
             catch (NumberFormatException nfe)
             {
-                Log.d(TAG, nfe.getMessage());
             }
 
             if (idGet_Mode == EditMode.ADD_MODE)
@@ -138,11 +135,9 @@ public class AddCategory extends Activity {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
 
-                Log.d(TAG, "Added Category Successfully.");
                 finish();
 
             }
@@ -163,11 +158,9 @@ public class AddCategory extends Activity {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
 
-                Log.d(TAG, "Edited Category Successfully.");
                 finish();
             }
 

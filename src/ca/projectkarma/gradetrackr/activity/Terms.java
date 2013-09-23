@@ -240,7 +240,7 @@ public class Terms extends Activity {
                                 }
                                 catch (ClassCastException cce)
                                 {
-                                    Log.d(TAG, cce.getMessage());
+                                    
                                 }
                                 toast.show();
                                 dataReset();

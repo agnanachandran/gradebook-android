@@ -239,7 +239,7 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
 
     public void addTerm(View v) {
 
-        Log.d(TAG, "Adding of Editing Term.");
+        
 
         if (etTermTitle.getText().toString().trim().equals(""))
         {
@@ -282,10 +282,10 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
                     }
                     catch (ClassCastException cce)
                     {
-                        Log.d(TAG, cce.getMessage());
+                        
                     }
                     toast.show();
-                    Log.d(TAG, "Added Term Successfully.");
+                    
                     finish();
                 }
                 else if (idGet_Mode == EditMode.EDIT_MODE)
@@ -305,10 +305,10 @@ public class AddTerm extends FragmentActivity implements DatePickedListener {
                     }
                     catch (ClassCastException cce)
                     {
-                        Log.d(TAG, cce.getMessage());
+                        
                     }
                     toast.show();
-                    Log.d(TAG, "Edited Term Successfully.");
+                    
                     finish();
                 }
             }

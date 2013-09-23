@@ -95,8 +95,6 @@ public class AddCourse extends Activity {
 
     public void addCourse(View v) {
 
-        Log.d(TAG, "Adding or Editing Course.");
-
         if (etCourseTitle.getText().toString().trim().equals("")
                 || etCourseCode.getText().toString().trim().equals("")
                 || etCourseUnits.getText().toString().trim().equals(""))
@@ -122,7 +120,6 @@ public class AddCourse extends Activity {
             }
             catch (NumberFormatException nfe)
             {
-                Log.d(TAG, nfe.getMessage());
             }
 
             if (idGet_Mode == EditMode.ADD_MODE)
@@ -142,10 +139,8 @@ public class AddCourse extends Activity {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
-                Log.d(TAG, "Added Course Successfully.");
                 finish();
             }
             else if (idGet_Mode == EditMode.EDIT_MODE)
@@ -166,10 +161,8 @@ public class AddCourse extends Activity {
                 }
                 catch (ClassCastException cce)
                 {
-                    Log.d(TAG, cce.getMessage());
                 }
                 toast.show();
-                Log.d(TAG, "Added Course Successfully.");
                 finish();
             }
 

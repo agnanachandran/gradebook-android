@@ -135,7 +135,6 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
         tasksDB.open();
         Cursor cTask = tasksDB.getTask(idEditGet_Item);
         cTask.moveToFirst();
-        Log.d(TAG, String.valueOf(cTask.getCount()));
         // set the date
         if (savedInstanceState != null)
         {
@@ -185,7 +184,7 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
             mEHour = Integer.parseInt(hourFormat.format(eTime));
             mEMin = Integer.parseInt(minFormat.format(eTime));
             String x = ampmFormat.format(eTime);
-            Log.d(TAG, x);
+            
         }
         tasksDB.close();
 
@@ -238,7 +237,7 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
 
     public void addTask(View v) {
 
-        Log.d(TAG, "Adding or Editing Task.");
+        
 
         if (etTaskTitle.getText().toString().trim().equals(""))
         {
@@ -272,10 +271,10 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
                     }
                     catch (ClassCastException cce)
                     {
-                        Log.d(TAG, cce.getMessage());
+                        
                     }
                     toast.show();
-                    Log.d(TAG, "Added Task Successfully.");
+                    
                     finish();
                 }
                 else if (idGet_Mode == EditMode.EDIT_MODE)
@@ -295,10 +294,10 @@ public class AddTask extends FragmentActivity implements TimePickedListener, Dat
                     }
                     catch (ClassCastException cce)
                     {
-                        Log.d(TAG, cce.getMessage());
+                        
                     }
                     toast.show();
-                    Log.d(TAG, "Edited Task Successfully.");
+                    
                     finish();
                 }
             }
