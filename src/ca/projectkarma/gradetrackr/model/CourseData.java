@@ -7,7 +7,7 @@ import android.database.Cursor;
 
 public class CourseData {
 
-    int courseID = -1;
+    int databaseID = -1;
     String title = null;
     String code = null;
     double units = 0;
@@ -20,7 +20,7 @@ public class CourseData {
 
     public CourseData(int inputCourseID, String inputTitle, String inputCode, double inputUnits,
             String inputNotes, int inputRefTermID, Context inputContext) {
-        courseID = inputCourseID;
+    	databaseID = inputCourseID;
         title = inputTitle;
         code = inputCode;
         units = inputUnits;
@@ -82,8 +82,8 @@ public class CourseData {
         return mark;
     }
 
-    public double getID() {
-        return courseID;
+    public int getDatabaseID() {
+        return databaseID;
     }
 
     public String getTitle() {

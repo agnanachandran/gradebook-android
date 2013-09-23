@@ -82,7 +82,7 @@ public class CategoriesListAdapter extends BaseAdapter {
             changeColor(title, mark, weight, lineColor, categories.getColor());
 
         // position of listview objects starts at 0 and ID starts at 1
-        if (categories.getID() == 0)
+        if (categories.getDatabaseID() == 0)
         {
             for (int i = 1; i < this.categories.size(); i++)
             {
@@ -106,7 +106,7 @@ public class CategoriesListAdapter extends BaseAdapter {
         {
             mark.setText(twoDForm.format(categories.getMark()));
         }
-        if (categories.getID() == 0)
+        if (categories.getDatabaseID() == 0)
         {
             weight.setText("");
         }

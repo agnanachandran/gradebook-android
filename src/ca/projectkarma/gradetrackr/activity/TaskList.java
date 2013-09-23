@@ -141,7 +141,7 @@ public class TaskList extends Activity {
         {
             case CONTEXT_EDIT:
                 Intent iAddTask = new Intent("ca.projectkarma.gradetrackr.activity.ADDTASK");
-                iAddTask.putExtra("idEdit_Item", tasks.get(contextSelection).getID());
+                iAddTask.putExtra("idEdit_Item", tasks.get(contextSelection).getDatabaseID());
                 iAddTask.putExtra("id_Mode", EditMode.EDIT_MODE);
                 startActivity(iAddTask);
                 dataReset();
@@ -149,7 +149,7 @@ public class TaskList extends Activity {
             case CONTEXT_DELETE:
 
                 tasksDB.open();
-                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getID());
+                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getDatabaseID());
                 String titleDelete = cDelete.getString(cDelete.getColumnIndex("taskTitle"));
                 tasksDB.close();
 
@@ -161,10 +161,10 @@ public class TaskList extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 tasksDB.open();
-                                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getID());
+                                Cursor cDelete = tasksDB.getTask(tasks.get(contextSelection).getDatabaseID());
                                 String titleDelete = cDelete.getString(cDelete
                                         .getColumnIndex("taskTitle"));
-                                tasksDB.deleteTask(tasks.get(contextSelection).getID());
+                                tasksDB.deleteTask(tasks.get(contextSelection).getDatabaseID());
                                 tasksDB.close();
 
                                 Toast toast = Toast.makeText(context, titleDelete

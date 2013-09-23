@@ -68,7 +68,6 @@ public class Courses extends Activity {
 
     // variables
     final private String TAG = "Courses";
-    int[] refIDPass_Course;
     int refIDGet_Term;
     int contextSelection;
 
@@ -129,7 +128,7 @@ public class Courses extends Activity {
                     cCategories = Class.forName("ca.projectkarma.gradetrackr.activity.Categories");
                     Intent iCategories = new Intent(Courses.this, cCategories);
                     iCategories.putExtra("refID_Term", refIDGet_Term);
-                    iCategories.putExtra("refID_Course", refIDPass_Course[position]);
+                    iCategories.putExtra("refID_Course", courses.get(position).getDatabaseID());
                     startActivity(iCategories);
                 }
                 catch (ClassNotFoundException e)
@@ -211,7 +210,7 @@ public class Courses extends Activity {
             case CONTEXT_EDIT:
                 Intent iAddCourse = new Intent("ca.projectkarma.gradetrackr.activity.ADDCOURSE");
                 iAddCourse.putExtra("refID_Term", refIDGet_Term);
-                iAddCourse.putExtra("idEdit_Item", refIDPass_Course[contextSelection]);
+                iAddCourse.putExtra("idEdit_Item", courses.get(contextSelection).getDatabaseID());
                 iAddCourse.putExtra("id_Mode", EditMode.EDIT_MODE);
                 startActivity(iAddCourse);
                 dataReset();
@@ -219,7 +218,7 @@ public class Courses extends Activity {
             case CONTEXT_DELETE:
 
                 coursesDB.open();
-                Cursor cDelete = coursesDB.getCourse(refIDPass_Course[contextSelection]);
+                Cursor cDelete = coursesDB.getCourse(courses.get(contextSelection).getDatabaseID());
                 String titleDelete = cDelete.getString(cDelete.getColumnIndex("courseTitle"));
                 coursesDB.close();
 
@@ -235,19 +234,19 @@ public class Courses extends Activity {
 
                                 coursesDB.open();
                                 Cursor cDelete = coursesDB
-                                        .getCourse(refIDPass_Course[contextSelection]);
+                                        .getCourse(courses.get(contextSelection).getDatabaseID());
                                 String titleDelete = cDelete.getString(cDelete
                                         .getColumnIndex("courseTitle"));
-                                coursesDB.deleteCourse(refIDPass_Course[contextSelection]);
+                                coursesDB.deleteCourse(courses.get(contextSelection).getDatabaseID());
                                 coursesDB.close();
 
                                 evalsDB.open();
-                                evalsDB.deleteEvaluationsOfCourse(refIDPass_Course[contextSelection]);
+                                evalsDB.deleteEvaluationsOfCourse(courses.get(contextSelection).getDatabaseID());
                                 evalsDB.close();
 
                                 categoriesDB.open();
                                 categoriesDB
-                                        .deleteCategoriesOfCourse(refIDPass_Course[contextSelection]);
+                                        .deleteCategoriesOfCourse(courses.get(contextSelection).getDatabaseID());
                                 categoriesDB.close();
 
                                 Toast toast = Toast
@@ -304,23 +303,16 @@ public class Courses extends Activity {
         coursesDB.open();
         Cursor c = coursesDB.getCoursesOfTerm(refIDGet_Term);
         // Cursor c = coursesDB.getAllCourses();
-        int i = 0;
-        refIDPass_Course = new int[c.getCount()];
         if (c.moveToFirst())
         {
             do
             {
-                refIDPass_Course[i] = c.getInt(c.getColumnIndex("_id")); // get
-                // ids
-                // of
-                // each.
                 courses.add(new CourseData(c.getInt(c.getColumnIndex("_id")), c.getString(c
                         .getColumnIndex("courseTitle")),
                         c.getString(c.getColumnIndex("courseCode")), c.getInt(c
                                 .getColumnIndex("courseUnits")), c.getString(c
                                 .getColumnIndex("notes")), c.getInt(c.getColumnIndex("termRef")),
                         context));
-                i++;
             }
             while (c.moveToNext());
         }

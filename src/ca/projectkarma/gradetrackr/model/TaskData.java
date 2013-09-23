@@ -4,32 +4,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 
 public class TaskData implements Comparator<TaskData> {
 
-    int taskID = -1;
+    int databaseID = -1;
     String title = null;
     String dateDue = null;
     String dateDueTime = null;
     Context context;
-    SimpleDateFormat parseFormat = new SimpleDateFormat("h:mm a");
+    SimpleDateFormat parseFormat = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     public TaskData() {
     }
 
     public TaskData(int inputTaskID, String inputTitle, String inputDateDue,
             String inputDateDueTime, Context inputContext) {
-        taskID = inputTaskID;
+    	databaseID = inputTaskID;
         title = inputTitle;
         dateDue = inputDateDue;
         dateDueTime = inputDateDueTime;
         context = inputContext;
     }
 
-    public int getID() {
-        return taskID;
+    public int getDatabaseID() {
+        return databaseID;
     }
 
     public String getTitle() {
@@ -46,7 +47,7 @@ public class TaskData implements Comparator<TaskData> {
 
     @Override
     public int compare(TaskData lhs, TaskData rhs) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date leDate = new Date();
         Date leTime = new Date();
         Date reDate = new Date();
@@ -63,11 +64,11 @@ public class TaskData implements Comparator<TaskData> {
             e.printStackTrace();
         }
 
-        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-        SimpleDateFormat hourFormat = new SimpleDateFormat("h");
-        SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ENGLISH);
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.ENGLISH);
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.ENGLISH);
+        SimpleDateFormat hourFormat = new SimpleDateFormat("h", Locale.ENGLISH);
+        SimpleDateFormat minFormat = new SimpleDateFormat("mm", Locale.ENGLISH);
 
         int lYear = Integer.parseInt(yearFormat.format(leDate));
         int lMonth = Integer.parseInt(monthFormat.format(leDate)) - 1;

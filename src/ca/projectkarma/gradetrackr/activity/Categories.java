@@ -63,7 +63,7 @@ public class Categories extends Activity {
 
     // variables
     final private String TAG = "Categories";
-    int[] refIDPass_Category;
+//    int[] refIDPass_Category;
     int refIDGet_Term;
     int refIDGet_Course;
     int contextSelection;
@@ -128,7 +128,7 @@ public class Categories extends Activity {
                     Intent iEvaluations = new Intent(Categories.this, cEvaluations);
                     iEvaluations.putExtra("refID_Term", refIDGet_Term);
                     iEvaluations.putExtra("refID_Course", refIDGet_Course);
-                    iEvaluations.putExtra("refID_Category", refIDPass_Category[position]);
+                    iEvaluations.putExtra("refID_Category", categories.get(position).getDatabaseID());
                     startActivity(iEvaluations);
                 }
                 catch (ClassNotFoundException e)
@@ -209,14 +209,14 @@ public class Categories extends Activity {
                 Intent iAddCategory = new Intent("ca.projectkarma.gradetrackr.activity.ADDCAT");
                 iAddCategory.putExtra("refID_Term", refIDGet_Term);
                 iAddCategory.putExtra("refID_Course", refIDGet_Course);
-                iAddCategory.putExtra("idEdit_Item", refIDPass_Category[contextSelection]);
+                iAddCategory.putExtra("idEdit_Item", categories.get(contextSelection).getDatabaseID());
                 iAddCategory.putExtra("id_Mode", EditMode.EDIT_MODE);
                 startActivity(iAddCategory);
                 dataReset();
                 return true;
             case CONTEXT_DELETE:
                 categoriesDB.open();
-                Cursor cDelete = categoriesDB.getCategory(refIDPass_Category[contextSelection]);
+                Cursor cDelete = categoriesDB.getCategory(categories.get(contextSelection).getDatabaseID());
                 String titleDelete = cDelete.getString(cDelete.getColumnIndex("catTitle"));
                 categoriesDB.close();
 
@@ -231,15 +231,15 @@ public class Categories extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 evalsDB.open();
-                                evalsDB.deleteEvaluationsOfCategory(refIDPass_Category[contextSelection]);
+                                evalsDB.deleteEvaluationsOfCategory(categories.get(contextSelection).getDatabaseID());
                                 evalsDB.close();
 
                                 categoriesDB.open();
                                 Cursor cDelete = categoriesDB
-                                        .getCategory(refIDPass_Category[contextSelection]);
+                                        .getCategory(categories.get(contextSelection).getDatabaseID());
                                 String titleDelete = cDelete.getString(cDelete
                                         .getColumnIndex("catTitle"));
-                                categoriesDB.deleteCategory(refIDPass_Category[contextSelection]);
+                                categoriesDB.deleteCategory(categories.get(contextSelection).getDatabaseID());
                                 categoriesDB.close();
 
                                 Toast toast = Toast
@@ -298,25 +298,19 @@ public class Categories extends Activity {
         categoriesDB.open();
 
         Cursor c = categoriesDB.getCategoriesOfCourse(refIDGet_Course);
-        refIDPass_Category = new int[c.getCount() + 1];
-        int i = 0;
         if (c.moveToFirst())
         {
             categories.add(new CategoryData(0, "All", 100, c.getInt(c.getColumnIndex("courseRef")),
                     c.getInt(c.getColumnIndex("termRef")), c.getInt(c.getColumnIndex("catColor")),
                     context));
-            refIDPass_Category[i] = 0;
-            i++;
             do
             {
                 // get ids of each
-                refIDPass_Category[i] = c.getInt(c.getColumnIndex("_id"));
                 categories.add(new CategoryData(c.getInt(c.getColumnIndex("_id")), c.getString(c
                         .getColumnIndex("catTitle")), c.getDouble(c.getColumnIndex("catWeight")), c
                         .getInt(c.getColumnIndex("courseRef")), c.getInt(c
                         .getColumnIndex("termRef")), c.getInt(c.getColumnIndex("catColor")),
                         context));
-                i++;
             }
             while (c.moveToNext());
         }

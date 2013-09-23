@@ -13,6 +13,7 @@ public class EvalData {
     // database
     CategoriesDBAdapter categoriesDB;
 
+    int databaseID = -1;
     String title = null;
     double mark = 0;
     double outOf = 0;
@@ -22,7 +23,7 @@ public class EvalData {
     int course = 0;
     int category = 0;
 
-    public EvalData(String inputTitle, double inputMark, double inputOutOf, double inputWeight,
+    public EvalData(int inputEvalID, String inputTitle, double inputMark, double inputOutOf, double inputWeight,
             String inputDate, int inputTerm, int inputCourse, int inputCategory,
             Context inputContext) {
         title = inputTitle;
@@ -35,6 +36,10 @@ public class EvalData {
         category = inputCategory;
         context = inputContext;
         categoriesDB = new CategoriesDBAdapter(context);
+    }
+    
+    public int getDatabaseID() {
+    	return databaseID;
     }
 
     public String getTitle() {

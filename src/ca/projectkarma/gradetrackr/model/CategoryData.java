@@ -9,7 +9,7 @@ public class CategoryData {
 
     Context context;
 
-    int categoryID = -1;
+    int databaseID = -1;
     double weight = 0;
     String title = null;
     double mark = 0;
@@ -21,7 +21,7 @@ public class CategoryData {
 
     public CategoryData(int inputCategoryID, String inputTitle, double inputWeight,
             int inputRefCourseID, int inputRefTermID, int inputColor, Context inputContext) {
-        categoryID = inputCategoryID;
+    	databaseID = inputCategoryID;
         title = inputTitle;
         weight = inputWeight;
         course = inputRefCourseID;
@@ -45,9 +45,9 @@ public class CategoryData {
         return mark;
 
     }
-
-    public double getID() {
-        return categoryID;
+    
+    public int getDatabaseID() {
+        return databaseID;
     }
 
     public String getTitle() {

@@ -2,17 +2,7 @@ package ca.projectkarma.gradetrackr.activity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import ca.projectkarma.gradetrackr.EditMode;
-import ca.projectkarma.gradetrackr.adapter.EvaluationsExpListAdapter;
-import ca.projectkarma.gradetrackr.db.adapter.CategoriesDBAdapter;
-import ca.projectkarma.gradetrackr.db.adapter.CoursesDBAdapter;
-import ca.projectkarma.gradetrackr.db.adapter.EvaluationsDBAdapter;
-import ca.projectkarma.gradetrackr.model.CategoryData;
-import ca.projectkarma.gradetrackr.model.CourseData;
-import ca.projectkarma.gradetrackr.model.EvalData;
-
-import ca.projectkarma.gradetrackr.R;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +25,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ca.projectkarma.gradetrackr.EditMode;
+import ca.projectkarma.gradetrackr.R;
+import ca.projectkarma.gradetrackr.adapter.EvaluationsExpListAdapter;
+import ca.projectkarma.gradetrackr.db.adapter.CategoriesDBAdapter;
+import ca.projectkarma.gradetrackr.db.adapter.CoursesDBAdapter;
+import ca.projectkarma.gradetrackr.db.adapter.EvaluationsDBAdapter;
+import ca.projectkarma.gradetrackr.model.CategoryData;
+import ca.projectkarma.gradetrackr.model.CourseData;
+import ca.projectkarma.gradetrackr.model.EvalData;
 
 public class Evaluations extends Activity {
 
@@ -101,10 +100,10 @@ public class Evaluations extends Activity {
     CourseData courseData;
     CategoryData categoryData;
     // expListview parent rows
-    ArrayList<EvalData> eval_parent = new ArrayList<EvalData>();
+    List<EvalData> eval_parent = new ArrayList<EvalData>();
     // expListview child rows
-    ArrayList<ArrayList<EvalData>> eval_childs = new ArrayList<ArrayList<EvalData>>();
-    ArrayList<EvalData> eval_child = new ArrayList<EvalData>();
+    List<List<EvalData>> eval_childs = new ArrayList<List<EvalData>>();
+    List<EvalData> eval_child = new ArrayList<EvalData>();
 
     DecimalFormat twoDForm = new DecimalFormat("0.00");
 
@@ -310,7 +309,6 @@ public class Evaluations extends Activity {
         ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
         int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
         // Only create a context menu for child items
         if (type == 0)
         {
@@ -339,12 +337,11 @@ public class Evaluations extends Activity {
     // statement
     public boolean onContextItemSelected(MenuItem menuItem) {
         ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) menuItem.getMenuInfo();
-        int groupPos = 0, childPos = 0;
+        int groupPos = 0;
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
         if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP)
         {
             groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-            childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
         }
         // Pull values from the array we built when we created the list
         contextSelection = groupPos;
@@ -530,13 +527,13 @@ public class Evaluations extends Activity {
             do
             {
                 refIDPass_Evaluation[i] = c.getInt(c.getColumnIndex("_id"));
-                eval_parent.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), c.getInt(c
+                eval_parent.add(new EvalData(c.getInt(c.getColumnIndex("_id")), c.getString(c.getColumnIndex("evalTitle")), c.getInt(c
                         .getColumnIndex("evalMark")), c.getInt(c.getColumnIndex("evalOutOf")), c
                         .getDouble(c.getColumnIndex("evalWeight")), c.getString(c
                         .getColumnIndex("evalDate")), c.getInt(c.getColumnIndex("termRef")), c
                         .getInt(c.getColumnIndex("courseRef")),
                         c.getInt(c.getColumnIndex("catRef")), context));
-                eval_child.add(new EvalData(c.getString(c.getColumnIndex("evalTitle")), c.getInt(c
+                eval_child.add(new EvalData(c.getInt(c.getColumnIndex("_id")), c.getString(c.getColumnIndex("evalTitle")), c.getInt(c
                         .getColumnIndex("evalMark")), c.getInt(c.getColumnIndex("evalOutOf")), c
                         .getDouble(c.getColumnIndex("evalWeight")), c.getString(c
                         .getColumnIndex("evalDate")), c.getInt(c.getColumnIndex("termRef")), c
